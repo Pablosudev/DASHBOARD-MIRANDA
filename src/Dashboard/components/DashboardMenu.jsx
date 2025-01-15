@@ -36,7 +36,7 @@ export const DashboardMenu = () => {
                     </Ulist>
                 </article>
                 <CardContainer>
-                    <ImgUser src="IMAGENES/RoomsDetails/1726741504852.jpg" alt="imgUser" />
+                    <ImgUser src="Imagenes/1726741504852.jpg" alt="imgUser" />
                     <h3>Pablo López</h3>
                     <EmailUser>pablo.losu.dev@gmail.com</EmailUser>
                     <ButtonDefault>Contact Us</ButtonDefault>
@@ -44,7 +44,7 @@ export const DashboardMenu = () => {
                 <TravlStyled>Travl Hotel Admin Dashboard</TravlStyled>
                 <FooterText>2025 All Rights Reserved</FooterText>
                 <FooterText>Made whit<IconHeart/>by Pablo</FooterText>
-                </SideStyled>
+        </SideStyled>
         <NavbarStyled>
             <ContainerPage>
                 {side ? ( <LeftIcon onClick={handleSideMenu}/>) : (<RightIcon onClick={handleSideMenu} />)}

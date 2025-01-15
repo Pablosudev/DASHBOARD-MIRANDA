@@ -16,13 +16,11 @@ export const SideStyled = styled.section`
 `
 export const ContainerLogo = styled.article`
     display: flex;
-    aling-items: center;
     margin-left: 2rem;
     margin-top: 2rem
 `
 export const TitleLogo = styled.h2`
     margin-bottom: 0%;
-    font-weigth:20rem;
 `
 export const SubtitleLogo = styled.p`
     margin-top: 0.2rem;

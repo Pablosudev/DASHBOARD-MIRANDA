@@ -11,15 +11,6 @@ import styled from "styled-components";
    display: flex;
    justify-content: space-between;
  `
- export const SelectStyled = styled.select`
-   border: transparent;
-   background-color: rgba(255, 255, 255, 1);
-   text-align: left;
-   font: normal normal 600 18px/27px Poppins;
-   letter-spacing: 0px;
-   color: rgba(226, 52, 40, 1);
-   opacity: 1;
- `
  export const LogoStyled = styled.div`
   display:flex;
   padding-right: 1.5rem; 

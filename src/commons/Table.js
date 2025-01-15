@@ -2,7 +2,9 @@ import styled from "styled-components"
 
 
 export const SectionTable = styled.section`
-
+position:absolute;
+top: 12%;
+right:3%
 `
 export const TableR = styled.tr`
     border-left: transparent;
@@ -13,10 +15,10 @@ export const TableR = styled.tr`
 
 export const TableHead = styled.thead`
     text-align: left;
-    font: normal normal 600 18px/27px Poppins;
-    letter-spacing: 0px;
+    font-family: "Poppins";
+    font-weight: 600;
+    font-size: 1.1rem;
     color: #393939;
-    opacity: 1;
     height: 4rem;
 `
 export const TableRooms = styled.table`
@@ -28,4 +30,38 @@ export const TableRooms = styled.table`
 export const TableBody = styled.tbody`
     height: 7.5rem;
 `
-
+export const TableImg = styled.img`
+width: 9.3rem;
+height: 4.8rem;
+border-radius: 8px;
+`
+export const TableTd = styled.td`
+height:7.5rem;
+`
+export const ButtonTable = styled.button` 
+    border-radius: 12px;
+    background-color: ${(props) => props.status === 'available' ? '#5AD07A' : '#FF4D4D'};
+    color:white;
+    border:transparent;
+    width: 7.8rem;
+    height: 3rem;
+    font-family: "Poppins";
+`
+export const TableAmenities = styled.td`
+    font-family:"Poppins";
+    font-size:1rem;
+`
+export const TablePrice = styled.td`
+    display: flex;
+    font-family:"Poppins";
+    align-items:center;
+    margin-top: 2rem;
+    
+`
+export const Night = styled.p`
+    color:#799283;
+    margin-right: 4rem;
+`
+export const ContainerId = styled.td`
+ font-family:"Poppins";
+`
