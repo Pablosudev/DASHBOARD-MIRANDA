@@ -35,6 +35,8 @@ border-radius: 12px;
 `
 export const BoxSelect = styled.div`
 display:flex;
+justify-content: space-between;
+padding-right: 2rem;
 align-items: center;
 `
 export const SelectRooms = styled.select`

@@ -3,22 +3,25 @@ import { SectionTable, TableBody, TableHead, TableImg, TableR, TableRooms, Table
 import { ContainerSelect, SelectTitle, ButtonFake, ContainerButtons, ContainerFake, BoxSelect, SelectRooms } from "../Components/RoomsList"
 import rooms from "../Data/rooms.json"
 import { ButtonGreen } from "../../commons/ButtonGreen"
+import { useNavigate } from "react-router-dom"
 
 export const RoomsList = () => {
 
     const [roomsList, SetRoomsList] = useState(rooms)
+    const navigate = useNavigate();
+
+    const handleNewRoom = () => {
+        navigate('/rooms/create')
+    }
+
     return (
         <SectionTable>
             <BoxSelect>
             <ContainerSelect>
                 <SelectTitle>All Rooms</SelectTitle>
-                <SelectTitle>Active Employee</SelectTitle>
-                <SelectTitle>Inactive Employee</SelectTitle>
-                <SelectTitle>Price</SelectTitle>
             </ContainerSelect>
             <div>
-                <ButtonGreen type="secundary">+ New Room</ButtonGreen>
-                <SelectRooms>Newest</SelectRooms> 
+                <ButtonGreen type="secundary" onClick={handleNewRoom}>+ New Room</ButtonGreen>
             </div>
             </BoxSelect>
             <TableRooms>
