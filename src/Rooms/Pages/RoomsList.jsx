@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 import { SectionTable, TableBody, TableHead, TableImg, TableR, TableRooms, TableTd, ButtonTable, TableAmenities, TablePrice, Night, ContainerId } from "../../commons/Table"
-import { ContainerSelect, SelectTitle, ButtonFake, ContainerButtons, ContainerFake, BoxSelect} from "../Components/RoomsList"
+import { ContainerSelect, SelectTitle, ContainerButtons, ContainerFake, BoxSelect} from "../Components/RoomsList"
 import rooms from "../Data/rooms.json"
 import { ButtonGreen } from "../../commons/ButtonGreen"
+import { ButtonFake } from "../../commons/ButtonFake"
 import { useNavigate } from "react-router-dom"
 
 export const RoomsList = () => {

@@ -7,6 +7,7 @@ import { Dashboard } from './Dashboard/Dashboard.jsx'
 import {LogIn} from './LogIn/LogIn.jsx'
 import { RoomsCreate } from './Rooms/Pages/RoomsCreate.jsx'
 import { UserList } from './Users/Page/UsersList.jsx'
+import { UserCreate } from './Users/Page/UserCreate.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')).render(
           </Route>
           <Route path='/users'>
             <Route path='' element = {<UserList/>}/>
+            <Route path='new' element = {<UserCreate/>}/>
           </Route>
         </Route>
       </Routes>

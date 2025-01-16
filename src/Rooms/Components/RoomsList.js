@@ -12,16 +12,6 @@ margin-right: 2rem;
 font-family: "Poppins";
 color: #6E6E6E;
 `
-export const ButtonFake = styled.button`
-background-color:F5F5F5;
-color:black;
-padding-top:1rem;
-padding-bottom:1rem;
-padding-left:1.2rem;
-padding-right:1.2rem;
-border-radius: 12px;
-border: transparent;
-`
 export const ContainerButtons = styled.div`
 display:flex;
 justify-content: end;
