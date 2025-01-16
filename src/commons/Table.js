@@ -65,3 +65,12 @@ export const Night = styled.p`
 export const ContainerId = styled.td`
  font-family:"Poppins";
 `
+export const LogoUsers = styled.td`
+    width: 5.5rem;
+    height: 5.5rem;
+`
+export const StatusUsers = styled.p`
+    color:${(props) => props.status === 'Active' ? '#5AD07A' : '#FF4D4D'};
+    border:transparent;
+    font-family: "Poppins";
+`

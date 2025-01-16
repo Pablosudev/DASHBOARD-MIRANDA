@@ -6,6 +6,7 @@ import { Layout } from './commons/Layout.jsx'
 import { Dashboard } from './Dashboard/Dashboard.jsx'
 import {LogIn} from './LogIn/LogIn.jsx'
 import { RoomsCreate } from './Rooms/Pages/RoomsCreate.jsx'
+import { UserList } from './Users/Page/UsersList.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -18,6 +19,9 @@ createRoot(document.getElementById('root')).render(
           <Route path='/rooms'>
             <Route path='' element= {<RoomsList/>}/>
             <Route path='create' element = {<RoomsCreate/>}/>
+          </Route>
+          <Route path='/users'>
+            <Route path='' element = {<UserList/>}/>
           </Route>
         </Route>
       </Routes>

@@ -32,7 +32,7 @@ export const DashboardMenu = () => {
                         <ListSide><IconBookings/><Aside href="">Bookings</Aside></ListSide>
                         <ListSide><IconRooms/><Aside href="/rooms">Rooms</Aside></ListSide>
                         <ListSide><IconContact/><Aside href="">Contact</Aside></ListSide>
-                        <ListSide><IconUsers/><Aside href="">Users</Aside></ListSide>
+                        <ListSide><IconUsers/><Aside href="/users">Users</Aside></ListSide>
                     </Ulist>
                 </article>
                 <CardContainer>

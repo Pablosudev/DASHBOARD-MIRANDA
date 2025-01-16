@@ -103,11 +103,11 @@ export const IconDashboard = styled(LuLayoutDashboard)`
 margin-right: 1rem;
 font-size: 1.5rem;
 `
-export const IconBookings = styled(MdOutlineVpnKey)`
+export const IconRooms = styled(MdOutlineVpnKey)`
 margin-right: 1rem;
 font-size: 1.5rem;
 `
-export const IconRooms = styled(TbCalendarCheck)`
+export const IconBookings = styled(TbCalendarCheck)`
 margin-right: 1rem;
 font-size: 1.5rem;
 `

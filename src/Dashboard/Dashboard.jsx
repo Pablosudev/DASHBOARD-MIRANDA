@@ -1,4 +1,4 @@
-import { ContainerKpis, DashboardSection, Kpis, NumberKpis, DataKpis, IconLogOut } from "./components/Dashboard"
+import { ContainerKpis, DashboardSection, Kpis, NumberKpis, DataKpis, IconLogOut, TypeKpis, IconLogIn, IconBed, IconCalendary} from "./components/Dashboard"
 
 
 
@@ -10,35 +10,34 @@ export const Dashboard = () => {
             <DashboardSection>
                 <ContainerKpis>
                     <Kpis>
-                        <IconLogOut/>
+                        <IconBed/>
                         <DataKpis>
                             <NumberKpis>8,461</NumberKpis>
-                            <p>New Booking</p>
+                            <TypeKpis>New Booking</TypeKpis>
                         </DataKpis>
                     </Kpis>
-                    <div>
-                        <img src="" alt="" />
-                        <div>
-                            <p>963</p>
-                            <p>Scheduled Room</p>
-                        </div>
-                    </div>
-                    <div>
-                        <img src="" alt="" />
-                        <div>
-                            <p>753</p>
-                            <p>Check In</p>
-                        </div>
-                    </div>
-                    <div>
-                        <img src="" alt="" />
-                        <div>
-                            <p>516</p>
-                            <p>Check Out</p>
-                        </div>
-                    </div>
+                    <Kpis>
+                        <IconCalendary/>
+                        <DataKpis>
+                            <NumberKpis>963</NumberKpis>
+                            <TypeKpis>Scheduled Room</TypeKpis>
+                        </DataKpis>
+                    </Kpis>
+                    <Kpis>
+                        <IconLogIn/>
+                        <DataKpis>
+                            <NumberKpis>753</NumberKpis>
+                            <TypeKpis>Check In</TypeKpis>
+                        </DataKpis>
+                    </Kpis>
+                    <Kpis>
+                        <IconLogOut/>
+                        <DataKpis>
+                            <NumberKpis>516</NumberKpis>
+                            <TypeKpis>Check Out</TypeKpis>
+                        </DataKpis>
+                    </Kpis>
                 </ContainerKpis>
-
             </DashboardSection>
         </>
     )
