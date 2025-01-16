@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const LayaoutContainer = styled.div`
+
+`
+
  export const InputStyled = styled.input`
    padding-top: 2%;
    padding-bottom: 2%;

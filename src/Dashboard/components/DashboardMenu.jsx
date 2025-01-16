@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { LeftIcon, NavbarStyled, RightIcon, TitleNavbar, ContainerPage, MailIcon, BellIcon, MessageIcon, ContainerIcon} from "./Navbar";
-import { CardContainer, ContainerLogo, ContainerTitle, CustomIcon, EmailUser, FooterText, IconBookings, IconContact, IconDashboard, IconHeart, IconRooms, IconUsers, ImgUser, ListSide, SectionMenu, SideStyled, SubtitleLogo, TitleLogo, TravlStyled, Ulist } from "./Dashboard";
+import { LeftIcon, NavbarStyled, RightIcon, TitleNavbar, ContainerPage, MailIcon, BellIcon, MessageIcon, ContainerIcon, LogOut} from "./Navbar";
+import { Aside, CardContainer, ContainerLogo, ContainerTitle, CustomIcon, EmailUser, FooterText, IconBookings, IconContact, IconDashboard, IconHeart, IconRooms, IconUsers, ImgUser, ListSide, SectionMenu, SideStyled, SubtitleLogo, TitleLogo, TravlStyled, Ulist, NameUser } from "./DashboardSide";
 import { ButtonDefault } from "../../commons/Button";
 
 
@@ -28,16 +28,16 @@ export const DashboardMenu = () => {
             </ContainerLogo>    
                 <article>
                     <Ulist>
-                        <ListSide><IconDashboard/>Dashboard</ListSide>
-                        <ListSide><IconBookings/>Bookings</ListSide>
-                        <ListSide><IconRooms/>Rooms</ListSide>
-                        <ListSide><IconContact/>Contact</ListSide>
-                        <ListSide><IconUsers/>Users</ListSide>
+                        <ListSide><IconDashboard/><Aside href="/dashboard">Dashboard</Aside></ListSide>
+                        <ListSide><IconBookings/><Aside href="">Bookings</Aside></ListSide>
+                        <ListSide><IconRooms/><Aside href="/rooms">Rooms</Aside></ListSide>
+                        <ListSide><IconContact/><Aside href="">Contact</Aside></ListSide>
+                        <ListSide><IconUsers/><Aside href="">Users</Aside></ListSide>
                     </Ulist>
                 </article>
                 <CardContainer>
-                    <ImgUser src="Imagenes/1726741504852.jpg" alt="imgUser" />
-                    <h3>Pablo López</h3>
+                    <ImgUser src="../Imagenes/photoUser.jpg" alt="imgUser" />
+                    <NameUser>Pablo López</NameUser>
                     <EmailUser>pablo.losu.dev@gmail.com</EmailUser>
                     <ButtonDefault>Contact Us</ButtonDefault>
                 </CardContainer>
@@ -54,6 +54,7 @@ export const DashboardMenu = () => {
                 <MailIcon />
                 <BellIcon />
                 <MessageIcon />
+                <LogOut/>
             </ContainerIcon>
         </NavbarStyled>
 

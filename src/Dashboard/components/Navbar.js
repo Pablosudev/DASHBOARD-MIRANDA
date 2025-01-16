@@ -3,6 +3,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
 import { CiBellOn, CiMail } from "react-icons/ci";
 import { MdOutlineMessage } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 
 
 
@@ -42,6 +43,11 @@ export const BellIcon = styled(CiBellOn)`
     color: rgba(19, 88, 70, 1);
 `
 export const MessageIcon = styled(MdOutlineMessage)`
+    font-size: 2rem;
+    margin-right: 4rem;
+    color: rgba(19, 88, 70, 1);
+`
+export const LogOut = styled(MdLogout)`
     font-size: 2rem;
     margin-right: 4rem;
     color: rgba(19, 88, 70, 1);
