@@ -77,3 +77,12 @@ position: absolute;
 right: 4%;
 top:2%;
 `
+export const SelectCreate = styled.select`
+font-family: "Poppins";
+border: transparent;
+border-radius:12px;
+padding-top:0.5rem;
+padding-bottom:0.5rem;
+padding-left:0.5rem;
+padding-right:0.5rem;
+`

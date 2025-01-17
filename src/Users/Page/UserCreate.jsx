@@ -1,4 +1,4 @@
-import { ImgUser, ContainerNewUsers, TitleHotel, ContainerImg, AddImg, ContainerInput, BoxArticle, TypeInput, InputName, InputDesk, ContainerButton, IconClose } from "../Components/UsersCreate";
+import { SelectCreate, ImgUser, ContainerNewUsers, TitleHotel, ContainerImg, AddImg, ContainerInput, BoxArticle, TypeInput, InputName, InputDesk, ContainerButton, IconClose } from "../Components/UsersCreate";
 import { ButtonGreen } from "../../commons/ButtonGreen"
 export const UserCreate = () => {
 
@@ -32,7 +32,11 @@ export const UserCreate = () => {
                 <BoxArticle>
                     <div>
                         <TypeInput>Job</TypeInput>
-                        <InputName type="text" /> 
+                        <SelectCreate type="text">
+                        <option value="MANAGER">MANAGER</option>
+                        <option value="RECEPTIONIST">RECEPTIONIST</option>
+                        <option value="ROOM SERVICE">ROOM SERVICE</option>
+                        </SelectCreate> 
                     </div> 
                     <div>
                         <TypeInput>Job Desk</TypeInput>
