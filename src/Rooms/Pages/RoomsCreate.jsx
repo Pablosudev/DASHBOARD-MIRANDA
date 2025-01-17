@@ -1,12 +1,17 @@
 
-
+import { CardCreate } from '../Components/RoomsCreate';
 
 export const RoomsCreate = () => {
+  return (
 
-
-    return(
-        <>
-        <h1>hOLA</h1>
-        </>
-    )
-}
+    <CardCreate>
+        <div>
+            <h1>hola</h1>
+        </div>
+        <div>
+        
+        </div>
+    </CardCreate>
+    
+  );
+};

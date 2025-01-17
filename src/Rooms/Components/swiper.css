@@ -1,0 +1,34 @@
+
+  .swiper-image {
+    width: 46rem; 
+    height: 49.5rem; 
+    
+  }
+  .swiper{
+    width: 46rem;
+    height: 49.5rem;
+    border-radius: 12px;
+    position: absolute;
+    right: 0%;
+    top: 0%;
+  }
+  .swiper-theme-color {
+    color: #ffffff;
+  }
+  .swiper-button-prev, .swiper-button-next {
+    position: absolute;
+    top: var(--swiper-navigation-top-offset, 88%);
+    width: calc(var(--swiper-navigation-size) / 44* 27);
+    height: var(--swiper-navigation-size);
+    margin-top: calc(0px -(var(--swiper-navigation-size) / 2));
+    z-index: 10;
+    cursor: pointer;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.swiper-pagination {
+  display: none;       
+}
