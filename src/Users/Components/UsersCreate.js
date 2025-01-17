@@ -4,17 +4,17 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 
 export const ContainerNewUsers = styled.section`
     background-color:#ffffff;
-    position: absolute;
-    right: 20%;
-    top:20%;
     padding-left:3rem;
     padding-right:3rem;
     border-radius:12px;
+    margin-top: 10%;
+    margin-left:15%;
+    position: relative
 `
 export const ImgUser = styled.img`
     width:15rem;
     height:15rem;
-    padding-left:10%;
+    padding-left:4%;
 `
 export const TitleHotel = styled.h1`
     color:#135846;
@@ -30,7 +30,7 @@ justify-content:space-around;
 export const AddImg = styled(MdAddAPhoto)`
 position: absolute;
 top: 5%;
-left:42%;
+left:38%;
 font-size: 3rem;
 
 `
@@ -75,7 +75,7 @@ color:#135846;
 font-size:3rem;
 position: absolute;
 right: 4%;
-top:2%;
+top:1%;
 `
 export const SelectCreate = styled.select`
 font-family: "Poppins";
