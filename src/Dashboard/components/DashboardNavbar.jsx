@@ -1,6 +1,6 @@
 import { useLocation, useNavigate} from "react-router-dom";
 import { LeftIcon, NavbarStyled, RightIcon, TitleNavbar, ContainerPage, MailIcon, BellIcon, MessageIcon, LogOut} from "./Navbar";
-import { ContainerLogo, CustomIcon, ContainerTitle, TitleLogo, SubtitleLogo } from "./DashboardSide";
+import { ContainerLogo, CustomIcon, ContainerTitle, TitleLogo , SubtitleLogo } from "./DashboardSide";
 import { useState } from "react";
 import { DashboardSide } from "./DashboardSide.jsx";
 

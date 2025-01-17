@@ -1,19 +1,22 @@
-import { Aside, CardContainer, ContainerLogo, ContainerTitle, CustomIcon, EmailUser, FooterText, IconBookings, IconContact, IconDashboard, IconHeart, IconRooms, IconUsers, ImgUser, ListSide, SectionMenu, SideStyled, SubtitleLogo, TitleLogo, TravlStyled, Ulist, NameUser } from "./DashboardSide";
+import { StyledNavLink, CardContainer, EmailUser, FooterText, IconBookings, IconContact, IconDashboard, IconHeart, IconRooms, IconUsers, ImgUser, ListSide, SideStyled, TravlStyled, Ulist, NameUser } from "./DashboardSide";
 import { ButtonDefault } from "../../commons/Button";
+
 
 export const DashboardSide = ({side}) => {
     
+
+
     
     return(
         
         <SideStyled style={{display: side ? "block" : "none"}}>
             <article>
                 <Ulist>
-                    <ListSide><IconDashboard/><Aside href="/dashboard">Dashboard</Aside></ListSide>
-                    <ListSide><IconBookings/><Aside href="">Bookings</Aside></ListSide>
-                    <ListSide><IconRooms/><Aside href="/rooms">Rooms</Aside></ListSide>
-                    <ListSide><IconContact/><Aside href="">Contact</Aside></ListSide>
-                    <ListSide><IconUsers/><Aside href="/users">Users</Aside></ListSide>
+                    <ListSide><StyledNavLink to = "/dashboard" type="active"><IconDashboard/>Dashboard</StyledNavLink></ListSide>
+                    <ListSide><StyledNavLink to = "/bookings" type="active"><IconBookings/>Bookings</StyledNavLink></ListSide>
+                    <ListSide><StyledNavLink to = "/rooms" type = "active"><IconRooms/>Rooms</StyledNavLink></ListSide>
+                    <ListSide><StyledNavLink to = "contact" type = "active"><IconContact/>Contact</StyledNavLink></ListSide>
+                    <ListSide><StyledNavLink to = "/users" type="active"><IconUsers/>Users</StyledNavLink></ListSide>
                 </Ulist>
             </article>
             <CardContainer>
@@ -26,6 +29,5 @@ export const DashboardSide = ({side}) => {
             <FooterText>2025 All Rights Reserved</FooterText>
             <FooterText>Made whit<IconHeart/>by Pablo</FooterText>
         </SideStyled>
-        
     )
 };

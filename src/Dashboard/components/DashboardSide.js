@@ -6,11 +6,11 @@ import { TbCalendarCheck } from "react-icons/tb";
 import { IoPersonOutline } from "react-icons/io5";
 import { HiOutlinePuzzlePiece } from "react-icons/hi2";
 import { FaHeart } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 export const SideStyled = styled.section`
     max-width: 11rem;
     padding-bottom: 100%;
-    padding-top: 3rem;
     padding-right:6.5rem;
     box-shadow: 13px 3px 40px rgba(0, 0, 0, 0.02);
     background-color: rgba(255, 255, 255, 1);
@@ -20,6 +20,7 @@ export const ContainerLogo = styled.article`
     margin-left: 2rem;
 `
 export const TitleLogo = styled.h2`
+    font-family: "Poppins";
     margin-bottom: 0%;
 `
 export const SubtitleLogo = styled.p`
@@ -41,17 +42,23 @@ export const Ulist = styled.ul`
     letter-spacing: 0dp;
     color: rgba(121, 146, 131, 1);
     list-style: none;
-    margin-top: 1.5rem;
+    margin-top: 10rem;
+    padding:0%;
 `
 export const ListSide = styled.li`
     margin-bottom: 2rem;
-    display:flex;
-    align-items: center;
 `
-export const Aside = styled.a`
+export const StyledNavLink = styled(NavLink)`
     text-decoration: none;
     color: rgba(121, 146, 131, 1);
     font-family: "Poppins";
+    display:flex;
+    padding-left: 2rem;
+
+    &.active{
+        color:red;
+        border-left: 4px solid red;
+    }
 `
 export const CardContainer = styled.article`
     background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
