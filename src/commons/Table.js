@@ -2,9 +2,8 @@ import styled from "styled-components"
 
 
 export const SectionTable = styled.section`
-position:absolute;
-top: 12%;
-right:3%
+margin-top: 8rem;
+margin-left: 5rem;
 `
 export const TableR = styled.tr`
     border-left: transparent;

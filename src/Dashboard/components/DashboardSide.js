@@ -8,16 +8,16 @@ import { HiOutlinePuzzlePiece } from "react-icons/hi2";
 import { FaHeart } from "react-icons/fa";
 
 export const SideStyled = styled.section`
-    max-width: 20.9rem;
-    padding-left: 3.5rem;
-    padding-right:3.5rem;
+    max-width: 11rem;
+    padding-bottom: 100%;
+    padding-top: 3rem;
+    padding-right:6.5rem;
     box-shadow: 13px 3px 40px rgba(0, 0, 0, 0.02);
     background-color: rgba(255, 255, 255, 1);
 `
 export const ContainerLogo = styled.article`
     display: flex;
     margin-left: 2rem;
-    margin-top: 2rem
 `
 export const TitleLogo = styled.h2`
     margin-bottom: 0%;
@@ -33,15 +33,15 @@ export const SubtitleLogo = styled.p`
 `
 export const ContainerTitle = styled.div`
     margin-left: 2rem;
+    margin-right: 2.5rem;
 `
 export const Ulist = styled.ul`
     text-align: left;
     font-size: 18px;
     letter-spacing: 0dp;
     color: rgba(121, 146, 131, 1);
-    opacity: 1;
     list-style: none;
-    margin-top: 3rem;
+    margin-top: 1.5rem;
 `
 export const ListSide = styled.li`
     margin-bottom: 2rem;
@@ -60,6 +60,7 @@ export const CardContainer = styled.article`
     border-radius: 18px;
     text-align: center;
     width: 14.5rem;
+    margin-left: 1.5rem;
     margin-top: 4rem;
     margin-bottom: 4rem;
     padding-bottom: 2rem;
@@ -85,6 +86,7 @@ export const TravlStyled = styled.h4`
     color: rgba(33, 33, 33, 1);
     opacity: 1;
     margin-bottom: 0%;
+    margin-left: 1.5rem;
     font-family: "Poppins";
 `
 export const FooterText = styled.p`
@@ -92,6 +94,7 @@ export const FooterText = styled.p`
     color: rgba(121, 146, 131, 1);
     opacity: 1;
     margin-bottom: 3rem;
+    margin-left: 1.5rem;
     font-family: "Poppins";
 `
 export const CustomIcon = styled(FaHotel)`
@@ -129,4 +132,7 @@ display: flex;
 justify-content: flex-star;
 align-items: flex-start;
 background-color: rgba(255, 255, 255, 1);
+`
+export const ContainerLayaout = styled.div`
+display: flex;
 `

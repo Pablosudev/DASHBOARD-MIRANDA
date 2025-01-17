@@ -1,7 +1,9 @@
 
 import { Outlet } from "react-router-dom";
-import { DashboardMenu } from "../Dashboard/components/DashboardMenu";
-import { LayaoutContainer } from "./LayoutStyle";
+import { DashboardNavbar } from "../Dashboard/components/DashboardNavbar";
+import { DashboardSide } from "../Dashboard/components/DashboardSide.jsx";
+
+
 
 
 
@@ -11,9 +13,13 @@ export const Layout = () => {
 
 
     return(
-        <LayaoutContainer>
-        <DashboardMenu/>
+        <>
+        
+        <div style={{ display: "flex" }}>
+        <DashboardNavbar/>
+        <DashboardSide/>
         <Outlet/>
-        </LayaoutContainer>
+        </div>
+        </>
     )
 }
