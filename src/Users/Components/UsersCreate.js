@@ -7,8 +7,9 @@ export const ContainerNewUsers = styled.section`
     padding-left:3rem;
     padding-right:3rem;
     border-radius:12px;
-    margin-top: 10%;
     margin-left:15%;
+    margin-top: 10%;
+    max-height: 75rem;
     position: relative
 `
 export const ImgUser = styled.img`

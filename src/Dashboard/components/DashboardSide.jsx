@@ -20,7 +20,7 @@ export const DashboardSide = ({side}) => {
                 </Ulist>
             </article>
             <CardContainer>
-                <ImgUser src="../Imagenes/photoUser.jpg" alt="imgUser" />
+                <ImgUser src="/src/assets/Imagenes/photoUser.jpg" alt="imgUser" />
                 <NameUser>Pablo López</NameUser>
                 <EmailUser>pablo.losu.dev@gmail.com</EmailUser>
                 <ButtonDefault>Contact Us</ButtonDefault>

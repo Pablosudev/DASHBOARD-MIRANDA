@@ -1,72 +1,79 @@
-import { useState } from 'react';
-import {BoxInfo , RoomInfo, ButtonSlideLeft ,ButtonSlideRight ,BoxTitle ,IconArrowLeft, IconArrowRight, ImgSlide, TitleSection, ContainerSections } from '../Components/RoomsCreate';
+
+import { useNavigate } from 'react-router-dom';
+import { IconClose , ButtonSave , CancellationBox , ButtonAmenities , BoxDescription , TitlePrice , InputDiscount , InputDescription , TitleDescripition, ButtonOffer ,Price ,PriceBox,InputCreate, BoxInfo , RoomInfo, BoxTitle , TitleSection, ContainerSections} from '../Components/RoomsCreate';
 import { CardCreate } from '../Components/RoomsCreate';
+
 
 
 export const RoomsCreate = () => {
 
-  const [currentImage, setCurrentImage] = useState(0);
+  const navigate = useNavigate()
 
-  const images = [
-    "/src/assets/Imagenes/room1.jpg",
-    "/src/assets/Imagenes/room2.jpg",
-    "/src/assets/Imagenes/room5.jpg",
-    "/src/assets/Imagenes/room4.jpg"
-  ];
+  const handleClose = () => {
+    navigate ("/rooms")
 
-  const handleButtonNext = () => {
-    setCurrentImage ((prevIndex) => (prevIndex +1) % images.length);
-  };
-  const handleButtonPrev = () => {
-    setCurrentImage ((prevIndex) => (prevIndex -1 + images.length ) % images.length)
-  };
-
+  }
   return (
   
     <CardCreate>
         <ContainerSections>
+        <IconClose onClick={handleClose}/>
+        <RoomInfo>Room Info</RoomInfo>
             <BoxTitle>
               <div>
                 <TitleSection>Room Type</TitleSection>
-                <input type="text" />
+                <InputCreate type="text" />
               </div>
               <div>
                 <TitleSection>Room Number</TitleSection>
-                <input type="text" />
+                <InputCreate type="text" />
               </div>
             </BoxTitle>
             <BoxInfo>
-              <div>
-                <RoomInfo>Room Info</RoomInfo>
-                <p>p</p>
-              </div>
-              <div>
-                <RoomInfo>Price</RoomInfo>
-                <p>p</p>
-              </div>
-              <div>
-                <RoomInfo>Offer</RoomInfo>
-                <p>p</p>
-              </div>
+              <PriceBox>
+                <TitlePrice>Price/Night</TitlePrice>
+                <Price type="text" />
+              </PriceBox>
+              <PriceBox>
+                <TitlePrice>Offer</TitlePrice>
+                <div>
+                <ButtonOffer>Yes</ButtonOffer>
+                <ButtonOffer>No</ButtonOffer>
+                </div>
+              </PriceBox>
+              <PriceBox>
+                <TitlePrice>Discount</TitlePrice>
+                <InputDiscount type="text" />
+              </PriceBox>
             </BoxInfo>
             
-            <TitleSection>Description</TitleSection>
-            <p>jsgijfs</p>
-            <TitleSection>Offer</TitleSection>
-            <TitleSection>Price</TitleSection>
-            <p>dffddffd</p>
-            <TitleSection>Discount</TitleSection>
-            <p>fjdhnf</p>
-            <TitleSection>Cancellation</TitleSection>
-            <p>Campor de texto</p>
-            <TitleSection>Amenities</TitleSection>
-            <p>fdaidbk</p>
+            <BoxDescription>
+              <div>
+                <TitleDescripition>Description</TitleDescripition>
+                <InputDescription type="text" />
+              </div>
+              <div>
+                <TitleDescripition>Amenities</TitleDescripition>
+                <div>
+                  <ButtonAmenities>FREE WIFI</ButtonAmenities>
+                  <ButtonAmenities>TV LED</ButtonAmenities>
+                  <ButtonAmenities>2 BATHROOM</ButtonAmenities>
+                  <ButtonAmenities>AC</ButtonAmenities>
+                  <ButtonAmenities>3 BED SPACE</ButtonAmenities>
+                  <ButtonAmenities>COFEE SET</ButtonAmenities>
+                  <ButtonAmenities>BATHUP</ButtonAmenities>
+                  <ButtonAmenities>TOWEL</ButtonAmenities>
+                  <ButtonAmenities>SHOWER</ButtonAmenities>
+                </div>
+              </div>
+            </BoxDescription>
+            <CancellationBox>
+              <TitleSection>Cancellation Policy</TitleSection>
+              <p>Guests may cancel their reservation up to 48 hours prior to the scheduled check-in date without any charge. Cancellations made within 48 hours of the check-in date will incur a one-night charge. No-shows will be charged the full amount of the reservation. For any changes or cancellations, please contact the hotel directly.</p>
+            </CancellationBox>      
+            <ButtonSave>SAVE</ButtonSave>  
         </ContainerSections>
-        <div>
-          <ImgSlide src= {images[currentImage]} alt="photo room 1" />
-          <ButtonSlideRight onClick={handleButtonNext}><IconArrowRight/></ButtonSlideRight>
-          <ButtonSlideLeft onClick={handleButtonPrev}><IconArrowLeft/></ButtonSlideLeft>
-        </div>
+        
     </CardCreate>
     
   );

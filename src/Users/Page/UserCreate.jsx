@@ -10,7 +10,7 @@ export const UserCreate = () => {
             <TitleHotel>HOTEL MIRANDA</TitleHotel>
             <IconClose/>
             <ContainerImg>
-                <ImgUser src="/Imagenes/149071.png" alt="img NewUser" />
+                <ImgUser src="/src/assets/Imagenes/149071.png" alt="img NewUser" />
                 <AddImg/>
                 <BoxArticle>
                     <div>

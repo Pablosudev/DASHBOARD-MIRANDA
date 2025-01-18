@@ -27,7 +27,7 @@ export const DashboardNavbar = () => {
             case "/users":
                 return "Users";
             default:
-                return "Hotel Admin Dashboard";
+                return "Hotel Admin ";
         }
     };
 
