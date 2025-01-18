@@ -1,11 +1,12 @@
 import { SectionContact, BoxReviews, CancelIcon, CheckIcon, Review, TimeReview, BoxTime, BoxName, BoxCard, ImgUser, SliderReviews, NameReview, BoxIcon} from "../Components/Contact"
-import { SectionTable, TableBody, TableHead, TableR, TableRooms, TableDate, TableAmenities, TableContact} from "../../commons/Table"
+import { SectionTable, TableBody, TableHead, TableR, TableRooms, TableDate, TableAmenities, TableContact, TableButton, TableComment} from "../../commons/Table"
 import { BoxSelect, ContainerSelect, SelectTitle, ContainerButtons, ContainerFake} from "../../Rooms/Components/RoomsList.js"
 import { ButtonFake } from "../../commons/ButtonFake"
 import { ButtonGreen } from "../../commons/ButtonGreen"
 import { useState } from "react"
 import contact from "../Data/contact.json"
 import { useNavigate } from "react-router-dom"
+import { ButtonDefault } from "../../commons/Button.js"
 export const Contact = () => {
 
     const [contactList, SetContactList] = useState(contact)
@@ -80,9 +81,6 @@ export const Contact = () => {
                 <SelectTitle>All Contacts</SelectTitle>
                 <SelectTitle>Archived</SelectTitle>
             </ContainerSelect>
-            <div>
-                <ButtonGreen type="secundary" onClick={handleNewRoom}>+ New Room</ButtonGreen>
-            </div>
             </BoxSelect>
             <TableRooms>
                 <TableHead>
@@ -90,7 +88,7 @@ export const Contact = () => {
                         <TableDate>Date</TableDate>
                         <th></th>
                         <th>Customer</th>
-                        <th>Comment</th>
+                        <TableComment>Comment</TableComment>
                     </TableR>
                 </TableHead>
                 <TableBody>
@@ -100,7 +98,7 @@ export const Contact = () => {
                         <TableAmenities></TableAmenities>
                         <TableAmenities>{contact.customer_full_name} <br /> {contact.email} <br /> {contact.phone}</TableAmenities>
                         <TableContact>{contact.comment}</TableContact>
-                        <td><button>ARCHIVE</button></td>
+                        <TableButton><ButtonDefault>ARCHIVE</ButtonDefault></TableButton>
                     </TableR>
                     ))}
                 </TableBody>
