@@ -73,3 +73,12 @@ export const StatusUsers = styled.p`
     border:transparent;
     font-family: "Poppins";
 `
+export const TableContact = styled.td`
+    font-family: "Poppins";
+    padding-right:5rem;    
+`
+export const TableDate = styled.td`
+    font-family: "Poppins";
+    padding-left: 0.8rem;
+    padding-right:1rem;
+`
