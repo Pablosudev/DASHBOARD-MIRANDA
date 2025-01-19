@@ -1,5 +1,5 @@
-import { ContainerKpis, DashboardSection, Kpis, NumberKpis, DataKpis, IconLogOut, TypeKpis, IconLogIn, IconBed, IconCalendary} from "./components/Dashboard"
-
+import { BoxReviews, ContainerReviews ,Reviews , ContainerKpis, DashboardSection, Kpis, NumberKpis, DataKpis, IconLogOut, TypeKpis, IconLogIn, IconBed, IconCalendary} from "./components/Dashboard"
+import { CancelIcon, CheckIcon, Review, TimeReview, BoxTime, BoxName, BoxCard, ImgUser, SliderReviews, NameReview, BoxIcon} from "../Contact/Components/Contact"
 
 
 export const Dashboard = () => {
@@ -38,6 +38,62 @@ export const Dashboard = () => {
                         </DataKpis>
                     </Kpis>
                 </ContainerKpis>
+                <ContainerReviews>
+                    <Reviews>Latest Review By Customers</Reviews>
+                    <SliderReviews>
+                        
+                        <BoxReviews>
+                            <Review>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</Review>
+                            <BoxCard>
+                                <ImgUser src="/src/assets/Imagenes/user phot.jpg" alt="photoUser" />
+                                <BoxName>
+                                    <NameReview>Kusnaidi Anderson</NameReview>
+                                    <BoxTime>
+                                        <TimeReview>4m ago</TimeReview>
+                                        <BoxIcon>
+                                            <CancelIcon/>
+                                            <CheckIcon/>
+                                        </BoxIcon>
+                                    </BoxTime>
+                                </BoxName>
+                            </BoxCard>
+                        </BoxReviews>
+                        <BoxReviews>
+                            <Review>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</Review>
+                            <BoxCard>
+                                <ImgUser src="/src/assets/Imagenes/user phot.jpg" alt="photoUser" />
+                                <BoxName>
+                                    <NameReview>Kusnaidi Anderson</NameReview>
+                                    <BoxTime>
+                                        <TimeReview>4m ago</TimeReview>
+                                        <BoxIcon>
+                                            <CancelIcon/>
+                                            <CheckIcon/>
+                                        </BoxIcon>
+                                    </BoxTime>
+                                    
+                                </BoxName>
+                            </BoxCard>
+                        </BoxReviews>
+                        <BoxReviews>
+                            <Review>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</Review>
+                            <BoxCard>
+                                <ImgUser src="/src/assets/Imagenes/user phot.jpg" alt="photoUser" />
+                                <BoxName>
+                                    <NameReview>Kusnaidi Anderson</NameReview>
+                                    <BoxTime>
+                                        <TimeReview>4m ago</TimeReview>
+                                        <BoxIcon>
+                                            <CancelIcon/>
+                                            <CheckIcon/>
+                                        </BoxIcon>
+                                    </BoxTime>
+                                    
+                                </BoxName>
+                            </BoxCard>
+                        </BoxReviews>
+                    </SliderReviews>
+                </ContainerReviews>
             </DashboardSection>
         </>
     )

@@ -33,6 +33,7 @@ export const TableImg = styled.img`
 width: 9.3rem;
 height: 4.8rem;
 border-radius: 8px;
+margin-left:1rem;
 `
 export const TableTd = styled.td`
 height:7.5rem;
@@ -112,4 +113,7 @@ background-color: ${(props) =>
     props.status === 'Check In' ? '#5AD07A' :
     props.status === 'Check Out' ? '#E23428' :
     'yellow'};
+`
+export const TableName = styled.th`
+padding-left:1rem;
 `

@@ -34,7 +34,6 @@ export const Contact = () => {
                                     <CheckIcon/>
                                 </BoxIcon>
                             </BoxTime>
-                            
                         </BoxName>
                     </BoxCard>
                 </BoxReviews>

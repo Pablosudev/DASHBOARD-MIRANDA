@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { SectionTable, TableBody, TableHead, TableImg, TableR, TableRooms, TableTd, ButtonTable, TableAmenities, TablePrice, Night, ContainerId } from "../../commons/Table"
+import { SectionTable, TableBody, TableHead, TableImg, TableR, TableRooms, TableTd, ButtonTable, TableAmenities, TablePrice, Night, ContainerId, TableName } from "../../commons/Table"
 import { ContainerSelect, SelectTitle, ContainerButtons, ContainerFake, BoxSelect} from "../Components/RoomsList"
 import rooms from "../Data/rooms.json"
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen"
@@ -28,7 +28,7 @@ export const RoomsList = () => {
             <TableRooms>
                 <TableHead>
                     <TableR>
-                        <th>Room Name</th>
+                        <TableName>Room Name</TableName>
                         <th></th>
                         <th>Room Type</th>
                         <th>Amenities</th>
@@ -40,7 +40,7 @@ export const RoomsList = () => {
                 <TableBody>
                     {roomsList.slice(0,10).map((room) => (  
                         <TableR key={room.room_number}> 
-                        <TableTd><TableImg src="Imagenes/room10.jpg" alt="Room photo" /></TableTd>
+                        <TableTd><TableImg src="/src/assets/Imagenes/room10.jpg" alt="Room photo" /></TableTd>
                         <ContainerId><Night>#{room.room_number}</Night> <p>{room.id_room}</p></ContainerId>
                         <TableAmenities>{room.room_type}</TableAmenities>
                         <TableAmenities>AC,Shower,Double Bed, Towel, Bathup, Cofee Ser, LED TV, Wifi</TableAmenities>
