@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { ImgSlide, ButtonSlideLeft, ButtonSlideRight, IconArrowLeft, IconArrowRight } from "../Components/BookingsDetails";
-
-
+import { ImgSlide, ButtonSlideLeft, ButtonSlideRight, IconArrowLeft, IconArrowRight, CardBookings, CardSlide, PhoneIcon } from "../Components/BookingsDetails";
 export const BookingsDetails = () => {
+
 
 const [currentImage, setCurrentImage] = useState(0);
 
@@ -22,9 +21,20 @@ const [currentImage, setCurrentImage] = useState(0);
 
 return (
     <>
-    <ImgSlide src= {images[currentImage]} alt="photo room 1" />
-    <ButtonSlideRight onClick={handleButtonNext}><IconArrowRight/></ButtonSlideRight>
-    <ButtonSlideLeft onClick={handleButtonPrev}><IconArrowLeft/></ButtonSlideLeft>
+    <CardBookings>
+      <article>
+        <h1>Roberto Mansini</h1>
+        <p>ID 1234124512551</p>
+        <PhoneIcon/>
+        <button></button>
+      </article>
+      <CardSlide>
+        <ImgSlide src= {images[currentImage]} alt="photo room 1" />
+        <ButtonSlideRight onClick={handleButtonNext}><IconArrowRight/></ButtonSlideRight>
+        <ButtonSlideLeft onClick={handleButtonPrev}><IconArrowLeft/></ButtonSlideLeft>
+      </CardSlide>
+    </CardBookings>
+    
     </>
 )
 

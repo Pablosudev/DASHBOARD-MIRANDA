@@ -1,5 +1,5 @@
 import { SelectCreate, ImgUser, ContainerNewUsers, TitleHotel, ContainerImg, AddImg, ContainerInput, BoxArticle, TypeInput, InputName, InputDesk, ContainerButton, IconClose } from "../Components/UsersCreate";
-import { ButtonGreen } from "../../commons/ButtonGreen"
+import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 export const UserCreate = () => {
 
 

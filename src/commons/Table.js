@@ -73,6 +73,7 @@ export const StatusUsers = styled.p`
     border:transparent;
     font-family: "Poppins";
 `
+
 export const TableContact = styled.td`
     font-family: "Poppins";
     padding-right:5rem;
@@ -90,4 +91,25 @@ padding-bottom:4rem;
 ` 
 export const TableComment = styled.th`
 padding-left: 5rem;
+`
+export const TableGuest = styled.td`
+padding-left: 1.5rem;
+font-family: "Poppins";
+`
+export const TableStatus  = styled.th`
+text-align: left;
+`
+export const ButtonBookings = styled.button`
+padding-left: 1rem;
+padding-right: 1rem;
+padding-top: 1rem;
+padding-bottom: 1rem;
+border-radius: 0.8rem;
+font-family: "Poppins";
+border: transparent;
+background-color: ${(props) => 
+    props.status === 'In Progress' ? 'yellow' :
+    props.status === 'Check In' ? '#5AD07A' :
+    props.status === 'Check Out' ? '#E23428' :
+    'yellow'};
 `

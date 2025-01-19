@@ -1,5 +1,5 @@
 import { StyledNavLink, CardContainer, EmailUser, FooterText, IconBookings, IconContact, IconDashboard, IconHeart, IconRooms, IconUsers, ImgUser, ListSide, SideStyled, TravlStyled, Ulist, NameUser } from "./DashboardSide";
-import { ButtonDefault } from "../../commons/Button";
+import { ButtonDefault } from "../../commons/Buttons/Button"; 
 
 
 export const DashboardSide = ({side}) => {

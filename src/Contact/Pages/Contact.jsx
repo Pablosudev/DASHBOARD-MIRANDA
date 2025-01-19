@@ -1,12 +1,12 @@
 import { SectionContact, BoxReviews, CancelIcon, CheckIcon, Review, TimeReview, BoxTime, BoxName, BoxCard, ImgUser, SliderReviews, NameReview, BoxIcon} from "../Components/Contact"
 import { SectionTable, TableBody, TableHead, TableR, TableRooms, TableDate, TableAmenities, TableContact, TableButton, TableComment} from "../../commons/Table"
 import { BoxSelect, ContainerSelect, SelectTitle, ContainerButtons, ContainerFake} from "../../Rooms/Components/RoomsList.js"
-import { ButtonFake } from "../../commons/ButtonFake"
-import { ButtonGreen } from "../../commons/ButtonGreen"
+import { ButtonFake } from "../../commons/Buttons/ButtonFake.js"
+import { ButtonGreen } from "../../commons/Buttons/ButtonGreen.js"
+import { ButtonDefault } from "../../commons/Buttons/Button.js"
 import { useState } from "react"
 import contact from "../Data/contact.json"
 import { useNavigate } from "react-router-dom"
-import { ButtonDefault } from "../../commons/Button.js"
 export const Contact = () => {
 
     const [contactList, SetContactList] = useState(contact)

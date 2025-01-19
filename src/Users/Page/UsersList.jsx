@@ -1,9 +1,9 @@
 import { SectionTable, TableBody, TableHead, TableImg, TableR, TableRooms, TableTd, TableAmenities,  ContainerId, StatusUsers } from "../../commons/Table"
 import { ContainerSelect, SelectTitle, ContainerButtons, ContainerFake, BoxSelect } from "../../Rooms/Components/RoomsList"
-import { ButtonGreen } from "../../commons/ButtonGreen"
+import { ButtonGreen } from "../../commons/Buttons/ButtonGreen"
 import { useState } from "react"
 import users from "../Data/users.json"
-import { ButtonFake } from "../../commons/ButtonFake"
+import { ButtonFake } from "../../commons/Buttons/ButtonFake"
 import { ContainerInput, IconSearch, UsersInput } from "../Components/Users"
 import { useNavigate } from "react-router-dom"
 

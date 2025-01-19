@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 
 export const ButtonGreen = styled.button`
+font-family: "Poppins"; 
 padding-left:1.5rem;
 padding-right:1.5rem;
 padding-top:1rem;
