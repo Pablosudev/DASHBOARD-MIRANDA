@@ -1,6 +1,6 @@
-import { BoxReviews, ContainerReviews ,Reviews , ContainerKpis, DashboardSection, Kpis, NumberKpis, DataKpis, IconLogOut, TypeKpis, IconLogIn, IconBed, IconCalendary} from "./components/Dashboard"
+import { BoxReviews, ContainerReviews ,Reviews , ContainerKpis, DashboardSection, Kpis, NumberKpis, DataKpis, IconLogOut, TypeKpis, IconLogIn, IconBed, IconCalendary, ButtonSlider, IconArrowRight} from "./components/Dashboard"
 import { CancelIcon, CheckIcon, Review, TimeReview, BoxTime, BoxName, BoxCard, ImgUser, SliderReviews, NameReview, BoxIcon} from "../Contact/Components/Contact"
-
+import { FaArrowRight } from "react-icons/fa6";
 
 export const Dashboard = () => {
 
@@ -88,11 +88,11 @@ export const Dashboard = () => {
                                             <CheckIcon/>
                                         </BoxIcon>
                                     </BoxTime>
-                                    
                                 </BoxName>
                             </BoxCard>
                         </BoxReviews>
                     </SliderReviews>
+                    <ButtonSlider><IconArrowRight/></ButtonSlider>
                 </ContainerReviews>
             </DashboardSection>
         </>
