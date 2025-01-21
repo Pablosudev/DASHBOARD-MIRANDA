@@ -1,4 +1,5 @@
 import { useReducer , createContext, useContext } from "react";
+import { LogOut } from "../Dashboard/components/Navbar";
 
 
 const AuthContext = createContext();
@@ -21,6 +22,16 @@ const reducer = (state, action) => {
       return { ...state, password: action.payload };
     case "SET_AUTHENTICATED":
       return { ...state, authenticated: action.payload };
+    case "LOGOUT":
+      localStorage.removeItem('email');
+      localStorage.removeItem ('password');
+      localStorage.removeItem ('isAuthenticated')
+      return {
+        email:"",
+        password:"",
+        authenticated: false,
+      }
+    
     default:
       return state;
   }
@@ -32,6 +43,7 @@ const AuthProvider = ({children}) => {
 
   return(
     <AuthContext.Provider value={{
+      dispatch,
       email: state.email,
       password: state.password,
       authenticated: state.autheticated,

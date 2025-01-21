@@ -3,6 +3,7 @@ import { LeftIcon, NavbarStyled, RightIcon, TitleNavbar, ContainerPage, MailIcon
 import { ContainerLogo, CustomIcon, ContainerTitle, TitleLogo , SubtitleLogo } from "./DashboardSide";
 import { useState } from "react";
 import { DashboardSide } from "./DashboardSide.jsx";
+import { useAuthContext } from "../../UseContext/AuthContext.jsx";
 
 
 
@@ -12,7 +13,7 @@ export const DashboardNavbar = () => {
     const [arrow,setArrow] = useState(true)
     const location = useLocation();
     const navigate = useNavigate();
-
+    const { dispatch } = useAuthContext();
 
     const handleSideMenu = () => {
         setSide(!side);
@@ -33,7 +34,8 @@ export const DashboardNavbar = () => {
 
     const handleLogOut = () => {
 
-        localStorage.removeItem("authToken");
+        dispatch({ type: 'LOGOUT'});
+        
         navigate("/");
     }
 
