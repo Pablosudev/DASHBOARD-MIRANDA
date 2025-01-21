@@ -1,13 +1,14 @@
-import { useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ButtonStyled, CustomIcon, DivStyled, InputStyled} from "./LogInStyle";
+import { ButtonStyled, CustomIcon, DivStyled, InputStyled} from "../Components/LogInStyle";
+import { useAuthContext } from "../../UseContext/AuthContext";
 
 
 export const LogIn = () => {
 
-    const [email, setEmail ] = useState("")
-    const [password, setPassword ] = useState ("")
+    const {email, password, setEmail, setAuthenticated , setPassword } = useAuthContext();
+  
+
     const  navigate = useNavigate();
 
     const handleChangeEmail = (e) => {
@@ -20,14 +21,18 @@ export const LogIn = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (email === 'email@email.com' && password === 'password123'){
-            localStorage.setItem('isAuthenticated', true);
-            navigate('/dashboard')
-            console.log("dffd")
+        if (email === '1234' && password === '1234'){
+            
+          setAuthenticated(true);
+
+          localStorage.setItem('isAuthenticated', 'true');
+          localStorage.setItem('email', email)
+          localStorage.setItem('password', password)
+          navigate('/dashboard');
+      
         } else {
             alert ('Incorrect password or email.')
         }
-        
     }
 
     return (

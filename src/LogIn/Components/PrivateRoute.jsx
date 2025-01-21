@@ -12,3 +12,4 @@ export const PrivateRoute = ({ element }) => {
 
     return element
 }
+
