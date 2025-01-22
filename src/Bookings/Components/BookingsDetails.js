@@ -3,6 +3,9 @@ import { FaLongArrowAltLeft } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
 import { LuMessageCircleMore } from "react-icons/lu";
+import { GrView } from "react-icons/gr";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 export const CardBookings = styled.section`
 background-color: #ffffff;
@@ -16,6 +19,7 @@ max-height: 47rem;
 export const CardInfo = styled.article`
 padding-left: 4rem;
 padding-right: 4rem;
+position: relative; 
 `
 export const CardSlide = styled.article`
 position: relative;
@@ -189,4 +193,20 @@ position: absolute;
 bottom:  5%; 
 padding-left: 2rem;
 padding-right: 2rem;
+`
+export const EditIcon = styled(GrView)`
+font-size: 1.5rem;
+margin-right: 1rem;
+color: green;
+`
+export const DeleteIcon = styled(RiDeleteBin6Line)`
+font-size: 1.5rem;
+color: red;
+`
+export const CloseIcon = styled(IoCloseCircleOutline )`
+font-size: 2rem;
+position: absolute;
+top: 4%;
+left: 5%;
+color: #135846;
 `

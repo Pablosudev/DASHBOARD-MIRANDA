@@ -2,12 +2,13 @@ import React, { useState } from "react"
 import { ContainerSelect, SelectTitle, ContainerButtons, ContainerFake, BoxSelect } from "../../Rooms/Components/RoomsList"
 import { SectionTable, TableBody, TableHead, TableGuest, TableR, TableRooms, TableAmenities, TablePrice, TableStatus, ContainerId, ButtonBookings } from "../../commons/Table"
 import { UsersInput, IconSearch, ContainerInput } from "../../Users/Components/Users"
+import { DeleteIcon, EditIcon } from "../Components/BookingsDetails"
 import bookings from "../Data/bookings.json"
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen"
 import { ButtonFake } from "../../commons/Buttons/ButtonFake"
 import { Link } from "react-router-dom"
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { GrView } from "react-icons/gr";
+
+
 
 
 export const BookingsList = () => {
@@ -58,7 +59,7 @@ export const BookingsList = () => {
                                 <TableAmenities>{booking.special_request}</TableAmenities>
                                 <TablePrice>{booking.room_type} <br /> Room {booking.number_room}</TablePrice>
                                 <td><ButtonBookings status = {booking.status}>{booking.status}</ButtonBookings></td>
-                                <td><Link to={`/bookings/details/${booking.id_booking}`}><button><GrView /></button></Link><button><RiDeleteBin6Line /></button></td>
+                                <td><Link to={`/bookings/details/${booking.id_booking}`}><EditIcon /></Link><DeleteIcon /></td>
                             </TableR>
                             ))}
                         </TableBody>

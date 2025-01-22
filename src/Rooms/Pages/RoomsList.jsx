@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { SectionTable, TableBody, TableHead, TableImg, TableR, TableRooms, TableTd, ButtonTable, TableAmenities, TablePrice, Night, ContainerId, TableName } from "../../commons/Table"
 import { ContainerSelect, SelectTitle, ContainerButtons, ContainerFake, BoxSelect} from "../Components/RoomsList"
 import rooms from "../Data/rooms.json"
@@ -14,6 +14,8 @@ export const RoomsList = () => {
     const handleNewRoom = () => {
         navigate('/rooms/create')
     }
+
+    
 
     return (
         <SectionTable>

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import bookings from "../Data/bookings.json";
 import {
   TypeSlide, BoxDescription, ButtonDetails, BoxRoom, CardInfo, ContainerRoom,
   TypeRoom, BoxPrice, Price, ImgSlide, Night, ButtonSlideLeft, ButtonSlideRight,
   IconArrowLeft, IconArrowRight, DescriptionRoom, CardBookings, CardSlide,
   PhoneIcon, IconMessage, ButtonMessage, BoxMessage, ContainerDetails, BoxCheck,
-  TitleData, DataCheck, NameBooking, IdBookings, Request
+  TitleData, DataCheck, NameBooking, IdBookings, Request, CloseIcon
 } from "../Components/BookingsDetails";
 
 export const BookingsDetails = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [booking, setBooking] = useState(null); 
   const { id_booking } = useParams(); 
-
+  const navigate = useNavigate();
   const images = [
     "/src/assets/Imagenes/room1.jpg",
     "/src/assets/Imagenes/room2.jpg",
@@ -21,6 +21,9 @@ export const BookingsDetails = () => {
     "/src/assets/Imagenes/room4.jpg"
   ];
 
+  const handleClose = () => {
+    navigate("/bookings")
+  }
   
   useEffect(() => {
     const selectedBooking = bookings.find((booking) => booking.id_booking === parseInt(id_booking));
@@ -44,10 +47,9 @@ export const BookingsDetails = () => {
     <>
       <CardBookings key={booking.id_booking}>
         <CardInfo>
-          
+          <CloseIcon onClick={handleClose}/>
           <NameBooking>{booking.full_name}</NameBooking>
           <IdBookings>{booking.id_booking}</IdBookings>
-
           <BoxMessage>
             <PhoneIcon />
             <ButtonMessage>
