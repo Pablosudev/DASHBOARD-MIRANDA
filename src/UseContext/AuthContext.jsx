@@ -1,5 +1,5 @@
 import { useReducer , createContext, useContext } from "react";
-import { LogOut } from "../Dashboard/components/Navbar";
+
 
 
 const AuthContext = createContext();
@@ -10,7 +10,6 @@ const useAuthContext = () => {
 
 const initialState = {
     email: "",
-    password: "",
     authenticated: false,
 }
 
@@ -28,7 +27,6 @@ const reducer = (state, action) => {
       localStorage.removeItem ('isAuthenticated')
       return {
         email:"",
-        password:"",
         authenticated: false,
       }
     

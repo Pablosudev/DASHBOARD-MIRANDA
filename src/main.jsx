@@ -16,9 +16,9 @@ import { AuthProvider } from './UseContext/AuthContext.jsx'
 
 
 
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   
       <AuthProvider>
         <BrowserRouter>
           <Routes>
@@ -27,7 +27,7 @@ createRoot(document.getElementById('root')).render(
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/bookings'>
                 <Route path='' element = {<BookingsList/>}/>
-                <Route path='details' element = {<BookingsDetails/>}/>
+                <Route path='details/:id_booking' element = {<BookingsDetails/>}/>
               </Route>
               <Route path='/rooms'>
                 <Route path='' element={<RoomsList />} />
@@ -38,11 +38,9 @@ createRoot(document.getElementById('root')).render(
                 <Route path='' element={<UserList />} />
                 <Route path='new' element={<UserCreate />} />
               </Route>
-
             </Route>
           </Routes>
         </BrowserRouter>
       </AuthProvider>
-    
   </StrictMode>,
 )

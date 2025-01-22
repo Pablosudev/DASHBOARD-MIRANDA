@@ -5,11 +5,17 @@ import { UsersInput, IconSearch, ContainerInput } from "../../Users/Components/U
 import bookings from "../Data/bookings.json"
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen"
 import { ButtonFake } from "../../commons/Buttons/ButtonFake"
+import { Link } from "react-router-dom"
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { GrView } from "react-icons/gr";
 
 
 export const BookingsList = () => {
 
     const  [bookingsList, setBookingsList] = useState(bookings);
+    
+
+  
 
     return ( 
         <>
@@ -43,15 +49,16 @@ export const BookingsList = () => {
                             </TableR>
                         </TableHead>
                         <TableBody>
-                            {bookingsList.slice(0,10).map((bookings) => (  
-                                <TableR key={bookings.id_booking}> 
-                                <TableGuest>{bookings.full_name} <br /> #{bookings.id_booking}</TableGuest>
-                                <ContainerId>{bookings.date_booking}</ContainerId>
-                                <TableAmenities>{bookings.check_in}</TableAmenities>
-                                <TableAmenities>{bookings.check_out}</TableAmenities>
-                                <TableAmenities>{bookings.special_request}</TableAmenities>
-                                <TablePrice>{bookings.room_type} <br /> Room {bookings.number_room}</TablePrice>
-                                <td><ButtonBookings status = {bookings.status}>{bookings.status}</ButtonBookings></td>
+                            {bookingsList.slice(0,10).map((booking) => (  
+                            <TableR key={booking.id_booking}> 
+                                <TableGuest>{booking.full_name} <br /> #{booking.id_booking}</TableGuest>
+                                <ContainerId>{booking.date_booking}</ContainerId>
+                                <TableAmenities>{booking.check_in}</TableAmenities>
+                                <TableAmenities>{booking.check_out}</TableAmenities>
+                                <TableAmenities>{booking.special_request}</TableAmenities>
+                                <TablePrice>{booking.room_type} <br /> Room {booking.number_room}</TablePrice>
+                                <td><ButtonBookings status = {booking.status}>{booking.status}</ButtonBookings></td>
+                                <td><Link to={`/bookings/details/${booking.id_booking}`}><button><GrView /></button></Link><button><RiDeleteBin6Line /></button></td>
                             </TableR>
                             ))}
                         </TableBody>

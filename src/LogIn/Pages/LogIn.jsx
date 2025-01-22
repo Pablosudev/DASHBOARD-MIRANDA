@@ -27,7 +27,6 @@ export const LogIn = () => {
 
           localStorage.setItem('isAuthenticated', 'true');
           localStorage.setItem('email', email)
-          localStorage.setItem('password', password)
           navigate('/dashboard');
       
         } else {
