@@ -13,12 +13,15 @@ import { BookingsDetails } from './Bookings/Pages/BookingsDetails.jsx'
 import { BookingsList } from './Bookings/Pages/BookingsList.jsx'
 import { Contact } from './Contact/Pages/Contact.jsx'
 import { AuthProvider } from './UseContext/AuthContext.jsx'
+import { Provider } from 'react-redux'
+import Store from './App/Store.js'
 
 
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <Provider store={Store}>
       <AuthProvider>
         <BrowserRouter>
           <Routes>
@@ -42,5 +45,6 @@ createRoot(document.getElementById('root')).render(
           </Routes>
         </BrowserRouter>
       </AuthProvider>
+    </Provider>
   </StrictMode>,
 )

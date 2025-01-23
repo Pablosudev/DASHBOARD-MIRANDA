@@ -8,6 +8,9 @@ import {
   PhoneIcon, IconMessage, ButtonMessage, BoxMessage, ContainerDetails, BoxCheck,
   TitleData, DataCheck, NameBooking, IdBookings, Request, CloseIcon
 } from "../Components/BookingsDetails";
+import { RoomsThunk } from "../../Rooms/Features/RoomsThunk";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllRoomsData, getAllRoomsStatus } from "../../Rooms/Features/RoomsSlice";
 
 export const BookingsDetails = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -20,7 +23,7 @@ export const BookingsDetails = () => {
     "/src/assets/Imagenes/room5.jpg",
     "/src/assets/Imagenes/room4.jpg"
   ];
-
+  
   const handleClose = () => {
     navigate("/bookings")
   }

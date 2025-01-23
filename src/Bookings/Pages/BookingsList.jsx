@@ -9,14 +9,10 @@ import { ButtonFake } from "../../commons/Buttons/ButtonFake"
 import { Link } from "react-router-dom"
 
 
-
-
 export const BookingsList = () => {
 
     const  [bookingsList, setBookingsList] = useState(bookings);
     
-
-  
 
     return ( 
         <>
