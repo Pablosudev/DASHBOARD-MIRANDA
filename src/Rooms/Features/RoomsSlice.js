@@ -4,6 +4,7 @@ import {
   IdRoomThunk,
   EditRoomThunk,
   DeleteRoomThunk,
+  CreateRoomThunk,
 } from "./RoomsThunk";
 
 export const SliceRooms = createSlice({
@@ -93,6 +94,21 @@ export const SliceRooms = createSlice({
         state.roomId.status = "rejected";
         state.roomId.error = action.error.message;
       });
+
+    //CreateRoomThunk Reducers  
+    builder
+      .addCase(CreateRoomThunk.pending, (state) => {
+        state.roomId.status = "pending";
+      })
+      .addCase(CreateRoomThunk.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        state.data.push(action.payload)
+        state.error = null;
+      })
+      .addCase(CreateRoomThunk.rejected, (state, action) => {
+        state.roomId.status = "rejected";
+        state.roomId.error = action.error.message;
+      });
   },
 });
 
@@ -100,9 +116,5 @@ export const SliceRooms = createSlice({
 export const getAllRoomsData = (state) => state.rooms.data;
 export const getAllRoomsStatus = (state) => state.rooms.status;
 export const getAllRoomsError = (state) => state.rooms.error;
-
-export const getIdRoomData = (state) => state.rooms.roomId.data;
-export const getIdRoomStatus = (state) => state.rooms.roomId.status;
-export const getIdRoomError = (state) => state.rooms.roomId.error;
 
 export default SliceRooms.reducer;

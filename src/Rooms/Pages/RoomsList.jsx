@@ -25,10 +25,9 @@ import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllRoomsData, getAllRoomsStatus, getIdRoomData, getIdRoomStatus } from "../Features/RoomsSlice";
-import { RoomsThunk } from "../Features/RoomsThunk";
+import { getAllRoomsData, getAllRoomsStatus } from "../Features/RoomsSlice";
+import { RoomsThunk, DeleteRoomThunk } from "../Features/RoomsThunk";
 import { DeleteIcon, EditIcon } from "../../Bookings/Components/BookingsDetails";
-import { DeleteRoomThunk } from "../Features/RoomsThunk";
 
 
 export const RoomsList = () => {

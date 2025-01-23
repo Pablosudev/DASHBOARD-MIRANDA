@@ -69,6 +69,8 @@ export const EditRoomThunk = createAsyncThunk("room/getEditRoom", async () => {
   }
 });
 
+
+//FETCH DELETE
 export const DeleteRoomThunk = createAsyncThunk("room/deleteRoom", async (id) => {
   try {
     const roomId = await new Promise((resolve, reject) => {
@@ -94,3 +96,35 @@ export const DeleteRoomThunk = createAsyncThunk("room/deleteRoom", async (id) =>
     throw new Error("Error al eliminar la habitación");
   }
 });
+
+
+//FETCH CREATE
+export const CreateRoomThunk = createAsyncThunk(
+  "room/createRoom", // Nombre de la acción
+  async (newRoom, { rejectWithValue }) => {
+    try {
+      // Simulamos un retraso de 200ms con setTimeout
+      const roomId = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            // Simulamos una creación de habitación exitosa
+            const newRoomWithId = { 
+              ...newRoom, 
+              id: Date.now() // Usamos Date.now() para generar un id único
+            };
+
+            // Resolvemos la promesa con el nuevo objeto de la habitación
+            resolve(newRoomWithId);
+          } catch (error) {
+            reject("Error al crear la habitación"); // Simulamos un error
+          }
+        }, 200); // Retraso de 200ms
+      });
+
+      return roomId; // Devolvemos la habitación creada
+    } catch (error) {
+      // Si ocurre un error, usamos rejectWithValue para pasarlo al reducer
+      return rejectWithValue(error);
+    }
+  }
+);

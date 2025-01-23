@@ -1,4 +1,8 @@
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { CreateRoomThunk } from "../Features/RoomsThunk";
+import { CardCreate } from "../Components/RoomsCreate";
 import {
   IconClose,
   ButtonSave,
@@ -19,14 +23,52 @@ import {
   TitleSection,
   ContainerSections,
 } from "../Components/RoomsCreate";
-import { CardCreate } from "../Components/RoomsCreate";
 
 export const RoomsCreate = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  // Estado para manejar los datos del formulario
+  const [newRoom, setNewRoom] = useState({
+    room_type: "",
+    room_number: "",
+    room_price: "",
+    room_offer: "",
+    room_discount: "",
+    room_description: "",
+    amenities: [],
+  });
+
+  // Maneja el cambio de valor en los inputs
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewRoom((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  // Maneja la selección de amenidades
+  const handleAmenityChange = (amenity) => {
+    setNewRoom((prevState) => ({
+      ...prevState,
+      amenities: prevState.amenities.includes(amenity)
+        ? prevState.amenities.filter((item) => item !== amenity)
+        : [...prevState.amenities, amenity],
+    }));
+  };
+
+  // Dispara la acción de crear habitación
+  const handleCreateRoom = () => {
+    dispatch(CreateRoomThunk(newRoom)); // Despachamos el Thunk con los datos del formulario
+    navigate("/rooms"); // Navegamos de vuelta a la lista de habitaciones
+  };
+
+  // Cierra el formulario y vuelve a la lista de habitaciones
   const handleClose = () => {
     navigate("/rooms");
   };
+
   return (
     <CardCreate>
       <ContainerSections>
@@ -35,48 +77,117 @@ export const RoomsCreate = () => {
         <BoxTitle>
           <div>
             <TitleSection>Room Type</TitleSection>
-            <InputCreate type="text" />
+            <InputCreate
+              type="text"
+              name="room_type"
+              value={newRoom.room_type}
+              onChange={handleInputChange}
+            />
           </div>
           <div>
             <TitleSection>Room Number</TitleSection>
-            <InputCreate type="text" />
+            <InputCreate
+              type="text"
+              name="room_number"
+              value={newRoom.room_number}
+              onChange={handleInputChange}
+            />
           </div>
         </BoxTitle>
         <BoxInfo>
           <PriceBox>
             <TitlePrice>Price/Night</TitlePrice>
-            <Price type="text" />
+            <Price
+              type="text"
+              name="room_price"
+              value={newRoom.room_price}
+              onChange={handleInputChange}
+            />
           </PriceBox>
           <PriceBox>
             <TitlePrice>Offer</TitlePrice>
             <div>
-              <ButtonOffer>Yes</ButtonOffer>
-              <ButtonOffer>No</ButtonOffer>
+              <ButtonOffer
+                onClick={() => setNewRoom((prevState) => ({ ...prevState, room_offer: "Yes" }))}
+              >
+                Yes
+              </ButtonOffer>
+              <ButtonOffer
+                onClick={() => setNewRoom((prevState) => ({ ...prevState, room_offer: "No" }))}
+              >
+                No
+              </ButtonOffer>
             </div>
           </PriceBox>
           <PriceBox>
             <TitlePrice>Discount</TitlePrice>
-            <InputDiscount type="text" />
+            <InputDiscount
+              type="text"
+              name="room_discount"
+              value={newRoom.room_discount}
+              onChange={handleInputChange}
+            />
           </PriceBox>
         </BoxInfo>
 
         <BoxDescription>
           <div>
             <TitleDescripition>Description</TitleDescripition>
-            <InputDescription type="text" />
+            <InputDescription
+              type="text"
+              name="room_description"
+              value={newRoom.room_description}
+              onChange={handleInputChange}
+            />
           </div>
           <div>
             <TitleDescripition>Amenities</TitleDescripition>
             <div>
-              <ButtonAmenities>FREE WIFI</ButtonAmenities>
-              <ButtonAmenities>TV LED</ButtonAmenities>
-              <ButtonAmenities>2 BATHROOM</ButtonAmenities>
-              <ButtonAmenities>AC</ButtonAmenities>
-              <ButtonAmenities>3 BED SPACE</ButtonAmenities>
-              <ButtonAmenities>COFEE SET</ButtonAmenities>
-              <ButtonAmenities>BATHUP</ButtonAmenities>
-              <ButtonAmenities>TOWEL</ButtonAmenities>
-              <ButtonAmenities>SHOWER</ButtonAmenities>
+              <ButtonAmenities
+                onClick={() => handleAmenityChange("FREE WIFI")}
+              >
+                FREE WIFI
+              </ButtonAmenities>
+              <ButtonAmenities
+                onClick={() => handleAmenityChange("TV LED")}
+              >
+                TV LED
+              </ButtonAmenities>
+              <ButtonAmenities
+                onClick={() => handleAmenityChange("2 BATHROOM")}
+              >
+                2 BATHROOM
+              </ButtonAmenities>
+              <ButtonAmenities
+                onClick={() => handleAmenityChange("AC")}
+              >
+                AC
+              </ButtonAmenities>
+              <ButtonAmenities
+                onClick={() => handleAmenityChange("3 BED SPACE")}
+              >
+                3 BED SPACE
+              </ButtonAmenities>
+              <ButtonAmenities
+                onClick={() => handleAmenityChange("COFEE SET")}
+              >
+                COFEE SET
+              </ButtonAmenities>
+              <ButtonAmenities
+                onClick={() => handleAmenityChange("BATHUP")}
+              >
+                BATHUP
+              </ButtonAmenities>
+              <ButtonAmenities
+                onClick={() => handleAmenityChange("TOWEL")}
+              >
+                TOWEL
+              </ButtonAmenities>
+              <ButtonAmenities
+                onClick={() => handleAmenityChange("SHOWER")}
+              >
+                SHOWER
+              </ButtonAmenities>
             </div>
           </div>
         </BoxDescription>
@@ -90,7 +201,7 @@ export const RoomsCreate = () => {
             changes or cancellations, please contact the hotel directly.
           </p>
         </CancellationBox>
-        <ButtonSave>SAVE</ButtonSave>
+        <ButtonSave onClick={handleCreateRoom}>SAVE</ButtonSave>
       </ContainerSections>
     </CardCreate>
   );
