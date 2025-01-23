@@ -27,6 +27,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRoomsData, getAllRoomsStatus, getIdRoomData, getIdRoomStatus } from "../Features/RoomsSlice";
 import { RoomsThunk } from "../Features/RoomsThunk";
+import { DeleteIcon, EditIcon } from "../../Bookings/Components/BookingsDetails";
+import { DeleteRoomThunk } from "../Features/RoomsThunk";
+
+
 export const RoomsList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,12 +39,15 @@ export const RoomsList = () => {
     navigate("/rooms/create");
   };
 
+
+  const handleDeleteRoom = (id) => {
+    console.log("Eliminar habitación con id:", id);
+    dispatch(DeleteRoomThunk(id));
+  };
+
   const DataAllRooms = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
 
-  const IdDataRoom = useSelector(getIdRoomData);
-  const IdStatus = useSelector(getIdRoomStatus);
-  console.log("ID" , IdDataRoom)
 
   useEffect(() => {
     if (StatusAllRooms === "idle") {
@@ -57,7 +64,7 @@ export const RoomsList = () => {
   if (StatusAllRooms === "pending") {
     return <div>Loading...</div>;
   }
-  console.log("DataAllRooms", DataAllRooms);
+ 
   return (
     <SectionTable>
       <BoxSelect>
@@ -92,7 +99,7 @@ export const RoomsList = () => {
                 />
               </TableTd>
               <ContainerId>
-                <Night>#{room.room_number}</Night> <p>{room.id_room}</p>
+                <Night>#{room.room_number}</Night> <p>{room.id}</p>
               </ContainerId>
               <TableAmenities>{room.room_type}</TableAmenities>
               <TableAmenities>
@@ -105,6 +112,10 @@ export const RoomsList = () => {
               <td>{room.room_offer}</td>
               <td>
                 <ButtonTable status={room.status}>{room.status}</ButtonTable>
+              </td>
+              <td>
+                <EditIcon/>
+                <DeleteIcon onClick={() => handleDeleteRoom(room.id)} />
               </td>
             </TableR>
           ))}

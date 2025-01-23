@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import bookings from "../Data/bookings.json";
+
 import {
   TypeSlide, BoxDescription, ButtonDetails, BoxRoom, CardInfo, ContainerRoom,
   TypeRoom, BoxPrice, Price, ImgSlide, Night, ButtonSlideLeft, ButtonSlideRight,
@@ -8,7 +8,6 @@ import {
   PhoneIcon, IconMessage, ButtonMessage, BoxMessage, ContainerDetails, BoxCheck,
   TitleData, DataCheck, NameBooking, IdBookings, Request, CloseIcon
 } from "../Components/BookingsDetails";
-import { RoomsThunk } from "../../Rooms/Features/RoomsThunk";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRoomsData, getAllRoomsStatus } from "../../Rooms/Features/RoomsSlice";
 
