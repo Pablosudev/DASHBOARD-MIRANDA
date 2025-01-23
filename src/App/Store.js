@@ -4,6 +4,7 @@ import { SliceRooms } from "../Rooms/Features/RoomsSlice";
 const Store = configureStore({
     reducer: {
         rooms: SliceRooms.reducer,
+        roomId: SliceRooms.reducer,
     }
 })
 

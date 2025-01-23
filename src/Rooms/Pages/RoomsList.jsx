@@ -25,10 +25,9 @@ import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllRoomsData, getAllRoomsStatus } from "../Features/RoomsSlice";
+import { getAllRoomsData, getAllRoomsStatus, getIdRoomData, getIdRoomStatus } from "../Features/RoomsSlice";
 import { RoomsThunk } from "../Features/RoomsThunk";
 export const RoomsList = () => {
-  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -39,23 +38,26 @@ export const RoomsList = () => {
   const DataAllRooms = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
 
+  const IdDataRoom = useSelector(getIdRoomData);
+  const IdStatus = useSelector(getIdRoomStatus);
+  console.log("ID" , IdDataRoom)
+
   useEffect(() => {
     if (StatusAllRooms === "idle") {
-        console.log("Despachando")
+      console.log("Despachando");
       dispatch(RoomsThunk());
     } else if (StatusAllRooms === "fulfilled") {
-      
     } else if (StatusAllRooms === "rejected") {
       alert("Error");
     }
   }, [StatusAllRooms, dispatch]);
 
-    const roomsList = useMemo(() => DataAllRooms, [DataAllRooms]) ;
+  const roomsList = useMemo(() => DataAllRooms, [DataAllRooms]);
 
-    if (StatusAllRooms === "pending") {
-        return <div>Loading...</div>;
-    }
-    console.log("DataAllRooms", DataAllRooms)
+  if (StatusAllRooms === "pending") {
+    return <div>Loading...</div>;
+  }
+  console.log("DataAllRooms", DataAllRooms);
   return (
     <SectionTable>
       <BoxSelect>
