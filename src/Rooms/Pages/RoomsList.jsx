@@ -126,7 +126,7 @@ export const RoomsList = () => {
               </ContainerId>
               <TableAmenities>{room.room_type}</TableAmenities>
               <TableAmenities>
-                {room.amenities.join(' , ')}
+              {Array.isArray(room.amenities) ? room.amenities.join(', ') : room.amenities || 'No amenities'}
               </TableAmenities>
               <TablePrice>
                 ${room.room_price}
