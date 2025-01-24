@@ -100,30 +100,30 @@ export const DeleteRoomThunk = createAsyncThunk("room/deleteRoom", async (id) =>
 
 //FETCH CREATE
 export const CreateRoomThunk = createAsyncThunk(
-  "room/createRoom", // Nombre de la acción
+  "room/createRoom", 
   async (newRoom, { rejectWithValue }) => {
     try {
-      // Simulamos un retraso de 200ms con setTimeout
+      
       const roomId = await new Promise((resolve, reject) => {
         setTimeout(() => {
           try {
-            // Simulamos una creación de habitación exitosa
+            
             const newRoomWithId = { 
               ...newRoom, 
-              id: Date.now() // Usamos Date.now() para generar un id único
+              id: Date.now()
             };
 
             // Resolvemos la promesa con el nuevo objeto de la habitación
             resolve(newRoomWithId);
           } catch (error) {
-            reject("Error al crear la habitación"); // Simulamos un error
+            reject("Error al crear la habitación"); 
           }
-        }, 200); // Retraso de 200ms
+        }, 200); 
       });
 
       return roomId; // Devolvemos la habitación creada
     } catch (error) {
-      // Si ocurre un error, usamos rejectWithValue para pasarlo al reducer
+     
       return rejectWithValue(error);
     }
   }

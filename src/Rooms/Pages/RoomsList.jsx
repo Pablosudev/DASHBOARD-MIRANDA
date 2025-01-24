@@ -29,7 +29,6 @@ import { getAllRoomsData, getAllRoomsStatus } from "../Features/RoomsSlice";
 import { RoomsThunk, DeleteRoomThunk } from "../Features/RoomsThunk";
 import { DeleteIcon, EditIcon } from "../../Bookings/Components/BookingsDetails";
 
-
 export const RoomsList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,7 +37,6 @@ export const RoomsList = () => {
     navigate("/rooms/create");
   };
 
-
   const handleDeleteRoom = (id) => {
     console.log("Eliminar habitación con id:", id);
     dispatch(DeleteRoomThunk(id));
@@ -46,7 +44,6 @@ export const RoomsList = () => {
 
   const DataAllRooms = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
-
 
   useEffect(() => {
     if (StatusAllRooms === "idle") {
@@ -60,10 +57,39 @@ export const RoomsList = () => {
 
   const roomsList = useMemo(() => DataAllRooms, [DataAllRooms]);
 
+  
+  const roomsPerPage = 10; // Número de habitaciones por página
+  const [currentPage, setCurrentPage] = useState(1); // Página actual
+
+  
+  const totalPages = Math.ceil(roomsList.length / roomsPerPage);
+
+  // Obtener las habitaciones para la página actual
+  const indexOfLastRoom = currentPage * roomsPerPage;
+  const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
+  const currentRooms = roomsList.slice(indexOfFirstRoom, indexOfLastRoom);
+
+ 
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   if (StatusAllRooms === "pending") {
     return <div>Loading...</div>;
   }
- 
+
   return (
     <SectionTable>
       <BoxSelect>
@@ -89,7 +115,7 @@ export const RoomsList = () => {
           </TableR>
         </TableHead>
         <TableBody>
-          {roomsList.slice(0, 10).map((room) => (
+          {currentRooms.map((room) => (
             <TableR key={room.room_number}>
               <TableTd>
                 <TableImg
@@ -113,22 +139,41 @@ export const RoomsList = () => {
                 <ButtonTable status={room.status}>{room.status}</ButtonTable>
               </td>
               <td>
-                <EditIcon/>
+                <EditIcon />
                 <DeleteIcon onClick={() => handleDeleteRoom(room.id)} />
               </td>
             </TableR>
           ))}
         </TableBody>
       </TableRooms>
+
+      
       <ContainerButtons>
-        <ButtonGreen type="primary">Prev</ButtonGreen>
+        <ButtonGreen
+          type="primary"
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+        >
+          Prev
+        </ButtonGreen>
         <ContainerFake>
-          <ButtonFake>1</ButtonFake>
-          <ButtonFake>2</ButtonFake>
-          <ButtonFake>3</ButtonFake>
-          <ButtonFake>4</ButtonFake>
+          {[...Array(totalPages)].map((_, index) => (
+            <ButtonFake
+              key={index}
+              onClick={() => handlePageClick(index + 1)}
+              active={currentPage === index + 1}
+            >
+              {index + 1}
+            </ButtonFake>
+          ))}
         </ContainerFake>
-        <ButtonGreen type="primary">Next</ButtonGreen>
+        <ButtonGreen
+          type="primary"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </ButtonGreen>
       </ContainerButtons>
     </SectionTable>
   );

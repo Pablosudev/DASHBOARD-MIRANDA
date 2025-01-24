@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { CreateRoomThunk } from "../Features/RoomsThunk";
 import { CardCreate } from "../Components/RoomsCreate";
+
+
 import {
   IconClose,
   ButtonSave,
@@ -24,6 +26,7 @@ import {
   ContainerSections,
 } from "../Components/RoomsCreate";
 
+
 export const RoomsCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,6 +40,7 @@ export const RoomsCreate = () => {
     room_discount: "",
     room_description: "",
     amenities: [],
+    status: "",
   });
 
   // Maneja el cambio de valor en los inputs
@@ -48,26 +52,18 @@ export const RoomsCreate = () => {
     }));
   };
 
-  // Maneja la selección de amenidades
-  const handleAmenityChange = (amenity) => {
-    setNewRoom((prevState) => ({
-      ...prevState,
-      amenities: prevState.amenities.includes(amenity)
-        ? prevState.amenities.filter((item) => item !== amenity)
-        : [...prevState.amenities, amenity],
-    }));
-  };
 
-  // Dispara la acción de crear habitación
+  //BUTTON_CREATE
   const handleCreateRoom = () => {
-    dispatch(CreateRoomThunk(newRoom)); // Despachamos el Thunk con los datos del formulario
-    navigate("/rooms"); // Navegamos de vuelta a la lista de habitaciones
+    dispatch(CreateRoomThunk(newRoom)); 
+    navigate("/rooms"); 
   };
 
-  // Cierra el formulario y vuelve a la lista de habitaciones
+  //BUTTON_CLOSE
   const handleClose = () => {
     navigate("/rooms");
   };
+  
 
   return (
     <CardCreate>
@@ -108,12 +104,22 @@ export const RoomsCreate = () => {
             <TitlePrice>Offer</TitlePrice>
             <div>
               <ButtonOffer
-                onClick={() => setNewRoom((prevState) => ({ ...prevState, room_offer: "Yes" }))}
+                onClick={() =>
+                  setNewRoom((prevState) => ({
+                    ...prevState,
+                    room_offer: "Yes",
+                  }))
+                }
               >
                 Yes
               </ButtonOffer>
               <ButtonOffer
-                onClick={() => setNewRoom((prevState) => ({ ...prevState, room_offer: "No" }))}
+                onClick={() =>
+                  setNewRoom((prevState) => ({
+                    ...prevState,
+                    room_offer: "No",
+                  }))
+                }
               >
                 No
               </ButtonOffer>
@@ -143,14 +149,10 @@ export const RoomsCreate = () => {
           <div>
             <TitleDescripition>Amenities</TitleDescripition>
             <div>
-              <ButtonAmenities
-                onClick={() => handleAmenityChange("FREE WIFI")}
-              >
+              <ButtonAmenities onClick={() => handleAmenityChange("FREE WIFI")}>
                 FREE WIFI
               </ButtonAmenities>
-              <ButtonAmenities
-                onClick={() => handleAmenityChange("TV LED")}
-              >
+              <ButtonAmenities onClick={() => handleAmenityChange("TV LED")}>
                 TV LED
               </ButtonAmenities>
               <ButtonAmenities
@@ -158,9 +160,7 @@ export const RoomsCreate = () => {
               >
                 2 BATHROOM
               </ButtonAmenities>
-              <ButtonAmenities
-                onClick={() => handleAmenityChange("AC")}
-              >
+              <ButtonAmenities onClick={() => handleAmenityChange("AC")}>
                 AC
               </ButtonAmenities>
               <ButtonAmenities
@@ -168,29 +168,22 @@ export const RoomsCreate = () => {
               >
                 3 BED SPACE
               </ButtonAmenities>
-              <ButtonAmenities
-                onClick={() => handleAmenityChange("COFEE SET")}
-              >
+              <ButtonAmenities onClick={() => handleAmenityChange("COFEE SET")}>
                 COFEE SET
               </ButtonAmenities>
-              <ButtonAmenities
-                onClick={() => handleAmenityChange("BATHUP")}
-              >
+              <ButtonAmenities onClick={() => handleAmenityChange("BATHUP")}>
                 BATHUP
               </ButtonAmenities>
-              <ButtonAmenities
-                onClick={() => handleAmenityChange("TOWEL")}
-              >
+              <ButtonAmenities onClick={() => handleAmenityChange("TOWEL")}>
                 TOWEL
               </ButtonAmenities>
-              <ButtonAmenities
-                onClick={() => handleAmenityChange("SHOWER")}
-              >
+              <ButtonAmenities onClick={() => handleAmenityChange("SHOWER")}>
                 SHOWER
               </ButtonAmenities>
             </div>
           </div>
         </BoxDescription>
+
         <CancellationBox>
           <TitleSection>Cancellation Policy</TitleSection>
           <p>
