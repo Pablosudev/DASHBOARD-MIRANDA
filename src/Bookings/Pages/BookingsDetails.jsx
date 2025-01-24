@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   TypeSlide, BoxDescription, ButtonDetails, BoxRoom, CardInfo, ContainerRoom,
@@ -8,13 +8,11 @@ import {
   PhoneIcon, IconMessage, ButtonMessage, BoxMessage, ContainerDetails, BoxCheck,
   TitleData, DataCheck, NameBooking, IdBookings, Request, CloseIcon
 } from "../Components/BookingsDetails";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllRoomsData, getAllRoomsStatus } from "../../Rooms/Features/RoomsSlice";
+
 
 export const BookingsDetails = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [booking, setBooking] = useState(null); 
-  const { id_booking } = useParams(); 
   const navigate = useNavigate();
   const images = [
     "/src/assets/Imagenes/room1.jpg",
@@ -27,15 +25,6 @@ export const BookingsDetails = () => {
     navigate("/bookings")
   }
   
-  useEffect(() => {
-    const selectedBooking = bookings.find((booking) => booking.id_booking === parseInt(id_booking));
-    setBooking(selectedBooking);
-  }, [id_booking]);
-
- 
-  if (!booking) {
-    return <div>Booking not found</div>;
-  }
 
   const handleButtonNext = () => {
     setCurrentImage((prevIndex) => (prevIndex + 1) % images.length);

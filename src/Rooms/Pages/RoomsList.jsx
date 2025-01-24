@@ -32,44 +32,35 @@ import { DeleteIcon, EditIcon } from "../../Bookings/Components/BookingsDetails"
 export const RoomsList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const handleNewRoom = () => {
-    navigate("/rooms/create");
-  };
-
-  const handleDeleteRoom = (id) => {
-    console.log("Eliminar habitación con id:", id);
-    dispatch(DeleteRoomThunk(id));
-  };
-
   const DataAllRooms = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
+  const [dataRooms, setDataRooms] = useState([])
+  const roomsList = useMemo(() => DataAllRooms, [DataAllRooms]);
+  const roomsPerPage = 10; 
+  const [currentPage, setCurrentPage] = useState(1); 
+  const totalPages = Math.ceil(roomsList.length / roomsPerPage);
+  const indexOfLastRoom = currentPage * roomsPerPage;
+  const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
+  const currentRooms = roomsList.slice(indexOfFirstRoom, indexOfLastRoom);
+  
 
   useEffect(() => {
     if (StatusAllRooms === "idle") {
       console.log("Despachando");
       dispatch(RoomsThunk());
     } else if (StatusAllRooms === "fulfilled") {
+      setDataRooms(DataAllRooms);
     } else if (StatusAllRooms === "rejected") {
       alert("Error");
     }
-  }, [StatusAllRooms, dispatch]);
+  }, [StatusAllRooms, DataAllRooms, dispatch]);
 
-  const roomsList = useMemo(() => DataAllRooms, [DataAllRooms]);
+
+  if (StatusAllRooms === "pending") {
+    return <div>Loading...</div>;
+  }
 
   
-  const roomsPerPage = 10; // Número de habitaciones por página
-  const [currentPage, setCurrentPage] = useState(1); // Página actual
-
-  
-  const totalPages = Math.ceil(roomsList.length / roomsPerPage);
-
-  // Obtener las habitaciones para la página actual
-  const indexOfLastRoom = currentPage * roomsPerPage;
-  const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
-  const currentRooms = roomsList.slice(indexOfFirstRoom, indexOfLastRoom);
-
- 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -86,9 +77,16 @@ export const RoomsList = () => {
     setCurrentPage(pageNumber);
   };
 
-  if (StatusAllRooms === "pending") {
-    return <div>Loading...</div>;
-  }
+  const handleNewRoom = () => {
+    navigate("/rooms/create");
+  };
+
+  const handleDeleteRoom = (id) => {
+    console.log("Eliminar habitación con id:", id);
+    dispatch(DeleteRoomThunk(id));
+  };
+  
+
 
   return (
     <SectionTable>
@@ -128,7 +126,7 @@ export const RoomsList = () => {
               </ContainerId>
               <TableAmenities>{room.room_type}</TableAmenities>
               <TableAmenities>
-                AC,Shower,Double Bed, Towel, Bathup, Cofee Ser, LED TV, Wifi
+                {room.amenities.join(' , ')}
               </TableAmenities>
               <TablePrice>
                 ${room.room_price}

@@ -13,6 +13,7 @@ import { BookingsDetails } from './Bookings/Pages/BookingsDetails.jsx'
 import { BookingsList } from './Bookings/Pages/BookingsList.jsx'
 import { Contact } from './Contact/Pages/Contact.jsx'
 import { AuthProvider } from './UseContext/AuthContext.jsx'
+import { RoomsEdit } from './Rooms/Pages/RoomsEdit.jsx'
 import { Provider } from 'react-redux'
 import Store from './App/Store.js'
 
@@ -35,6 +36,7 @@ createRoot(document.getElementById('root')).render(
               <Route path='/rooms'>
                 <Route path='' element={<RoomsList />} />
                 <Route path='create' element={<RoomsCreate />} />
+                <Route path='edit' element={<RoomsEdit/>} />
               </Route>
               <Route path='/contact' element ={<Contact/>}/>
               <Route path='/users'>
