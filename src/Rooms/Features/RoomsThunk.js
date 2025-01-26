@@ -24,12 +24,12 @@ export const RoomsThunk = createAsyncThunk("rooms/getRooms", async () => {
   }
 });
 //FETCH UNO
-export const IdRoomThunk = createAsyncThunk("roomID/getRoomId", async () => {
+export const IdRoomThunk = createAsyncThunk("roomID/getRoomId", async (id) => {
   try {
     const roomId = await new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
-          const response = await fetch(`/Data/rooms.json?id=${id_room}`);
+          const response = await fetch(`/Data/rooms.json?id=${id}`);
           if (!response.ok) {
             reject("Error al cargar los datos");
           }
@@ -52,7 +52,7 @@ export const EditRoomThunk = createAsyncThunk("room/getEditRoom", async () => {
     const roomId = await new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
-          const response = await fetch(`/Data/rooms.json?id=${id_room}`);
+          const response = await fetch(`/Data/rooms.json?id=${id}`);
           if (!response.ok) {
             reject("Error al cargar los datos");
           }

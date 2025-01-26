@@ -30,11 +30,16 @@ import { ButtonFake } from "../../commons/Buttons/ButtonFake";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRoomsData, getAllRoomsStatus } from "../Features/RoomsSlice";
-import { RoomsThunk, DeleteRoomThunk } from "../Features/RoomsThunk";
+import {
+  RoomsThunk,
+  DeleteRoomThunk,
+  IdRoomThunk,
+} from "../Features/RoomsThunk";
 import {
   DeleteIcon,
   EditIcon,
 } from "../../Bookings/Components/BookingsDetails";
+import { Link } from "react-router-dom";
 
 export const RoomsList = () => {
   const navigate = useNavigate();
@@ -49,6 +54,11 @@ export const RoomsList = () => {
   const indexOfLastRoom = currentPage * roomsPerPage;
   const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
   const currentRooms = roomsList.slice(indexOfFirstRoom, indexOfLastRoom);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    dispatch(IdRoomThunk)
+  }
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (StatusAllRooms === "idle") {
@@ -89,11 +99,6 @@ export const RoomsList = () => {
     console.log("Eliminar habitación con id:", id);
     dispatch(DeleteRoomThunk(id));
   };
-  
-  
-  
-  
-
 
   return (
     <SectionTable>
@@ -102,7 +107,7 @@ export const RoomsList = () => {
           <SelectTitle>All Rooms</SelectTitle>
         </ContainerSelect>
         <ContainerInput>
-          <UsersInput type="text" />
+          <UsersInput type="text" onChanfe={handleSearch} value={searchTerm} onChange={(e) =>{setSearchTerm(e.target.value)}}/>
           <label>
             <IconSearch />
           </label>
@@ -147,12 +152,22 @@ export const RoomsList = () => {
                 ${room.room_price}
                 <Night>/night</Night>
               </TablePrice>
-              <OfferPrice> $ {(room.room_price - (room.room_price * (room.room_offer / 100))).toFixed(2)}</OfferPrice>
+              <OfferPrice>
+                {" "}
+                ${" "}
+                {(
+                  room.room_price -
+                  room.room_price * (room.room_offer / 100)
+                ).toFixed(2)}
+              </OfferPrice>
               <td>
                 <ButtonTable status={room.status}>{room.status}</ButtonTable>
               </td>
               <td>
-                <EditIcon />
+                <Link to={`/rooms/edit/${room.id}`}>
+                  <EditIcon />
+                </Link>
+
                 <DeleteIcon onClick={() => handleDeleteRoom(room.id)} />
               </td>
             </TableR>

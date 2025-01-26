@@ -36,7 +36,7 @@ createRoot(document.getElementById('root')).render(
               <Route path='/rooms'>
                 <Route path='' element={<RoomsList />} />
                 <Route path='create' element={<RoomsCreate />} />
-                <Route path='edit' element={<RoomsEdit/>} />
+                <Route path="/rooms/edit/:id" element={<RoomsEdit />} />
               </Route>
               <Route path='/contact' element ={<Contact/>}/>
               <Route path='/users'>

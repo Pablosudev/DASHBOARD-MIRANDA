@@ -110,21 +110,21 @@ export const RoomsCreate = () => {
                 onClick={() =>
                   setNewRoom((prevState) => ({
                     ...prevState,
-                    room_offer: "Yes",
+                    room_offer: 10,
                   }))
                 }
               >
-                Yes
+                10%
               </ButtonOffer>
               <ButtonOffer
                 onClick={() =>
                   setNewRoom((prevState) => ({
                     ...prevState,
-                    room_offer: "No",
+                    room_offer: 15,
                   }))
                 }
               >
-                No
+                15%
               </ButtonOffer>
             </div>
           </PriceBox>

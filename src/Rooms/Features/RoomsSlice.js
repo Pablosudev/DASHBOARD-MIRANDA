@@ -117,4 +117,7 @@ export const getAllRoomsData = (state) => state.rooms.data;
 export const getAllRoomsStatus = (state) => state.rooms.status;
 export const getAllRoomsError = (state) => state.rooms.error;
 
+export const getIdRoomsData = (state) => state.roomId.data;
+export const getIdRoomsStatuse = (state) => state.roomId.status;
+
 export default SliceRooms.reducer;

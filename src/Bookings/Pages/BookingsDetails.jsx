@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import {
   TypeSlide, BoxDescription, ButtonDetails, BoxRoom, CardInfo, ContainerRoom,
   TypeRoom, BoxPrice, Price, ImgSlide, Night, ButtonSlideLeft, ButtonSlideRight,

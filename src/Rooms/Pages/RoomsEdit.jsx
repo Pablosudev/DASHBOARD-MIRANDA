@@ -1,4 +1,4 @@
-
+import {  useSelector } from "react-redux";
 import {
     IconClose,
     ButtonSave,
@@ -20,13 +20,25 @@ import {
     ContainerSections,
     CardCreate
   } from "../Components/RoomsCreate";
+  
+import { Link } from "react-router-dom";
+
+
 
 
 export const RoomsEdit = () => {
+  
+  const room = useSelector((state) => state.rooms.roomId.data);
+  const status = useSelector((state) => state.rooms.roomId.status);
+  console.log(room.room_description)
+
+ 
+
+
   return (
     <CardCreate>
       <ContainerSections>
-        <IconClose onClick={handleClose} />
+        <Link to={"/rooms"}><IconClose/></Link>
         <RoomInfo>Room Info</RoomInfo>
         <BoxTitle>
           <div>
@@ -34,8 +46,8 @@ export const RoomsEdit = () => {
             <InputCreate
               type="text"
               name="room_type"
-              value={newRoom.room_type}
-              onChange={handleInputChange}
+              value={room.room_type}
+              
             />
           </div>
           <div>
@@ -43,8 +55,8 @@ export const RoomsEdit = () => {
             <InputCreate
               type="text"
               name="room_number"
-              value={newRoom.room_number}
-              onChange={handleInputChange}
+              value={room.room_number}
+              
             />
           </div>
         </BoxTitle>
@@ -54,8 +66,8 @@ export const RoomsEdit = () => {
             <Price
               type="text"
               name="room_price"
-              value={newRoom.room_price}
-              onChange={handleInputChange}
+              value={room.room_price}
+              
             />
           </PriceBox>
           <PriceBox>
@@ -88,8 +100,8 @@ export const RoomsEdit = () => {
             <InputDiscount
               type="text"
               name="room_discount"
-              value={newRoom.room_discount}
-              onChange={handleInputChange}
+              value={room.room_discount}
+              
             />
           </PriceBox>
         </BoxInfo>
@@ -100,8 +112,8 @@ export const RoomsEdit = () => {
             <InputDescription
               type="text"
               name="room_description"
-              value={newRoom.room_description}
-              onChange={handleInputChange}
+              value={room.room_description}
+              
             />
           </div>
           <div>
@@ -152,7 +164,7 @@ export const RoomsEdit = () => {
             changes or cancellations, please contact the hotel directly.
           </p>
         </CancellationBox>
-        <ButtonSave onClick={handleCreateRoom}>SAVE</ButtonSave>
+        <ButtonSave >SAVE</ButtonSave>
       </ContainerSections>
     </CardCreate>
   );
