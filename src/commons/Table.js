@@ -40,7 +40,7 @@ height:7.5rem;
 `
 export const ButtonTable = styled.button` 
     border-radius: 12px;
-    background-color: ${(props) => props.status === 'available' ? '#5AD07A' : '#FF4D4D'};
+    background-color: ${(props) => props.status === 'Available' ? '#5AD07A' : '#FF4D4D'};
     color:white;
     border:transparent;
     width: 7.8rem;
@@ -56,6 +56,7 @@ export const TablePrice = styled.td`
     font-family:"Poppins";
     align-items:center;
     margin-top: 2rem;
+    max-width: 6rem;
     
 `
 export const Night = styled.p`

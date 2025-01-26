@@ -20,6 +20,10 @@ import {
   ContainerButtons,
   ContainerFake,
   BoxSelect,
+  ContainerInput,
+  UsersInput,
+  IconSearch,
+  OfferPrice,
 } from "../Components/RoomsList";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake";
@@ -27,22 +31,24 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRoomsData, getAllRoomsStatus } from "../Features/RoomsSlice";
 import { RoomsThunk, DeleteRoomThunk } from "../Features/RoomsThunk";
-import { DeleteIcon, EditIcon } from "../../Bookings/Components/BookingsDetails";
+import {
+  DeleteIcon,
+  EditIcon,
+} from "../../Bookings/Components/BookingsDetails";
 
 export const RoomsList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const DataAllRooms = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
-  const [dataRooms, setDataRooms] = useState([])
+  const [dataRooms, setDataRooms] = useState(DataAllRooms);
   const roomsList = useMemo(() => DataAllRooms, [DataAllRooms]);
-  const roomsPerPage = 10; 
-  const [currentPage, setCurrentPage] = useState(1); 
+  const roomsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(roomsList.length / roomsPerPage);
   const indexOfLastRoom = currentPage * roomsPerPage;
   const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
   const currentRooms = roomsList.slice(indexOfFirstRoom, indexOfLastRoom);
-  
 
   useEffect(() => {
     if (StatusAllRooms === "idle") {
@@ -55,12 +61,10 @@ export const RoomsList = () => {
     }
   }, [StatusAllRooms, DataAllRooms, dispatch]);
 
-
   if (StatusAllRooms === "pending") {
     return <div>Loading...</div>;
   }
 
-  
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -86,6 +90,9 @@ export const RoomsList = () => {
     dispatch(DeleteRoomThunk(id));
   };
   
+  
+  
+  
 
 
   return (
@@ -94,6 +101,12 @@ export const RoomsList = () => {
         <ContainerSelect>
           <SelectTitle>All Rooms</SelectTitle>
         </ContainerSelect>
+        <ContainerInput>
+          <UsersInput type="text" />
+          <label>
+            <IconSearch />
+          </label>
+        </ContainerInput>
         <div>
           <ButtonGreen type="secundary" onClick={handleNewRoom}>
             + New Room
@@ -126,13 +139,15 @@ export const RoomsList = () => {
               </ContainerId>
               <TableAmenities>{room.room_type}</TableAmenities>
               <TableAmenities>
-              {Array.isArray(room.amenities) ? room.amenities.join(', ') : room.amenities || 'No amenities'}
+                {Array.isArray(room.amenities)
+                  ? room.amenities.join(", ")
+                  : room.amenities || "No amenities"}
               </TableAmenities>
               <TablePrice>
                 ${room.room_price}
                 <Night>/night</Night>
               </TablePrice>
-              <td>{room.room_offer}</td>
+              <OfferPrice> $ {(room.room_price - (room.room_price * (room.room_offer / 100))).toFixed(2)}</OfferPrice>
               <td>
                 <ButtonTable status={room.status}>{room.status}</ButtonTable>
               </td>
@@ -145,7 +160,6 @@ export const RoomsList = () => {
         </TableBody>
       </TableRooms>
 
-      
       <ContainerButtons>
         <ButtonGreen
           type="primary"
