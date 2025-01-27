@@ -7,6 +7,11 @@ export const UsersSlice = createSlice({
     status: "idle",
     error: null,
     data: [],
+    userId:{
+      status: "idle",
+      data: null,
+      error: null,
+    }
   },
   extraReducers: (builder) => {
     //UsersThunk

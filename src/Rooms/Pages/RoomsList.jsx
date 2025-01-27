@@ -30,10 +30,7 @@ import { ButtonFake } from "../../commons/Buttons/ButtonFake";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRoomsData, getAllRoomsStatus } from "../Features/RoomsSlice";
-import {
-  RoomsThunk,
-  DeleteRoomThunk,
-} from "../Features/RoomsThunk";
+import { RoomsThunk, DeleteRoomThunk } from "../Features/RoomsThunk";
 import {
   DeleteIcon,
   EditIcon,
@@ -45,32 +42,46 @@ export const RoomsList = () => {
   const dispatch = useDispatch();
   const DataAllRooms = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
-  const [dataRooms, setDataRooms] = useState(DataAllRooms);
-  const roomsList = useMemo(() => DataAllRooms, [DataAllRooms]);
+  
+  const [searchTerm, setSearchTerm] = useState("");
   const roomsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(roomsList.length / roomsPerPage);
-  const indexOfLastRoom = currentPage * roomsPerPage;
-  const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
-  const currentRooms = roomsList.slice(indexOfFirstRoom, indexOfLastRoom);
- 
 
   useEffect(() => {
     if (StatusAllRooms === "idle") {
-      console.log("Despachando");
       dispatch(RoomsThunk());
     } else if (StatusAllRooms === "fulfilled") {
-      setDataRooms(DataAllRooms);
-    } else if (StatusAllRooms === "rejected") {
-      alert("Error");
+      
     }
-  }, [StatusAllRooms, DataAllRooms, dispatch]);
+  }, [StatusAllRooms, dispatch, DataAllRooms]);
 
   if (StatusAllRooms === "pending") {
     return <div>Loading...</div>;
   }
 
-  
+  if (StatusAllRooms === "rejected") {
+    return <div>Error loading rooms. Please try again later.</div>;
+  }
+
+  // Filtrar habitaciones
+  const filteredRooms = DataAllRooms.filter(
+    (room) =>
+      room.room_number.toString().includes(searchTerm) ||
+      room.room_type.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Paginación
+  const totalPages = Math.ceil(filteredRooms.length / roomsPerPage);
+  const indexOfLastRoom = currentPage * roomsPerPage;
+  const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
+  const currentRooms = filteredRooms.slice(indexOfFirstRoom, indexOfLastRoom);
+
+  // Funciones de paginación
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -78,23 +89,23 @@ export const RoomsList = () => {
     }
   };
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1);
   };
 
   const handleNewRoom = () => {
     navigate("/rooms/create");
   };
 
-  const handleDeleteRoom = (id) => {
-    console.log("Eliminar habitación con id:", id);
+  const handleDeleteRoom = async (id) => {
+    console.log(id)
     dispatch(DeleteRoomThunk(id));
+    console.log(DataAllRooms)
   };
 
   return (
@@ -102,9 +113,11 @@ export const RoomsList = () => {
       <BoxSelect>
         <ContainerSelect>
           <SelectTitle>All Rooms</SelectTitle>
+          <SelectTitle>Price</SelectTitle>
+          <SelectTitle>Status</SelectTitle>
         </ContainerSelect>
         <ContainerInput>
-          <UsersInput type="text" />
+          <UsersInput type="text" placeholder="Search your Room" />
           <label>
             <IconSearch />
           </label>
@@ -128,12 +141,12 @@ export const RoomsList = () => {
           </TableR>
         </TableHead>
         <TableBody>
-          {currentRooms.map((room) => (
-            <TableR key={room.room_number}>
+          {DataAllRooms.map((room, index ) => (
+            <TableR key={room.room_number}index={index}>
               <TableTd>
                 <TableImg
-                  src="/src/assets/Imagenes/room10.jpg"
-                  alt="Room photo"
+                  src={room.image_url || "/src/assets/Imagenes/room10.jpg"}
+                  alt={`Room ${room.room_number} photo`}
                 />
               </TableTd>
               <ContainerId>
@@ -161,17 +174,18 @@ export const RoomsList = () => {
                 <ButtonTable status={room.status}>{room.status}</ButtonTable>
               </td>
               <td>
-                <Link to={`/rooms/edit/${room.id}`}>
+                <Link to={`/rooms/edit/${room.id}`} aria-label="Edit room">
                   <EditIcon />
                 </Link>
-
-                <DeleteIcon onClick={() => handleDeleteRoom(room.id)} />
+                <DeleteIcon
+                  onClick={() => handleDeleteRoom(room.id)}
+                  aria-label="Delete room"
+                />
               </td>
             </TableR>
           ))}
         </TableBody>
       </TableRooms>
-
       <ContainerButtons>
         <ButtonGreen
           type="primary"

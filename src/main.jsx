@@ -42,6 +42,7 @@ createRoot(document.getElementById('root')).render(
               <Route path='/users'>
                 <Route path='' element={<UserList />} />
                 <Route path='new' element={<UserCreate />} />
+                
               </Route>
             </Route>
           </Routes>

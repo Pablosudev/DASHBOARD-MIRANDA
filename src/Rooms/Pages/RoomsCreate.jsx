@@ -29,7 +29,7 @@ export const RoomsCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Estado para manejar los datos del formulario
+  
   const [newRoom, setNewRoom] = useState({
     room_type: "",
     room_number: "",
@@ -38,10 +38,10 @@ export const RoomsCreate = () => {
     room_discount: "",
     room_description: "",
     amenities: [],
-    status: "available",
+    status: "Available",
   });
 
-  // Maneja el cambio de valor en los inputs
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewRoom((prevState) => ({

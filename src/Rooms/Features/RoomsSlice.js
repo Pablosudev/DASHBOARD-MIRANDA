@@ -11,6 +11,8 @@ export const SliceRooms = createSlice({
   name: "rooms",
   initialState: {
     status: "idle",
+    statusDelete: "idle",
+    statusEdit: "idle",
     error: null,
     data: [],
     roomId: {
@@ -57,11 +59,11 @@ export const SliceRooms = createSlice({
     
       builder
         .addCase(EditRoomThunk.pending, (state) => {
-          state.roomId.status = "pending";
+          state.roomId.statusEdit = "pending";
           console.log("Editando la habitación...");
         })
         .addCase(EditRoomThunk.fulfilled, (state, action) => {
-          state.roomId.status = "fulfilled";
+          state.roomId.statusEdit = "fulfilled";
           state.roomId.data = action.payload; // Actualiza los datos de la habitación
     
           // Actualiza la lista de habitaciones con la habitación editada
@@ -73,7 +75,7 @@ export const SliceRooms = createSlice({
           console.log("Habitación actualizada en el estado:", action.payload);
         })
         .addCase(EditRoomThunk.rejected, (state, action) => {
-          state.roomId.status = "rejected";
+          state.roomId.statusEdit = "rejected";
           state.roomId.error = action.error.message;
           console.error("Error al editar la habitación:", action.error);
         });
@@ -82,24 +84,24 @@ export const SliceRooms = createSlice({
       // DeleteRoomThunk Reducers
       builder
         .addCase(DeleteRoomThunk.pending, (state) => {
-          state.roomId.status = "pending";
+          state.roomId.statusDelete = "pending";
         })
         .addCase(DeleteRoomThunk.fulfilled, (state, action) => {
-          state.status = "fulfilled";
-
+          state.statusDelete = "fulfilled";
+         
           state.data = state.data.filter(
             (room) => room.id !== action.payload.id
           );
-
+          console.log(JSON.stringify(state.data))
           if (state.roomId.data.id === action.payload.id) {
             state.roomId.data = {};
-            state.roomId.status = "idle";
+            state.roomId.statusDelete = "idle";
           }
 
           state.error = null;
         })
         .addCase(DeleteRoomThunk.rejected, (state, action) => {
-          state.roomId.status = "rejected";
+          state.roomId.statusDelete = "rejected";
           state.roomId.error = action.error.message;
         });
 

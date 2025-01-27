@@ -61,14 +61,14 @@ export const RoomsEdit = () => {
   };
   
   useEffect(() => {
-    if (StatusId === "idle" && id) {
+    if (StatusId === "idle") {
       dispatch(IdRoomThunk(id));
-    } else if (StatusId === "fulfilled" && DataId) {
-      setRoomId(DataId); 
+    } else if (StatusId === "fulfilled") {
+       setRoomId(DataId)
     } else if (StatusId === "rejected") {
       alert("Error al cargar los datos de la habitación");
     }
-  }, [dispatch, StatusId, id, DataId]);
+  }, [dispatch, StatusId, id , DataId]);
   return (
     <CardCreate>
       <ContainerSections>
@@ -113,21 +113,21 @@ export const RoomsEdit = () => {
                 onClick={() =>
                   setRoomId((prevState) => ({
                     ...prevState,
-                    room_offer: "Yes",
+                    room_offer: "10",
                   }))
                 }
               >
-                Yes
+                10%
               </ButtonOffer>
               <ButtonOffer
                 onClick={() =>
                   setRoomId((prevState) => ({
                     ...prevState,
-                    room_offer: "No",
+                    room_offer: "15",
                   }))
                 }
               >
-                No
+                15%
               </ButtonOffer>
             </div>
           </PriceBox>

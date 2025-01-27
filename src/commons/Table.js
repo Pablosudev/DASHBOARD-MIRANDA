@@ -72,7 +72,6 @@ export const LogoUsers = styled.td`
 `
 export const StatusUsers = styled.p`
     color:${(props) => props.status === 'Active' ? '#5AD07A' : '#FF4D4D'};
-    border:transparent;
     font-family: "Poppins";
 `
 
