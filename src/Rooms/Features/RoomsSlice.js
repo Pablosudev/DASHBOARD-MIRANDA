@@ -16,7 +16,7 @@ export const SliceRooms = createSlice({
     roomId: {
       status: "idle",
       error: null,
-      data: {},
+      data: null,
     },
   },
   reducers: {},
@@ -45,6 +45,7 @@ export const SliceRooms = createSlice({
         state.roomId.status = "fulfilled";
         state.roomId.data = action.payload;
         state.roomId.error = null;
+        console.log("Datos de la habitación cargados:", action.payload);
       })
       .addCase(IdRoomThunk.rejected, (state, action) => {
         state.roomId.status = "rejected";
@@ -52,57 +53,64 @@ export const SliceRooms = createSlice({
       });
 
     // EditRoomThunk Reducers
-    builder
-      .addCase(EditRoomThunk.pending, (state) => {
-        state.roomId.status = "pending";
-      })
-      .addCase(EditRoomThunk.fulfilled, (state, action) => {
-        state.roomId.status = "fulfilled";
-        state.roomId.data = action.payload;
+    
+    
+      builder
+        .addCase(EditRoomThunk.pending, (state) => {
+          state.roomId.status = "pending";
+          console.log("Editando la habitación...");
+        })
+        .addCase(EditRoomThunk.fulfilled, (state, action) => {
+          state.roomId.status = "fulfilled";
+          state.roomId.data = action.payload; // Actualiza los datos de la habitación
+    
+          // Actualiza la lista de habitaciones con la habitación editada
+          const index = state.data.findIndex((room) => room.id === action.payload.id);
+          if (index !== -1) {
+            state.data[index] = action.payload;
+          }
+    
+          console.log("Habitación actualizada en el estado:", action.payload);
+        })
+        .addCase(EditRoomThunk.rejected, (state, action) => {
+          state.roomId.status = "rejected";
+          state.roomId.error = action.error.message;
+          console.error("Error al editar la habitación:", action.error);
+        });
+ 
+    
+      // DeleteRoomThunk Reducers
+      builder
+        .addCase(DeleteRoomThunk.pending, (state) => {
+          state.roomId.status = "pending";
+        })
+        .addCase(DeleteRoomThunk.fulfilled, (state, action) => {
+          state.status = "fulfilled";
 
-        const index = state.data.findIndex(
-          (room) => room.id === action.payload.id
-        );
-        if (index !== -1) {
-          state.data[index] = action.payload;
-        }
-        state.roomId.error = null;
-      })
-      .addCase(EditRoomThunk.rejected, (state, action) => {
-        state.roomId.status = "rejected";
-        state.roomId.error = action.error.message;
-      });
+          state.data = state.data.filter(
+            (room) => room.id !== action.payload.id
+          );
 
-    // DeleteRoomThunk Reducers
-    builder
-      .addCase(DeleteRoomThunk.pending, (state) => {
-        state.roomId.status = "pending";
-      })
-      .addCase(DeleteRoomThunk.fulfilled, (state, action) => {
-        state.status = "fulfilled";
+          if (state.roomId.data.id === action.payload.id) {
+            state.roomId.data = {};
+            state.roomId.status = "idle";
+          }
 
-        state.data = state.data.filter((room) => room.id !== action.payload.id);
+          state.error = null;
+        })
+        .addCase(DeleteRoomThunk.rejected, (state, action) => {
+          state.roomId.status = "rejected";
+          state.roomId.error = action.error.message;
+        });
 
-        if (state.roomId.data.id === action.payload.id) {
-          state.roomId.data = {};
-          state.roomId.status = "idle";
-        }
-
-        state.error = null;
-      })
-      .addCase(DeleteRoomThunk.rejected, (state, action) => {
-        state.roomId.status = "rejected";
-        state.roomId.error = action.error.message;
-      });
-
-    //CreateRoomThunk Reducers  
+    //CreateRoomThunk Reducers
     builder
       .addCase(CreateRoomThunk.pending, (state) => {
         state.roomId.status = "pending";
       })
       .addCase(CreateRoomThunk.fulfilled, (state, action) => {
         state.status = "fulfilled";
-        state.data.push(action.payload)
+        state.data.push(action.payload);
         state.error = null;
       })
       .addCase(CreateRoomThunk.rejected, (state, action) => {
@@ -117,7 +125,6 @@ export const getAllRoomsData = (state) => state.rooms.data;
 export const getAllRoomsStatus = (state) => state.rooms.status;
 export const getAllRoomsError = (state) => state.rooms.error;
 
-export const getIdRoomsData = (state) => state.roomId.data;
-export const getIdRoomsStatuse = (state) => state.roomId.status;
-
+export const getIdRoomsData = (state) => state.rooms.roomId.data;
+export const getIdRoomsStatus = (state) => state.rooms.roomId.status;
 export default SliceRooms.reducer;

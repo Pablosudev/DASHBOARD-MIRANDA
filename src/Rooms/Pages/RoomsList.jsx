@@ -33,7 +33,6 @@ import { getAllRoomsData, getAllRoomsStatus } from "../Features/RoomsSlice";
 import {
   RoomsThunk,
   DeleteRoomThunk,
-  IdRoomThunk,
 } from "../Features/RoomsThunk";
 import {
   DeleteIcon,
@@ -54,11 +53,7 @@ export const RoomsList = () => {
   const indexOfLastRoom = currentPage * roomsPerPage;
   const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
   const currentRooms = roomsList.slice(indexOfFirstRoom, indexOfLastRoom);
-  const handleSearch = (e) => {
-    e.preventDefault();
-    dispatch(IdRoomThunk)
-  }
-  const [searchTerm, setSearchTerm] = useState("");
+ 
 
   useEffect(() => {
     if (StatusAllRooms === "idle") {
@@ -74,6 +69,8 @@ export const RoomsList = () => {
   if (StatusAllRooms === "pending") {
     return <div>Loading...</div>;
   }
+
+  
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -107,7 +104,7 @@ export const RoomsList = () => {
           <SelectTitle>All Rooms</SelectTitle>
         </ContainerSelect>
         <ContainerInput>
-          <UsersInput type="text" onChanfe={handleSearch} value={searchTerm} onChange={(e) =>{setSearchTerm(e.target.value)}}/>
+          <UsersInput type="text" />
           <label>
             <IconSearch />
           </label>

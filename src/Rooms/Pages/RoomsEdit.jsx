@@ -1,44 +1,80 @@
-import {  useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
-    IconClose,
-    ButtonSave,
-    CancellationBox,
-    ButtonAmenities,
-    BoxDescription,
-    TitlePrice,
-    InputDiscount,
-    InputDescription,
-    TitleDescripition,
-    ButtonOffer,
-    Price,
-    PriceBox,
-    InputCreate,
-    BoxInfo,
-    RoomInfo,
-    BoxTitle,
-    TitleSection,
-    ContainerSections,
-    CardCreate
-  } from "../Components/RoomsCreate";
-  
-import { Link } from "react-router-dom";
-
-
-
+  IconClose,
+  ButtonSave,
+  CancellationBox,
+  ButtonAmenities,
+  BoxDescription,
+  TitlePrice,
+  InputDiscount,
+  InputDescription,
+  TitleDescripition,
+  ButtonOffer,
+  Price,
+  PriceBox,
+  InputCreate,
+  BoxInfo,
+  RoomInfo,
+  BoxTitle,
+  TitleSection,
+  ContainerSections,
+  CardCreate,
+} from "../Components/RoomsCreate";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { IdRoomThunk, EditRoomThunk } from "../Features/RoomsThunk";
+import { useEffect, useState } from "react";
+import { getIdRoomsData, getIdRoomsStatus } from "../Features/RoomsSlice";
 
 export const RoomsEdit = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const DataId = useSelector(getIdRoomsData);
+  const StatusId = useSelector(getIdRoomsStatus);
+  const [roomId, setRoomId] = useState({
+    room_type: "",
+    room_number: "",
+    room_price: "",
+    room_offer: "",
+    room_discount: "",
+    room_description: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRoomId((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = () => {
+    dispatch(EditRoomThunk({ id: Number(id), updatedRoom: roomId }))
+      .unwrap()
+      .then(() => {
+        alert("Habitación actualizada correctamente");
+        navigate("/rooms");
+      })
+      .catch((error) => {
+        alert("Error al actualizar la habitación: " + error.message);
+      });
+  };
   
-  const room = useSelector((state) => state.rooms.roomId.data);
-  const status = useSelector((state) => state.rooms.roomId.status);
-  console.log(room.room_description)
-
- 
-
-
+  useEffect(() => {
+    if (StatusId === "idle" && id) {
+      dispatch(IdRoomThunk(id));
+    } else if (StatusId === "fulfilled" && DataId) {
+      setRoomId(DataId); 
+    } else if (StatusId === "rejected") {
+      alert("Error al cargar los datos de la habitación");
+    }
+  }, [dispatch, StatusId, id, DataId]);
   return (
     <CardCreate>
       <ContainerSections>
-        <Link to={"/rooms"}><IconClose/></Link>
+        <Link to={"/rooms"}>
+          <IconClose />
+        </Link>
         <RoomInfo>Room Info</RoomInfo>
         <BoxTitle>
           <div>
@@ -46,8 +82,8 @@ export const RoomsEdit = () => {
             <InputCreate
               type="text"
               name="room_type"
-              value={room.room_type}
-              
+              value={roomId?.room_type || ""}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -55,8 +91,8 @@ export const RoomsEdit = () => {
             <InputCreate
               type="text"
               name="room_number"
-              value={room.room_number}
-              
+              value={roomId?.room_number || ""}
+              onChange={handleChange}
             />
           </div>
         </BoxTitle>
@@ -66,8 +102,8 @@ export const RoomsEdit = () => {
             <Price
               type="text"
               name="room_price"
-              value={room.room_price}
-              
+              value={roomId?.room_price || ""}
+              onChange={handleChange}
             />
           </PriceBox>
           <PriceBox>
@@ -75,7 +111,7 @@ export const RoomsEdit = () => {
             <div>
               <ButtonOffer
                 onClick={() =>
-                  setNewRoom((prevState) => ({
+                  setRoomId((prevState) => ({
                     ...prevState,
                     room_offer: "Yes",
                   }))
@@ -85,7 +121,7 @@ export const RoomsEdit = () => {
               </ButtonOffer>
               <ButtonOffer
                 onClick={() =>
-                  setNewRoom((prevState) => ({
+                  setRoomId((prevState) => ({
                     ...prevState,
                     room_offer: "No",
                   }))
@@ -100,20 +136,19 @@ export const RoomsEdit = () => {
             <InputDiscount
               type="text"
               name="room_discount"
-              value={room.room_discount}
-              
+              value={roomId?.room_offer || ""}
+              onChange={handleChange}
             />
           </PriceBox>
         </BoxInfo>
-
         <BoxDescription>
           <div>
             <TitleDescripition>Description</TitleDescripition>
             <InputDescription
               type="text"
               name="room_description"
-              value={room.room_description}
-              
+              value={roomId?.room_description || ""}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -153,7 +188,6 @@ export const RoomsEdit = () => {
             </div>
           </div>
         </BoxDescription>
-
         <CancellationBox>
           <TitleSection>Cancellation Policy</TitleSection>
           <p>
@@ -164,7 +198,7 @@ export const RoomsEdit = () => {
             changes or cancellations, please contact the hotel directly.
           </p>
         </CancellationBox>
-        <ButtonSave >SAVE</ButtonSave>
+        <ButtonSave onClick={handleSave}>EDIT</ButtonSave>
       </ContainerSections>
     </CardCreate>
   );

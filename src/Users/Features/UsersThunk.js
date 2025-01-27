@@ -19,6 +19,6 @@ export const UsersAllThunk = createAsyncThunk("users/getUsers" , async () => {
         });
         return RoomsThunk;
     }   catch (error) {
-        throw new Error("Error al obetener los datos de las habitaciones");
+        throw new Error("Error al obetener los datos de los usuarios");
     }
 });
