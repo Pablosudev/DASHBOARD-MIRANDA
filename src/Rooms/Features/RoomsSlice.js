@@ -11,8 +11,10 @@ export const SliceRooms = createSlice({
   name: "rooms",
   initialState: {
     status: "idle",
+    statusId: "idle", 
     statusDelete: "idle",
     statusEdit: "idle",
+    statusCreate: "idle",
     error: null,
     data: [],
     roomId: {
@@ -41,16 +43,16 @@ export const SliceRooms = createSlice({
     // IdRoomThunk Reducers
     builder
       .addCase(IdRoomThunk.pending, (state) => {
-        state.roomId.status = "pending";
+        state.roomId.statusId = "pending";
       })
       .addCase(IdRoomThunk.fulfilled, (state, action) => {
-        state.roomId.status = "fulfilled";
+        state.roomId.statusId = "fulfilled";
         state.roomId.data = action.payload;
         state.roomId.error = null;
         console.log("Datos de la habitación cargados:", action.payload);
       })
       .addCase(IdRoomThunk.rejected, (state, action) => {
-        state.roomId.status = "rejected";
+        state.roomId.statusId = "rejected";
         state.roomId.error = action.error.message;
       });
 
@@ -108,15 +110,15 @@ export const SliceRooms = createSlice({
     //CreateRoomThunk Reducers
     builder
       .addCase(CreateRoomThunk.pending, (state) => {
-        state.roomId.status = "pending";
+        state.roomId.statusCreate = "pending";
       })
       .addCase(CreateRoomThunk.fulfilled, (state, action) => {
-        state.status = "fulfilled";
+        state.statusCreate = "fulfilled";
         state.data.push(action.payload);
         state.error = null;
       })
       .addCase(CreateRoomThunk.rejected, (state, action) => {
-        state.roomId.status = "rejected";
+        state.roomId.statusCreate = "rejected";
         state.roomId.error = action.error.message;
       });
   },
@@ -128,5 +130,5 @@ export const getAllRoomsStatus = (state) => state.rooms.status;
 export const getAllRoomsError = (state) => state.rooms.error;
 
 export const getIdRoomsData = (state) => state.rooms.roomId.data;
-export const getIdRoomsStatus = (state) => state.rooms.roomId.status;
+export const getIdRoomsStatus = (state) => state.rooms.roomId.statusId;
 export default SliceRooms.reducer;
