@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UsersAllThunk } from "./UsersThunk";
+import { DeleteUsersThunk, UsersAllThunk } from "./UsersThunk";
 
 export const UsersSlice = createSlice({
   name: "users",
@@ -7,11 +7,11 @@ export const UsersSlice = createSlice({
     status: "idle",
     error: null,
     data: [],
-    userId:{
+    userId: {
       status: "idle",
       data: null,
       error: null,
-    }
+    },
   },
   extraReducers: (builder) => {
     //UsersThunk
@@ -28,9 +28,29 @@ export const UsersSlice = createSlice({
         state.status = "rejected";
         state.error = action.error.message;
       });
+
+    builder
+      .addCase(DeleteUsersThunk.pending, (state) => {
+        state.roomId.statusDelete = "pending";
+      })
+      .addCase(DeleteUsersThunk.fulfilled, (state, action) => {
+        state.statusDelete = "fulfilled";
+
+        state.data = state.data.filter((room) => room.id !== action.payload.id);
+
+        if (state.roomId && state.roomId.data.id === action.payload.id) {
+          state.roomId.data = {};
+          state.roomId.statusDelete = "idle";
+        }
+
+        state.error = null;
+      })
+      .addCase(DeleteUsersThunk.rejected, (state, action) => {
+        state.roomId.statusDelete = "rejected";
+        state.roomId.error = action.error.message;
+      });
   },
 });
-
 
 export const AllDataUsers = (state) => state.users.data;
 export const AllStatusUsers = (state) => state.users.status;

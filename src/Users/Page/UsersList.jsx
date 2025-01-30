@@ -23,8 +23,13 @@ import { ContainerInput, IconSearch, UsersInput } from "../Components/Users";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AllDataUsers, AllStatusUsers } from "../Features/UsersSlice";
-import { UsersAllThunk } from "../Features/UsersThunk";
+import { DeleteUsersThunk, UsersAllThunk } from "../Features/UsersThunk";
 import { StatusUsers } from "../../commons/Table";
+import {
+  DeleteIcon,
+  EditIcon,
+} from "../../Bookings/Components/BookingsDetails";
+
 
 
 export const UserList = () => {
@@ -61,7 +66,7 @@ export const UserList = () => {
   });
 
   const handleDeleteUser = async (id) => {
-      dispatch(DeleteUserThunk(id));
+      dispatch(DeleteUsersThunk(id));
     };
 
   return (
@@ -81,7 +86,7 @@ export const UserList = () => {
           </ContainerInput>
           <div>
             <ButtonGreen type="secondary" onClick={handleUserCreate}>
-              + New Employee
+              Create User
             </ButtonGreen>
           </div>
         </BoxSelect>
@@ -120,10 +125,10 @@ export const UserList = () => {
                 </td>
                 <td>
                   
-                    <EditIcon />
+                  <EditIcon />
                 
                   <DeleteIcon
-                    onClick={() => handleDeleteUser(user.id)}
+                    onClick={handleDeleteUser}
                     aria-label="Delete room"
                   />
                 </td>

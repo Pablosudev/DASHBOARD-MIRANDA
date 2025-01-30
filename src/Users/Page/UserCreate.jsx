@@ -1,5 +1,6 @@
 import { SelectCreate, ImgUser, ContainerNewUsers, TitleHotel, ContainerImg, AddImg, ContainerInput, BoxArticle, TypeInput, InputName, InputDesk, ContainerButton, IconClose } from "../Components/UsersCreate";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
+import { Link } from "react-router-dom";
 export const UserCreate = () => {
 
 
@@ -8,7 +9,9 @@ export const UserCreate = () => {
         <>
             <ContainerNewUsers>
             <TitleHotel>HOTEL MIRANDA</TitleHotel>
-            <IconClose/>
+            <Link to={"/users"}>
+            <IconClose />
+            </Link>
             <ContainerImg>
                 <ImgUser src="/src/assets/Imagenes/149071.png" alt="img NewUser" />
                 <AddImg/>

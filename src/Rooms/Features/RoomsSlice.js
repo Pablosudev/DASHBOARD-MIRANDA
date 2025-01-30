@@ -10,8 +10,7 @@ import {
 export const SliceRooms = createSlice({
   name: "rooms",
   initialState: {
-    status: "idle",
-    statusId: "idle", 
+    status: "idle", 
     statusDelete: "idle",
     statusEdit: "idle",
     statusCreate: "idle",
@@ -43,16 +42,16 @@ export const SliceRooms = createSlice({
     // IdRoomThunk Reducers
     builder
       .addCase(IdRoomThunk.pending, (state) => {
-        state.roomId.statusId = "pending";
+        state.roomId.status = "pending";
       })
       .addCase(IdRoomThunk.fulfilled, (state, action) => {
-        state.roomId.statusId = "fulfilled";
+        state.roomId.status = "fulfilled";
         state.roomId.data = action.payload;
         state.roomId.error = null;
         console.log("Datos de la habitación cargados:", action.payload);
       })
       .addCase(IdRoomThunk.rejected, (state, action) => {
-        state.roomId.statusId = "rejected";
+        state.roomId.status = "rejected";
         state.roomId.error = action.error.message;
       });
 
@@ -73,7 +72,7 @@ export const SliceRooms = createSlice({
           if (index !== -1) {
             state.data[index] = action.payload;
           }
-    
+          console.log(index)
           console.log("Habitación actualizada en el estado:", action.payload);
         })
         .addCase(EditRoomThunk.rejected, (state, action) => {
@@ -106,6 +105,7 @@ export const SliceRooms = createSlice({
           state.roomId.statusDelete = "rejected";
           state.roomId.error = action.error.message;
         });
+        
 
     //CreateRoomThunk Reducers
     builder
