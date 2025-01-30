@@ -37,15 +37,15 @@ export const LogIn = () => {
     return (
         <DivStyled>
           <CustomIcon/>
-          <h1>HOTEL MIRANDA</h1>
+          <h1 data-cy = "Title">HOTEL MIRANDA</h1>
           <form onSubmit={handleSubmit}>
             <div>
-              <InputStyled type="text" placeholder="Email" value={email} onChange={handleChangeEmail}/>
+              <InputStyled type="text" placeholder="Email" value={email} onChange={handleChangeEmail} data-cy = "InputEmail"/>
             </div>
             <div>
-              <InputStyled type="password" placeholder="Contraseña" value={password} onChange={handleChangePassword}/>
+              <InputStyled type="password" placeholder="Contraseña" value={password} onChange={handleChangePassword} data-cy = "InputPassword"/>
             </div>
-            <ButtonStyled type="submit">Login</ButtonStyled>
+            <ButtonStyled type="submit" data-cy="ButtonStyled">Login</ButtonStyled>
           </form>
       </DivStyled>
     )

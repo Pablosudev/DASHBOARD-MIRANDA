@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
+import { ButtonTable } from "../../../src/commons/Table";
 
 
 
@@ -21,24 +22,24 @@ const TestButtonTable = {
 
 describe("<ButtonTable/>", () => {
   test("Renders ButtonTable with 'Available' status", () => {
-    render(<TestButtonTable status="Available" />);
-    const ButtonTable = screen.getByText(/Available/i);
-    expect(ButtonTable).toBeInTheDocument();
-    expect(ButtonTable).toHaveStyle("background-color: #5AD07A");
+    render(<ButtonTable status="Available" />);
+    const TestButtonTable = screen.getByText(/Available/i);
+    expect(TestButtonTable).toBeInTheDocument();
+    expect(TestButtonTable).toHaveStyle("background-color: #5AD07A");
   });
 
   test("Renders ButtonTable with 'Booked' status", () => {
-    render(<TestButtonTable status="Booked" />);
-    const ButtonTable = screen.getByText(/Booked/i);
-    expect(ButtonTable).toBeInTheDocument();
-    expect(ButtonTable).toHaveStyle("background-color: #FF4D4D");
+    render(<ButtonTable status="Booked" />);
+    const TestButtonTable = screen.getByText(/Booked/i);
+    expect(TestButtonTable).toBeInTheDocument();
+    expect(TestButtonTable).toHaveStyle("background-color: #FF4D4D");
   });
 
   test("Renders ButtonTable with default status", () => {
-    render(<TestButtonTable status="Unknown" />);
-    const ButtonTable = screen.getByText(/Unknown/i);
-    expect(ButtonTable).toBeInTheDocument();
-    expect(ButtonTable).toHaveStyle("background-color: #D3D3D3");
+    render(<ButtonTable status="Unknown" />);
+    const TestButtonTable = screen.getByText(/Unknown/i);
+    expect(TestButtonTable).toBeInTheDocument();
+    expect(TestButtonTable).toHaveStyle("background-color: #D3D3D3");
   });
 });
 
