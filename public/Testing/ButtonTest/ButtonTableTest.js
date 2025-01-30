@@ -1,4 +1,7 @@
+import React from "react";
+
 const ButtonTable = ({ status }) => {
+    
     const getButtonColor = () => {
         switch (status) {
             case 'Available':
@@ -18,4 +21,3 @@ const ButtonTable = ({ status }) => {
 };
 
 export { ButtonTable };
-

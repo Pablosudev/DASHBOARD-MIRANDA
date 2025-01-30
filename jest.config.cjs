@@ -1,5 +1,7 @@
 module.exports = {
-    testEnvironment: 'jest-environment-jsdom',
-    setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],  // Para extender las aserciones
-  };
-  
+  collectCoverage: true,
+  collectCoverageFrom: ['src/**/*.{js,jsx}'],
+  coverageDirectory: 'coverage',
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+}

@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 
 export const SideStyled = styled.section`
     max-width: 11rem;
-    padding-bottom: 100%;
+    padding-bottom: auto;
     padding-right:6.5rem;
     box-shadow: 13px 3px 40px rgba(0, 0, 0, 0.02);
     background-color: rgba(255, 255, 255, 1);

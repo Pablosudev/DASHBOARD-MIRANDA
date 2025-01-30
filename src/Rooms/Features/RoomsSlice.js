@@ -86,24 +86,24 @@ export const SliceRooms = createSlice({
       // DeleteRoomThunk Reducers
       builder
         .addCase(DeleteRoomThunk.pending, (state) => {
-          state.roomId.status= "pending";
+          state.roomId.statusDelete = "pending";
         })
         .addCase(DeleteRoomThunk.fulfilled, (state, action) => {
-          state.status = "fulfilled";
+          state.statusDelete = "fulfilled";
          
           state.data = state.data.filter(
             (room) => room.id !== action.payload.id
           );
-          console.log(JSON.stringify(state.data))
-          if (state.roomId.data.id === action.payload.id) {
+          
+          if (state.roomId && state.roomId.data.id === action.payload.id) {
             state.roomId.data = {};
-            state.roomId.status = "idle";
+            state.roomId.statusDelete = "idle";
           }
 
           state.error = null;
         })
         .addCase(DeleteRoomThunk.rejected, (state, action) => {
-          state.roomId.status = "rejected";
+          state.roomId.statusDelete = "rejected";
           state.roomId.error = action.error.message;
         });
 
@@ -128,6 +128,8 @@ export const SliceRooms = createSlice({
 export const getAllRoomsData = (state) => state.rooms.data;
 export const getAllRoomsStatus = (state) => state.rooms.status;
 export const getAllRoomsError = (state) => state.rooms.error;
+
+
 
 export const getIdRoomsData = (state) => state.rooms.roomId.data;
 export const getIdRoomsStatus = (state) => state.rooms.roomId.status;

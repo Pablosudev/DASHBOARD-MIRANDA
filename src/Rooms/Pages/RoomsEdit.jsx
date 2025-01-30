@@ -32,11 +32,11 @@ export const RoomsEdit = () => {
   const DataId = useSelector(getIdRoomsData);
   const StatusId = useSelector(getIdRoomsStatus);
   const [roomId, setRoomId] = useState({
-    room_type: "",
+    room_type:"",
     room_number: "",
     room_price: "",
     room_offer: "",
-    room_discount: "",
+    room_discount: "" ,
     room_description: "",
   });
 
@@ -64,11 +64,19 @@ export const RoomsEdit = () => {
     if (StatusId === "idle") {
       dispatch(IdRoomThunk(id));
     } else if (StatusId === "fulfilled") {
-       setRoomId(DataId)
+      setRoomId({
+        room_type: DataId.room_type ,
+        room_number: DataId.room_number ,
+        room_price: DataId.room_price ,
+        room_offer: DataId.room_offer ,
+        room_discount: DataId.room_discount ,
+        room_description: DataId.room_description ,
+      });
     } else if (StatusId === "rejected") {
       alert("Error al cargar los datos de la habitación");
     }
-  }, [dispatch, StatusId, id , DataId]);
+  }, [dispatch, StatusId, id]);
+  console.log(roomId)
   return (
     <CardCreate>
       <ContainerSections>
@@ -82,7 +90,7 @@ export const RoomsEdit = () => {
             <InputCreate
               type="text"
               name="room_type"
-              value={roomId?.room_type || ""}
+              value={setRoomId.room_type || ""}
               onChange={handleChange}
             />
           </div>
@@ -91,7 +99,7 @@ export const RoomsEdit = () => {
             <InputCreate
               type="text"
               name="room_number"
-              value={roomId?.room_number || ""}
+              value={setRoomId.room_number || ""}
               onChange={handleChange}
             />
           </div>
@@ -102,7 +110,7 @@ export const RoomsEdit = () => {
             <Price
               type="text"
               name="room_price"
-              value={roomId?.room_price || ""}
+              value={roomId.room_price || ""}
               onChange={handleChange}
             />
           </PriceBox>
@@ -136,7 +144,7 @@ export const RoomsEdit = () => {
             <InputDiscount
               type="text"
               name="room_discount"
-              value={roomId?.room_offer || ""}
+              value={roomId.room_offer || ""}
               onChange={handleChange}
             />
           </PriceBox>
@@ -147,7 +155,7 @@ export const RoomsEdit = () => {
             <InputDescription
               type="text"
               name="room_description"
-              value={roomId?.room_description || ""}
+              value={roomId.room_description || ""}
               onChange={handleChange}
             />
           </div>

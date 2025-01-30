@@ -29,7 +29,7 @@ import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllRoomsData, getAllRoomsStatus } from "../Features/RoomsSlice";
+import { getAllRoomsData, getAllRoomsStatus} from "../Features/RoomsSlice";
 import { RoomsThunk, DeleteRoomThunk } from "../Features/RoomsThunk";
 import {
   DeleteIcon,
@@ -42,7 +42,6 @@ export const RoomsList = () => {
   const dispatch = useDispatch();
   const DataAllRooms = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
-  
   const [searchTerm, setSearchTerm] = useState("");
   const roomsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -102,10 +101,10 @@ export const RoomsList = () => {
     navigate("/rooms/create");
   };
 
-  const handleDeleteRoom = async (id) => {
-    console.log(id)
-    dispatch(DeleteRoomThunk(id));
-    console.log(DataAllRooms)
+  const handleDeleteRoom = async () => {
+    
+    dispatch(DeleteRoomThunk(room.id));
+    
   };
 
   return (
@@ -117,9 +116,9 @@ export const RoomsList = () => {
           <SelectTitle>Status</SelectTitle>
         </ContainerSelect>
         <ContainerInput>
-          <UsersInput type="text" placeholder="Search your Room" />
+          <UsersInput type="text" placeholder="Search your Room" value={searchTerm} onChange={handleSearch} />
           <label>
-            <IconSearch />
+            <IconSearch/>
           </label>
         </ContainerInput>
         <div>
@@ -141,7 +140,7 @@ export const RoomsList = () => {
           </TableR>
         </TableHead>
         <TableBody>
-          {DataAllRooms.map((room, index ) => (
+          {currentRooms.map((room, index ) => (
             <TableR key={room.room_number}index={index}>
               <TableTd>
                 <TableImg
@@ -178,7 +177,7 @@ export const RoomsList = () => {
                   <EditIcon />
                 </Link>
                 <DeleteIcon
-                  onClick={() => handleDeleteRoom(room.id)}
+                  onClick={handleDeleteRoom}
                   aria-label="Delete room"
                 />
               </td>
