@@ -30,29 +30,21 @@ export const IdRoomThunk = createAsyncThunk(
       const roomId = await new Promise((resolve, reject) => {
         setTimeout(async () => {
           try {
-            console.log(
-              "Realizando solicitud para obtener la habitación con ID:",
-              id
-            );
-
+            
             const response = await fetch("/Data/rooms.json");
             if (!response.ok) {
               reject("Error al cargar los datos");
             }
             const jsonData = await response.json();
-            console.log("Datos cargados:", jsonData);
 
             const room = jsonData.find((room) => room.id === Number(id));
 
             if (room) {
-              console.log("Habitación encontrada:", room);
               resolve(room);
             } else {
-              console.log("Habitación no encontrada para el ID:", id);
               reject("Habitación no encontrada");
             }
           } catch (error) {
-            console.error("Error en la solicitud:", error);
             reject(error);
           }
         }, 200);
@@ -75,8 +67,7 @@ export const EditRoomThunk = createAsyncThunk(
       const roomId = await new Promise((resolve, reject) => {
         setTimeout(async () => {
           try {
-            console.log("Editando la habitación con ID:", id);
-
+           
             const response = await fetch("/Data/rooms.json");
             if (!response.ok) {
               reject("Error al cargar los datos");
@@ -89,21 +80,21 @@ export const EditRoomThunk = createAsyncThunk(
               (room) => room.id === Number(id)
             );
             if (updatedRoomData) {
-              console.log("Habitación actualizada:", updatedRoomData);
+              
               resolve(updatedRoomData);
             } else {
-              console.log("Habitación no encontrada para el ID:", id);
+    
               reject("Habitación no encontrada");
             }
           } catch (error) {
-            console.error("Error en la solicitud:", error);
+            
             reject(error);
           }
         }, 200);
       });
       return roomId;
     } catch (error) {
-      console.error("Error en el thunk:", error);
+      
       return rejectWithValue(error.message || "Error al editar la habitación");
     }
   }
@@ -117,13 +108,13 @@ export const DeleteRoomThunk = createAsyncThunk(
       const roomId = await new Promise((resolve, reject) => {
         setTimeout(async () => {
           try {
-            const response = await fetch(`/Data/rooms.json?id=${id}`, {});
-
+            const response = await fetch(`/Data/rooms.json?id=${id}`, {method: 'DELETE'});
+              
             if (!response.ok) {
               reject("Error al eliminar la habitación");
             }
 
-            resolve({ id: id });
+            resolve({id});
           } catch (error) {
             reject(error);
           }

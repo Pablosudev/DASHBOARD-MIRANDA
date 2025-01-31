@@ -30,25 +30,19 @@ export const UsersSlice = createSlice({
       });
 
     builder
-      .addCase(DeleteUsersThunk.pending, (state) => {
-        state.roomId.statusDelete = "pending";
-      })
-      .addCase(DeleteUsersThunk.fulfilled, (state, action) => {
-        state.statusDelete = "fulfilled";
-
-        state.data = state.data.filter((room) => room.id !== action.payload.id);
-
-        if (state.roomId && state.roomId.data.id === action.payload.id) {
-          state.roomId.data = {};
-          state.roomId.statusDelete = "idle";
-        }
-
-        state.error = null;
-      })
-      .addCase(DeleteUsersThunk.rejected, (state, action) => {
-        state.roomId.statusDelete = "rejected";
-        state.roomId.error = action.error.message;
-      });
+    builder
+    .addCase(DeleteUsersThunk.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(DeleteUsersThunk.fulfilled, (state, action) => {
+      state.loading = false;
+      state.users = state.users.filter(user => user.id !== action.payload.id);
+    })
+    .addCase(DeleteUsersThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload || action.error.message;
+    });
   },
 });
 

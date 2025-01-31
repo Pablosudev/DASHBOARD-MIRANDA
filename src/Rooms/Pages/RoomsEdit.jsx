@@ -61,9 +61,14 @@ export const RoomsEdit = () => {
   };
   
   useEffect(() => {
+    console.log(DataId)
     if (StatusId === "idle") {
       dispatch(IdRoomThunk(id));
+      
     } else if (StatusId === "fulfilled") {
+      if(DataId.id != id){
+        dispatch(IdRoomThunk(id))
+      }
       setRoomId({
         room_type: DataId.room_type,
         room_number: DataId.room_number,
@@ -74,8 +79,8 @@ export const RoomsEdit = () => {
       })
     } else if (StatusId === "rejected") {
       alert("Error al cargar los datos de la habitación");
-    }
-  }, [dispatch, DataId, id]);
+    } 
+  }, [dispatch, id, StatusId]);
 
   return (
     <CardCreate>

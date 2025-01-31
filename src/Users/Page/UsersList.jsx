@@ -66,8 +66,9 @@ export const UserList = () => {
   });
 
   const handleDeleteUser = async (id) => {
-      dispatch(DeleteUsersThunk(id));
-    };
+    dispatch(DeleteUsersThunk(id))
+  };
+  
 
   return (
     <>

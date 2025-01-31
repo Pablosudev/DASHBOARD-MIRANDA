@@ -94,9 +94,8 @@ export const SliceRooms = createSlice({
             (room) => room.id !== action.payload.id
           );
           
-          if (state.roomId && state.roomId.data.id === action.payload.id) {
-            state.roomId.data = {};
-            state.roomId.statusDelete = "idle";
+          if (state.roomId.data && state.roomId.data.id === action.payload) {
+            state.roomId.data = null;
           }
 
           state.error = null;
@@ -128,9 +127,7 @@ export const SliceRooms = createSlice({
 export const getAllRoomsData = (state) => state.rooms.data;
 export const getAllRoomsStatus = (state) => state.rooms.status;
 export const getAllRoomsError = (state) => state.rooms.error;
-
-
-
+export const getDeleteStatus = (state) => state.rooms.roomId.status
 export const getIdRoomsData = (state) => state.rooms.roomId.data;
 export const getIdRoomsStatus = (state) => state.rooms.roomId.status;
 export default SliceRooms.reducer;
