@@ -16,6 +16,7 @@ import { AuthProvider } from './UseContext/AuthContext.jsx'
 import { RoomsEdit } from './Rooms/Pages/RoomsEdit.jsx'
 import { Provider } from 'react-redux'
 import Store from './App/Store.js'
+import { UserEdit } from './Users/Page/UserEdit.jsx'
 
 
 
@@ -42,7 +43,7 @@ createRoot(document.getElementById('root')).render(
               <Route path='/users'>
                 <Route path='' element={<UserList />} />
                 <Route path='new' element={<UserCreate />} />
-                
+                <Route path='/users/edit/:id' element={<UserEdit/>}/>
               </Route>
             </Route>
           </Routes>

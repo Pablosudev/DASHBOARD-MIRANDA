@@ -1,16 +1,42 @@
 import { SelectCreate, ImgUser, ContainerNewUsers, TitleHotel, ContainerImg, AddImg, ContainerInput, BoxArticle, TypeInput, InputName, InputDesk, ContainerButton, IconClose } from "../Components/UsersCreate";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { CreateUserThunk } from "../Features/UsersThunk";
+
+
 export const UserCreate = () => {
+    const dispatch= useDispatch();
+    const navigate = useNavigate();
+    const[ newUser, setNewUser] = useState({
+        full_name: "",
+        start_date:"",
+        job_description: "",
+        phone_number: "",
+        email:"",
+        job_desk:"",
+        password:""
+    })
 
-
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewUser((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+      };
+    const handleCreateUser = () => {
+        dispatch(CreateUserThunk(newUser));
+        navigate("/users")
+    }
 
     return (
         <>
             <ContainerNewUsers>
             <TitleHotel>HOTEL MIRANDA</TitleHotel>
             <Link to={"/users"}>
-            <IconClose />
+            <IconClose onClick={() => {navigate("/users")}}/>
             </Link>
             <ContainerImg>
                 <ImgUser src="/src/assets/Imagenes/149071.png" alt="img NewUser" />
@@ -18,15 +44,31 @@ export const UserCreate = () => {
                 <BoxArticle>
                     <div>
                         <TypeInput>Full Name</TypeInput>
-                        <InputName type="text" placeholder="Name" /> 
+                        <InputName
+                            type="text"
+                            placeholder="Name"
+                            name="full_name"
+                            value={newUser.full_name}
+                            onChange={handleInputChange} /> 
                     </div>
                     <div>
                         <TypeInput>Email</TypeInput>
-                        <InputName type="text"placeholder="email@email.com"/> 
+                        <InputName 
+                            type="text"
+                            placeholder="email@email.com"
+                            name="email"
+                            value={newUser.email}
+                            onChange={handleInputChange}
+                        /> 
                     </div> 
                     <div>
                         <TypeInput>Phone</TypeInput>
-                        <InputName type="text" /> 
+                        <InputName 
+                            type="text" 
+                            name="phone_number"
+                            value={newUser.phone_number}
+                            onChange={handleInputChange}
+                        /> 
                     </div> 
                 </BoxArticle>
             </ContainerImg> 
@@ -35,29 +77,36 @@ export const UserCreate = () => {
                 <BoxArticle>
                     <div>
                         <TypeInput>Job</TypeInput>
-                        <SelectCreate type="text">
+                        <SelectCreate type="text" name="job_description" value={newUser.job_description} onChange={handleInputChange}>
                         <option value="MANAGER">MANAGER</option>
                         <option value="RECEPTIONIST">RECEPTIONIST</option>
                         <option value="ROOM SERVICE">ROOM SERVICE</option>
                         </SelectCreate> 
+                        <TypeInput>Status</TypeInput>
+                        <SelectCreate type="text" name="status" value={newUser.status} onChange={handleInputChange}>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                        
+                        </SelectCreate> 
+
                     </div> 
                     <div>
                         <TypeInput>Job Desk</TypeInput>
-                        <InputDesk type="text" /> 
+                        <InputDesk type="text" name="job_desk" onChange={handleInputChange}/> 
                     </div> 
                 </BoxArticle>
                 <BoxArticle>
                     <div>
                         <TypeInput>Create Password</TypeInput>
-                        <InputName type="password" /> 
+                        <InputName type="password" name="password" onChange={handleInputChange}/> 
                     </div> <div>
                         <TypeInput>Star Date</TypeInput>
-                        <InputName type="date" placeholder="0/00/0000"/> 
+                        <InputName type="date" name="start_Date" placeholder="0/00/0000" value={newUser.start_date} onChange={handleInputChange}/> 
                     </div> 
                 </BoxArticle>
             </ContainerInput>
             <ContainerButton>
-                <ButtonGreen>Add User</ButtonGreen>
+                <ButtonGreen onClick={handleCreateUser}>Add User</ButtonGreen>
             </ContainerButton>
             
             </ContainerNewUsers>

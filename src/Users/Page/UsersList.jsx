@@ -20,17 +20,16 @@ import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 import { useEffect, useState } from "react";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake";
 import { ContainerInput, IconSearch, UsersInput } from "../Components/Users";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AllDataUsers, AllStatusUsers } from "../Features/UsersSlice";
-import { DeleteUsersThunk, UsersAllThunk } from "../Features/UsersThunk";
+import { DeleteUserThunk, UsersAllThunk } from "../Features/UsersThunk";
 import { StatusUsers } from "../../commons/Table";
 import {
   DeleteIcon,
   EditIcon,
 } from "../../Bookings/Components/BookingsDetails";
-
-
+import { Link } from "react-router-dom";
 
 export const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,7 +42,6 @@ export const UserList = () => {
   const handleUserCreate = () => {
     navigate("/users/new");
   };
-
   const sortedUsers = [...users].sort((a, b) => {
     return new Date(a.start_date) - new Date(b.start_date);
   });
@@ -65,10 +63,9 @@ export const UserList = () => {
     }
   });
 
-  const handleDeleteUser = async (id) => {
-    dispatch(DeleteUsersThunk(id))
+  const handleDeleteUser = (id) => {
+    dispatch(DeleteUserThunk(id));
   };
-  
 
   return (
     <>
@@ -106,7 +103,7 @@ export const UserList = () => {
           </TableHead>
           <TableBody>
             {currentUsers.map((user) => (
-              <TableR key={user.employee_id}>
+              <TableR key={user.id}>
                 <TableTd>
                   <TableImg
                     src="/src/assets/Imagenes/users logo.jpg"
@@ -115,7 +112,7 @@ export const UserList = () => {
                 </TableTd>
                 <ContainerId>
                   {user.full_name} <br />
-                  {user.employee_id}
+                  {user.id}
                 </ContainerId>
                 <TableAmenities>{user.start_date}</TableAmenities>
                 <TableAmenities>{user.job_description}</TableAmenities>
@@ -125,12 +122,11 @@ export const UserList = () => {
                   <StatusUsers status={user.status}>{user.status}</StatusUsers>
                 </td>
                 <td>
+                  <Link to= {`/users/edit/${user.id}`}> <EditIcon /></Link>
                   
-                  <EditIcon />
-                
                   <DeleteIcon
-                    onClick={handleDeleteUser}
-                    aria-label="Delete room"
+                    onClick={() => handleDeleteUser(user.id)}
+                    aria-label="Delete user"
                   />
                 </td>
               </TableR>

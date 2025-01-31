@@ -9,7 +9,8 @@ export const ContainerNewUsers = styled.section`
     border-radius:12px;
     margin-left:15%;
     margin-top: 10%;
-    max-height: 75rem;
+    margin-bottom: 2%;
+    max-height: 85rem;
     position: relative
 `
 export const ImgUser = styled.img`

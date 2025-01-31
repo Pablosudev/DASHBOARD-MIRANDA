@@ -29,8 +29,8 @@ export const RoomsEdit = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const DataId = useSelector(getIdRoomsData);
-  const StatusId = useSelector(getIdRoomsStatus);
+  const RoomID = useSelector(getIdRoomsData);
+  const StatusRoom = useSelector(getIdRoomsStatus);
   const [roomId, setRoomId] = useState({
     room_type:"",
     room_number: "",
@@ -39,7 +39,7 @@ export const RoomsEdit = () => {
     room_discount: "" ,
     room_description: "",
   });
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRoomId((prevState) => ({
@@ -61,26 +61,26 @@ export const RoomsEdit = () => {
   };
   
   useEffect(() => {
-    console.log(DataId)
-    if (StatusId === "idle") {
+    
+    if (StatusRoom === "idle") {
       dispatch(IdRoomThunk(id));
       
-    } else if (StatusId === "fulfilled") {
-      if(DataId.id != id){
+    } else if (StatusRoom === "fulfilled") {
+      if(RoomID.id != id){
         dispatch(IdRoomThunk(id))
       }
       setRoomId({
-        room_type: DataId.room_type,
-        room_number: DataId.room_number,
-        room_price: DataId.room_price,
-        room_offer: DataId.room_offer,
-        room_discount: DataId.room_discount ,
-        room_description: DataId.room_description,
+        room_type: RoomID.room_type,
+        room_number: RoomID.room_number,
+        room_price: RoomID.room_price,
+        room_offer: RoomID.room_offer,
+        room_discount: RoomID.room_discount ,
+        room_description: RoomID.room_description,
       })
-    } else if (StatusId === "rejected") {
+    } else if (StatusRoom === "rejected") {
       alert("Error al cargar los datos de la habitación");
     } 
-  }, [dispatch, id, StatusId]);
+  }, [dispatch, id, StatusRoom]);
 
   return (
     <CardCreate>

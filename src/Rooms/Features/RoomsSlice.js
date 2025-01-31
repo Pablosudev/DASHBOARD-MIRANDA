@@ -127,7 +127,7 @@ export const SliceRooms = createSlice({
 export const getAllRoomsData = (state) => state.rooms.data;
 export const getAllRoomsStatus = (state) => state.rooms.status;
 export const getAllRoomsError = (state) => state.rooms.error;
-export const getDeleteStatus = (state) => state.rooms.roomId.status
+export const getDeleteStatus = (state) => state.rooms.roomId.statusDelete
 export const getIdRoomsData = (state) => state.rooms.roomId.data;
 export const getIdRoomsStatus = (state) => state.rooms.roomId.status;
 export default SliceRooms.reducer;

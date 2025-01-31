@@ -45,7 +45,7 @@ export const RoomsList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const roomsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
-  const {id} = useParams()
+  
   useEffect(() => {
     if (StatusAllRooms === "idle") {
       dispatch(RoomsThunk());
@@ -53,14 +53,6 @@ export const RoomsList = () => {
       
     }
   }, [StatusAllRooms, dispatch, DataAllRooms]);
-
-  if (StatusAllRooms === "pending") {
-    return <div>Loading...</div>;
-  }
-
-  if (StatusAllRooms === "rejected") {
-    return <div>Error loading rooms. Please try again later.</div>;
-  }
 
   // Filtrar habitaciones
   const filteredRooms = DataAllRooms.filter(

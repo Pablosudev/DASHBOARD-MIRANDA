@@ -23,24 +23,137 @@ export const UsersAllThunk = createAsyncThunk("users/getUsers" , async () => {
     }
 });
 
+//FETCH ID
+export const IdUserThunk = createAsyncThunk(
+  "userId/getIdUser",
+  async (id, { rejectWithValue }) => {
+    try {
+      const userId = await new Promise((resolve, reject) => {
+        setTimeout(async () => {
+          try {
+            
+            const response = await fetch("/Data/users.json");
+            if (!response.ok) {
+              reject("Error al cargar los datos");
+            }
+            const jsonData = await response.json();
+
+            const user = jsonData.find((user) => user.id === Number(id));
+
+            if (user) {
+              resolve(user);
+            } else {
+              reject("Usuario no encontrado");
+            }
+          } catch (error) {
+            reject(error);
+          }
+        }, 200);
+      });
+      return userId;
+    } catch (error) {
+      console.error("Error en el thunk:", error);
+      return rejectWithValue(
+        error.message || "Error al obtener los datos de la ID"
+      );
+    }
+  }
+);
+
+
+
 
 //FETCH DELETE
 
-export const DeleteUsersThunk = createAsyncThunk(
+export const DeleteUserThunk = createAsyncThunk(
   "user/deleteUser",
-  async (id, { rejectWithValue }) => {
+  async (id) => {
     try {
-      const response = await fetch(`/Data/users.json?id=${id}`, {
-        method: 'DELETE', 
+      const userId = await new Promise((resolve, reject) => {
+        setTimeout(async () => {
+          try {
+            const response = await fetch(`/Data/users.json?id=${id}`, {method: 'DELETE'});
+              
+            if (!response.ok) {
+              reject("Error al eliminar la habitación");
+            }
+
+            resolve({id});
+          } catch (error) {
+            reject(error);
+          }
+        }, 200);
+      });
+      return userId;
+    } catch (error) {
+      throw new Error("Error al eliminar la habitación");
+    }
+  }
+);
+
+//FETCH CREATE
+export const CreateUserThunk = createAsyncThunk(
+  "user/createUser",
+  async (newUser, { rejectWithValue }) => {
+    try {
+      const userId = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            const newUserWithId = {
+              ...newUser,
+            };
+            
+            resolve(newUserWithId);
+          } catch (error) {
+            reject("Error al crear la habitación");
+          }
+        }, 200);
       });
 
-      if (!response.ok) {
-        return rejectWithValue("Error al eliminar el usuario");
-      }
-
-      return { id }; 
+      return userId; 
     } catch (error) {
-      return rejectWithValue("Error al eliminar el usuario");
+      return rejectWithValue(error);
+    }
+  }
+);
+
+//FETCH EDIT
+export const EditUserThunk = createAsyncThunk(
+  "user/editUser",
+  async ({ id, updatedUser }, { rejectWithValue }) => {
+    try {
+      const userId = await new Promise((resolve, reject) => {
+        setTimeout(async () => {
+          try {
+           
+            const response = await fetch("/Data/users.json");
+            if (!response.ok) {
+              reject("Error al cargar los datos");
+            }
+            const jsonData = await response.json();
+            const updatedData = jsonData.map((user) =>
+              user.id === Number(id) ? { ...user, ...updatedUser } : user
+            );
+            const updatedUserData = updatedData.find(
+              (user) => user.id === Number(id)
+            );
+            if (updatedUserData) {
+              
+              resolve(updatedUserData);
+            } else {
+    
+              reject("Usuario no encontrada");
+            }
+          } catch (error) {
+            
+            reject(error);
+          }
+        }, 200);
+      });
+      return userId;
+    } catch (error) {
+      
+      return rejectWithValue(error.message || "Error al editar el usuario");
     }
   }
 );
