@@ -24,9 +24,10 @@ import { IdUserThunk } from "../Features/UsersThunk";
 export const UserEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
   const Users = useSelector(IdData);
   const UserStatus = useSelector(StatusId);
-  const { id } = useParams;
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewUser((prevState) => ({
@@ -34,6 +35,18 @@ export const UserEdit = () => {
       [name]: value,
     }));
   };
+
+  const handleSave = () => {
+      dispatch(EditUserThunk({ id: Number(id), updatedUser: userId }))
+        .unwrap()
+        .then(() => {
+          alert("Habitación actualizada correctamente");
+          navigate("/users");
+        })
+        .catch((error) => {
+          alert("Error al actualizar la habitación: " + error.message);
+        });
+    };
   const [newUser, setNewUser] = useState({
     full_name: "",
     start_date: "",
@@ -43,11 +56,12 @@ export const UserEdit = () => {
     job_desk: "",
     password: "",
   });
+
   useEffect(() => {
-    if(UserStatus === "idle"){
-      dispatch(IdUserThunk(id))
-      console.log("Recibimos el id ", id)
-    } else if (UserStatus === "fulfilled"){
+    if (UserStatus === "idle") {
+      dispatch(IdUserThunk(id));
+    } else if (UserStatus === "fulfilled") {
+    
       setNewUser({
         full_name: Users.full_name,
         start_date: Users.start_date,
@@ -57,11 +71,13 @@ export const UserEdit = () => {
         job_desk: "",
         password: "",
       });
-    } else if (UserStatus === "rejected"){
-      console.log("Error al cargar los datos")
+      if (Users.id != id) {
+        dispatch(IdUserThunk(id));
+      }
+    } else if (UserStatus === "rejected") {
+      alert("Error al cargar los datos de la habitación");
     }
-  },[ dispatch, id, UserStatus])
-  
+  }, [dispatch, id, UserStatus,]);
 
   return (
     <>
@@ -155,7 +171,7 @@ export const UserEdit = () => {
             <div>
               <TypeInput>Star Date</TypeInput>
               <InputName
-                type="date"
+                type="text"
                 name="start_Date"
                 placeholder="0/00/0000"
                 value={newUser.start_date}
@@ -165,7 +181,7 @@ export const UserEdit = () => {
           </BoxArticle>
         </ContainerInput>
         <ContainerButton>
-          <ButtonGreen>Add User</ButtonGreen>
+          <ButtonGreen onClick={() => {handleSave}}>Create User</ButtonGreen>
         </ContainerButton>
       </ContainerNewUsers>
     </>

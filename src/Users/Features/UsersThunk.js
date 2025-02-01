@@ -38,8 +38,8 @@ export const IdUserThunk = createAsyncThunk(
             }
             const jsonData = await response.json();
 
-            const users = jsonData.find((users) => users.id );
-
+            const users = jsonData.find((users) => users.id === Number(id));
+           
             if (users) {
               resolve(users);
             } else {
