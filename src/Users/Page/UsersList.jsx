@@ -34,25 +34,37 @@ import { Link } from "react-router-dom";
 export const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
-  const navigate = useNavigate();
   const DataUsers = useSelector(AllDataUsers);
   const [users, setUsers] = useState(DataUsers);
   const StatusUser = useSelector(AllStatusUsers);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {id} = useParams();
-  const handleUserCreate = () => {
-    navigate("/users/new");
-  };
+  const [searchTerm, setSearchTerm] = useState("");
   const sortedUsers = [...users].sort((a, b) => {
     return new Date(a.start_date) - new Date(b.start_date);
   });
-
+  const filteredUsers = DataUsers.filter((user) =>
+    user.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = sortedUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser)
 
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
+  
+  const handleCreateUser = () => {
+    navigate("/users/new")
+  }
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1);
+  };
+  const handleDeleteUser = (id) => {
+    dispatch(DeleteUserThunk(id));
+  };
+
 
   useEffect(() => {
     if (StatusUser === "idle") {
@@ -64,9 +76,6 @@ export const UserList = () => {
     }
   },[dispatch, id, StatusUser, DataUsers]);
 
-  const handleDeleteUser = (id) => {
-    dispatch(DeleteUserThunk(id));
-  };
 
   return (
     <>
@@ -78,13 +87,13 @@ export const UserList = () => {
             <SelectTitle>Inactive Employee</SelectTitle>
           </ContainerSelect>
           <ContainerInput>
-            <UsersInput type="text" />
+            <UsersInput type="text" value={searchTerm} onChange={handleSearch}/>
             <label>
               <IconSearch />
             </label>
           </ContainerInput>
           <div>
-            <ButtonGreen type="secondary" onClick={handleUserCreate}>
+            <ButtonGreen type="secondary" onClick={handleCreateUser}>
               Create User
             </ButtonGreen>
           </div>

@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const ContactThunks = createAsyncThunk(
+
+//THUNK ALL
+export const ContactAllThunks = createAsyncThunk(
   "contact/getContact",
   async () => {
     try {
@@ -24,6 +26,8 @@ export const ContactThunks = createAsyncThunk(
     }
   }
 );
+
+//THUNK ID
 export const ContactIdThunks = createAsyncThunk(
   "contactId/getIdContact",
   async (id, { rejecWhitValue }) => {
@@ -58,8 +62,100 @@ export const ContactIdThunks = createAsyncThunk(
   }
 );
 
-export const ContactDeleteThunks = () => {};
+//THUNK DELETE
 
-export const ContactEditThunks = () => {};
+export const ContactDeleteThunk = createAsyncThunk(
+  "contact/deletecontact",
+  async (id) => {
+    try {
+      const contactId = await new Promise((resolve, reject) => {
+        setTimeout(async () => {
+          try {
+            const response = await fetch(`/Data/contact.json?id=${id}`, {method: 'DELETE'});
+              
+            if (!response.ok) {
+              reject("Error al eliminar la habitación");
+            }
 
-export const ContactCreateThunks = () => {};
+            resolve({id});
+          } catch (error) {
+            reject(error);
+          }
+        }, 200);
+      });
+      return contactId;
+    } catch (error) {
+      throw new Error("Error al eliminar la habitación");
+    }
+  }
+);
+
+// THUNK EDIT
+
+export const ContactEditThunks = createAsyncThunk(
+  "contact/editContact",
+  async ({ id, updatedcontact }, { rejectWithValue }) => {
+    try {
+      const contactId = await new Promise((resolve, reject) => {
+        setTimeout(async () => {
+          try {
+           
+            const response = await fetch("/Data/contact.json");
+            if (!response.ok) {
+              reject("Error al cargar los datos");
+            }
+            const jsonData = await response.json();
+            const updatedData = jsonData.map((contact) =>
+              contact.id === Number(id) ? { ...contact, ...updatedcontact } : contact
+            );
+            const updatedcontactData = updatedData.find(
+              (contact) => contact.id === Number(id)
+            );
+            if (updatedcontactData) {
+              
+              resolve(updatedcontactData);
+            } else {
+    
+              reject("Usuario no encontrada");
+            }
+          } catch (error) {
+            
+            reject(error);
+          }
+        }, 200);
+      });
+      return contactId;
+    } catch (error) {
+      
+      return rejectWithValue(error.message || "Error al editar el usuario");
+    }
+  }
+);
+//THUNK CREATE
+
+export const ContactCreateThunk = createAsyncThunk(
+  "contact/createcontact",
+  async (newcontact, { rejectWithValue }) => {
+    try {
+      const contactId = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            const newcontactWithId = {
+              ...newcontact,
+              id: Date.now(),
+            };
+            
+            resolve(newcontactWithId);
+          } catch (error) {
+            reject("Error al crear la habitación");
+          }
+        }, 200);
+      });
+
+      return contactId; 
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+

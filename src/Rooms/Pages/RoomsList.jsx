@@ -27,7 +27,7 @@ import {
 } from "../Components/RoomsList";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRoomsData, getAllRoomsStatus} from "../Features/RoomsSlice";
 import { RoomsThunk, DeleteRoomThunk } from "../Features/RoomsThunk";
