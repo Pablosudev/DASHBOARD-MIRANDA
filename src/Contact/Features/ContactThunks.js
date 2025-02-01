@@ -131,31 +131,38 @@ export const ContactEditThunks = createAsyncThunk(
     }
   }
 );
-//THUNK CREATE
+//THUNK ARCHIVE
 
-export const ContactCreateThunk = createAsyncThunk(
-  "contact/createcontact",
-  async (newcontact, { rejectWithValue }) => {
+export const ContactSaveThunk = createAsyncThunk(
+  "contact/archiveContact",
+  async (id, { getState, rejectWithValue }) => {
     try {
-      const contactId = await new Promise((resolve, reject) => {
+      
+      const state = getState();
+      const contact = state.contact.data.find((contact) => contact.id === id);
+      if (!contact) {
+        return rejectWithValue("Contacto no encontrado");
+      }
+
+      
+      const archivedContact = {
+        ...contact,
+        archived: true,  
+      };
+
+      
+      const updatedContact = await new Promise((resolve) => {
         setTimeout(() => {
-          try {
-            const newcontactWithId = {
-              ...newcontact,
-              id: Date.now(),
-            };
-            
-            resolve(newcontactWithId);
-          } catch (error) {
-            reject("Error al crear la habitación");
-          }
+          resolve(archivedContact);
         }, 200);
       });
 
-      return contactId; 
+      return updatedContact; 
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue("Error al archivar el contacto");
     }
   }
 );
+
+
 

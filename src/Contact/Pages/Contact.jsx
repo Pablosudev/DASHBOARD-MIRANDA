@@ -36,7 +36,11 @@ import { ButtonFake } from "../../commons/Buttons/ButtonFake.js";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen.js";
 import { ButtonDefault } from "../../commons/Buttons/Button.js";
 import { useEffect } from "react";
-import { ContactAllThunks } from "../Features/ContactThunks.js";
+import {
+  ContactAllThunks,
+  ContactIdThunks,
+  ContactSaveThunk,
+} from "../Features/ContactThunks.js";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -51,13 +55,20 @@ export const Contact = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const contactPerPage = 10;
-  const filteredContact = DataContact.filter((contact) =>
-    contact.full_name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [archive, setArchive] = useState(false);
 
+
+  const filteredContact = Array.isArray(DataContact)
+  ? DataContact.filter((contact) =>
+      contact.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  : [];
+  const filteredContactArchive = archive
+  ? filteredContact.filter((contact) => contact.archived === true)
+  : filteredContact;
   const indexOfLastContact = currentPage * contactPerPage;
   const indexOfFirstContact = indexOfLastContact - contactPerPage;
-  const currentContact = filteredContact.slice(
+  const currentContact = filteredContactArchive.slice(
     indexOfFirstContact,
     indexOfLastContact
   );
@@ -67,6 +78,12 @@ export const Contact = () => {
 
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
+
+  const handleArchive = (id) => {
+    dispatch(ContactSaveThunk(id))
+  };
+  
+
   useEffect(() => {
     if (StatusContact === "idle") {
       dispatch(ContactAllThunks(id));
@@ -158,7 +175,12 @@ export const Contact = () => {
           <BoxSelect>
             <ContainerSelect>
               <SelectTitle>All Contacts</SelectTitle>
-              <SelectTitle>Archived</SelectTitle>
+              <SelectTitle
+                onClick={() => setArchive(!archive)}
+                type="primary"
+              >
+                Archived
+              </SelectTitle>
             </ContainerSelect>
           </BoxSelect>
           <TableRooms>
@@ -183,7 +205,7 @@ export const Contact = () => {
                   </TableAmenities>
                   <TableContact>{contact.comment}</TableContact>
                   <TableButton>
-                    <ButtonDefault>ARCHIVE</ButtonDefault>
+                    <ButtonDefault onClick={() => handleArchive(contact.id)}>ARCHIVE</ButtonDefault>
                   </TableButton>
                 </TableR>
               ))}
