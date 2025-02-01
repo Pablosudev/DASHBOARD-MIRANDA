@@ -39,6 +39,7 @@ export const UserList = () => {
   const [users, setUsers] = useState(DataUsers);
   const StatusUser = useSelector(AllStatusUsers);
   const dispatch = useDispatch();
+  const {id} = useParams();
   const handleUserCreate = () => {
     navigate("/users/new");
   };
@@ -55,13 +56,13 @@ export const UserList = () => {
 
   useEffect(() => {
     if (StatusUser === "idle") {
-      dispatch(UsersAllThunk());
+      dispatch(UsersAllThunk(id));
     } else if (StatusUser === "fulfilled") {
       setUsers(DataUsers);
     } else if (StatusUser === "rejected") {
       alert("Error al cargar los datos de los usuarios");
     }
-  });
+  },[dispatch, id, StatusUser]);
 
   const handleDeleteUser = (id) => {
     dispatch(DeleteUserThunk(id));

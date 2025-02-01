@@ -38,10 +38,10 @@ export const IdUserThunk = createAsyncThunk(
             }
             const jsonData = await response.json();
 
-            const user = jsonData.find((user) => user.id === Number(id));
+            const users = jsonData.find((users) => users.id );
 
-            if (user) {
-              resolve(user);
+            if (users) {
+              resolve(users);
             } else {
               reject("Usuario no encontrado");
             }

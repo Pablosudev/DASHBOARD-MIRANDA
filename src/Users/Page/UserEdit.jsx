@@ -19,15 +19,14 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IdData, StatusId } from "../Features/UsersSlice";
-import { EditUserThunk, IdUserThunk } from "../Features/UsersThunk";
-
+import { IdUserThunk } from "../Features/UsersThunk";
 
 export const UserEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const Users = useSelector(IdData);
   const UserStatus = useSelector(StatusId);
-  const {id} = useParams;
+  const { id } = useParams;
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewUser((prevState) => ({
@@ -44,12 +43,11 @@ export const UserEdit = () => {
     job_desk: "",
     password: "",
   });
-
   useEffect(() => {
-    
-    if (UserStatus === "idle") {
-      dispatch(IdUserThunk(id));
-    } else if (UserStatus === "fulfilled") {
+    if(UserStatus === "idle"){
+      dispatch(IdUserThunk(id))
+      console.log("Recibimos el id ", id)
+    } else if (UserStatus === "fulfilled"){
       setNewUser({
         full_name: Users.full_name,
         start_date: Users.start_date,
@@ -59,12 +57,11 @@ export const UserEdit = () => {
         job_desk: "",
         password: "",
       });
-
-      
     } else if (UserStatus === "rejected"){
-        alert("Error al cargar los datos del Usuario")
+      console.log("Error al cargar los datos")
     }
-  },[dispatch, id, UserStatus]);
+  },[ dispatch, id, UserStatus])
+  
 
   return (
     <>
@@ -168,7 +165,7 @@ export const UserEdit = () => {
           </BoxArticle>
         </ContainerInput>
         <ContainerButton>
-          <ButtonGreen >Add User</ButtonGreen>
+          <ButtonGreen>Add User</ButtonGreen>
         </ContainerButton>
       </ContainerNewUsers>
     </>

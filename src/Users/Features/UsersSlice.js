@@ -110,5 +110,5 @@ export const AllDataUsers = (state) => state.users.data;
 export const AllStatusUsers = (state) => state.users.status;
 export const IdData = (state) => state.users.userId.data;
 export const StatusIdDelete = (state) => state.users.userId.statusDelete;
-export const StatusId = (state) => state.users.userId.satatus;
+export const StatusId = (state) => state.users.userId.status;
 export default UsersSlice.reducer;
