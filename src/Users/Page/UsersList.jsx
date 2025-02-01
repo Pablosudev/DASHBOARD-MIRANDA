@@ -62,7 +62,7 @@ export const UserList = () => {
     } else if (StatusUser === "rejected") {
       alert("Error al cargar los datos de los usuarios");
     }
-  },[dispatch, id, StatusUser]);
+  },[dispatch, id, StatusUser, DataUsers]);
 
   const handleDeleteUser = (id) => {
     dispatch(DeleteUserThunk(id));

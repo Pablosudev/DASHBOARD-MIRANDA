@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IdData, StatusId } from "../Features/UsersSlice";
-import { IdUserThunk } from "../Features/UsersThunk";
+import { IdUserThunk, EditUserThunk } from "../Features/UsersThunk";
 
 export const UserEdit = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export const UserEdit = () => {
   };
 
   const handleSave = () => {
-      dispatch(EditUserThunk({ id: Number(id), updatedUser: userId }))
+      dispatch(EditUserThunk({ id: Number(id), updatedUser: newUser }))
         .unwrap()
         .then(() => {
           alert("Habitación actualizada correctamente");
@@ -181,7 +181,7 @@ export const UserEdit = () => {
           </BoxArticle>
         </ContainerInput>
         <ContainerButton>
-          <ButtonGreen onClick={() => {handleSave}}>Create User</ButtonGreen>
+          <ButtonGreen onClick={handleSave}>Edit User</ButtonGreen>
         </ContainerButton>
       </ContainerNewUsers>
     </>

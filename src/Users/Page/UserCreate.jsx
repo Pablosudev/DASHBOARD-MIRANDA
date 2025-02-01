@@ -9,6 +9,7 @@ import { CreateUserThunk } from "../Features/UsersThunk";
 export const UserCreate = () => {
     const dispatch= useDispatch();
     const navigate = useNavigate();
+
     const[ newUser, setNewUser] = useState({
         full_name: "",
         start_date:"",
@@ -16,7 +17,8 @@ export const UserCreate = () => {
         phone_number: "",
         email:"",
         job_desk:"",
-        password:""
+        password:"",
+        status: "Active"
     })
 
     const handleInputChange = (e) => {
@@ -101,12 +103,12 @@ export const UserCreate = () => {
                         <InputName type="password" name="password" onChange={handleInputChange}/> 
                     </div> <div>
                         <TypeInput>Star Date</TypeInput>
-                        <InputName type="date" name="start_Date" placeholder="0/00/0000" value={newUser.start_date} onChange={handleInputChange}/> 
+                        <InputName type="text" name="start_Date" placeholder="0/00/0000" value={newUser.start_date} onChange={handleInputChange}/> 
                     </div> 
                 </BoxArticle>
             </ContainerInput>
             <ContainerButton>
-                <ButtonGreen onClick={handleCreateUser}>Add User</ButtonGreen>
+                <ButtonGreen onClick={handleCreateUser}>SAVE</ButtonGreen>
             </ContainerButton>
             
             </ContainerNewUsers>

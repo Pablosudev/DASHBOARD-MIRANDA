@@ -101,6 +101,7 @@ export const CreateUserThunk = createAsyncThunk(
           try {
             const newUserWithId = {
               ...newUser,
+              id: Date.now(),
             };
             
             resolve(newUserWithId);
