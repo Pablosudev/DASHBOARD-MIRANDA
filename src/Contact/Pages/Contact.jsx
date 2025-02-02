@@ -24,6 +24,7 @@ import {
   TableContact,
   TableButton,
   TableComment,
+  PopUpContacts,
 } from "../../commons/Table";
 import {
   BoxSelect,
@@ -38,13 +39,12 @@ import { ButtonDefault } from "../../commons/Buttons/Button.js";
 import { useEffect } from "react";
 import {
   ContactAllThunks,
-  ContactIdThunks,
   ContactSaveThunk,
 } from "../Features/ContactThunks.js";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { AllDataContact, AllStatusContact } from "../Features/ContacSlice.js";
+import { AllDataContact, AllStatusContact} from "../Features/ContacSlice.js";
 import { useParams } from "react-router-dom";
 export const Contact = () => {
   const StatusContact = useSelector(AllStatusContact);
@@ -56,8 +56,10 @@ export const Contact = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const contactPerPage = 10;
   const [archive, setArchive] = useState(false);
+  const [ showAllContact, setShowAllcontact] = useState(true)
 
 
+//FILTRADO SEGÚN ARCHIVO
   const filteredContact = Array.isArray(DataContact)
   ? DataContact.filter((contact) =>
       contact.full_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -66,6 +68,14 @@ export const Contact = () => {
   const filteredContactArchive = archive
   ? filteredContact.filter((contact) => contact.archived === true)
   : filteredContact;
+  showAllContact 
+  ? [...contact , ...DataContact]
+  : archive
+  ? archivedContact
+  : contact;
+
+
+//FILTRADO PÁGINAS
   const indexOfLastContact = currentPage * contactPerPage;
   const indexOfFirstContact = indexOfLastContact - contactPerPage;
   const currentContact = filteredContactArchive.slice(
@@ -73,16 +83,19 @@ export const Contact = () => {
     indexOfLastContact
   );
   const sortedContact = [...contact].sort((a, b) => {
-    return new Date(a.start_date) - new Date(b.start_date);
+    return new Date(a.date) - new Date(b.date);
   });
-
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
 
+//CONTROL DE CONTACTS
   const handleArchive = (id) => {
     dispatch(ContactSaveThunk(id))
   };
-  
+  const hanldeAllContacts = (id) => {
+    setShowAllcontact(true);
+    setArchive(false)
+  }
 
   useEffect(() => {
     if (StatusContact === "idle") {
@@ -170,11 +183,10 @@ export const Contact = () => {
             </BoxReviews>
           </SliderReviews>
         </SectionContact>
-
         <SectionTable>
           <BoxSelect>
             <ContainerSelect>
-              <SelectTitle>All Contacts</SelectTitle>
+              <SelectTitle onClick={hanldeAllContacts}>All Contacts</SelectTitle>
               <SelectTitle
                 onClick={() => setArchive(!archive)}
                 type="primary"
@@ -203,7 +215,7 @@ export const Contact = () => {
                     {contact.full_name} <br /> {contact.email} <br />{" "}
                     {contact.phone}
                   </TableAmenities>
-                  <TableContact>{contact.comment}</TableContact>
+                  <TableContact onClick={() => handleOpenPopUp(PopUpContacts)}>{contact.comment}</TableContact>
                   <TableButton>
                     <ButtonDefault onClick={() => handleArchive(contact.id)}>ARCHIVE</ButtonDefault>
                   </TableButton>

@@ -117,3 +117,10 @@ background-color: ${(props) =>
 export const TableName = styled.th`
 padding-left:1rem;
 `
+export const PopUpContacts = styled.div`
+padding-top: 4rem;
+padding-bottom:4rem;
+padding-left: 8rem;
+padding-right: 8rem;
+display: none;
+`
