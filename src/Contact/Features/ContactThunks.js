@@ -30,34 +30,43 @@ export const ContactAllThunks = createAsyncThunk(
 //THUNK ID
 export const ContactIdThunks = createAsyncThunk(
   "contactId/getIdContact",
-  async (id, { rejecWhitValue }) => {
-    try{
-        const contactId = await new Promise (( resolve, reject ) => {
-            setTimeout(async () => {
-                try{
-                    const response = await fetch("/Data/contact.json");
-                    if(!response.ok) {
-                        reject("Error al cargar los datos de Contacto")
-                    }
-                    const jsonData = await response.json();
-                    const contact = jsonData.find((contact) => contact.id === Number(id));
+  async (id, { rejectWithValue }) => {
+    try {
+      const contactId = await new Promise((resolve, reject) => {
+        setTimeout(async () => {
+          try {
+            
+            console.log('ID recibido:', id, 'Tipo:', typeof id);
 
-                    if(contact){
-                        resolve(contact);
-                    }else {
-                        reject("Contacto no encontrado")
-                    }
-                } catch (error) {
-                reject(error);
-                }
-            }, 200);
-        });
-        return contactId
-    }   catch (error){
-        console.error("Error en el thunk:" , error);
-        return rejecWhitValue(
-            error.message ||"Error al obtener los datos del contacto"
-        );
+            const response = await fetch("/Data/contact.json");
+            if (!response.ok) {
+              reject("Error al cargar los datos de Contacto");
+            }
+
+            
+            const jsonData = await response.json();
+            console.log('Datos obtenidos:', jsonData);
+            
+            
+            const contact = jsonData.find((contact) => contact.id );
+            console.log('Contacto encontrado:', contact);
+
+            if (contact) {
+              resolve(contact); 
+            } else {
+              reject("Contacto no encontrado"); 
+            }
+          } catch (error) {
+            reject(error.message || "Error en la consulta");
+          }
+        }, 200); 
+      });
+
+      return contactId; 
+
+    } catch (error) {
+      console.error("Error en el thunk:", error);
+      return rejectWithValue(error.message || "Error al obtener los datos del contacto");
     }
   }
 );

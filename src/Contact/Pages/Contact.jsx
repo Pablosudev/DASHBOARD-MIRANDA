@@ -1,17 +1,4 @@
 import {
-  SectionContact,
-  BoxReviews,
-  CancelIcon,
-  CheckIcon,
-  Review,
-  TimeReview,
-  BoxTime,
-  BoxName,
-  BoxCard,
-  ImgUser,
-  SliderReviews,
-  NameReview,
-  BoxIcon,
   CancelArchive,
   ButtonDelete,
 } from "../Components/Contact";
@@ -35,7 +22,7 @@ import {
   ContainerButtons,
   ContainerFake,
 } from "../../Rooms/Components/RoomsList.js";
-import { DeleteIcon } from "../../Bookings/Components/BookingsDetails.js";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake.js";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen.js";
 import { ButtonDefault } from "../../commons/Buttons/Button.js";
@@ -43,18 +30,26 @@ import { useEffect } from "react";
 import {
   ContactAllThunks,
   ContactDeleteThunk,
+  ContactIdThunks,
   ContactSaveThunk,
 } from "../Features/ContactThunks.js";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { AllDataContact, AllStatusContact } from "../Features/ContacSlice.js";
+import {
+  AllDataContact,
+  AllStatusContact,
+  ContactId,
+} from "../Features/ContacSlice.js";
 import { useParams } from "react-router-dom";
+
 export const Contact = () => {
   const StatusContact = useSelector(AllStatusContact);
   const DataContact = useSelector(AllDataContact);
+  const DataId = useSelector(ContactId);
   const dispatch = useDispatch();
   const [contact, setContact] = useState(DataContact);
+  const [contactId, setContactId] = useState(DataId);
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -78,15 +73,16 @@ export const Contact = () => {
     : contact;
 
   //FILTRADO PÁGINAS
+  const sortedContact = [...filteredContactArchive].sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
   const indexOfLastContact = currentPage * contactPerPage;
   const indexOfFirstContact = indexOfLastContact - contactPerPage;
-  const currentContact = filteredContactArchive.slice(
+  const currentContact = sortedContact.slice(
     indexOfFirstContact,
     indexOfLastContact
   );
-  const sortedContact = [...contact].sort((a, b) => {
-    return new Date(a.date) - new Date(b.date);
-  });
+ 
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
 
@@ -106,6 +102,7 @@ export const Contact = () => {
   useEffect(() => {
     if (StatusContact === "idle") {
       dispatch(ContactAllThunks(id));
+      dispatch(ContactIdThunks(id));
     } else if (StatusContact === "fulfilled") {
       setContact(DataContact);
     } else if (StatusContact === "reject") {
@@ -116,86 +113,51 @@ export const Contact = () => {
   return (
     <>
       <section>
-        <SectionContact>
+        {/* <SectionContact>
           <SliderReviews>
-            <BoxReviews>
-              <Review>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam
-              </Review>
-              <BoxCard>
-                <ImgUser
-                  src="/src/assets/Imagenes/user phot.jpg"
-                  alt="photoUser"
-                />
-                <BoxName>
-                  <NameReview>Kusnaidi Anderson</NameReview>
-                  <BoxTime>
-                    <TimeReview>4m ago</TimeReview>
-                    <BoxIcon>
-                      <CancelIcon />
-                      <CheckIcon />
-                    </BoxIcon>
-                  </BoxTime>
-                </BoxName>
-              </BoxCard>
-            </BoxReviews>
-            <BoxReviews>
-              <Review>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam
-              </Review>
-              <BoxCard>
-                <ImgUser
-                  src="/src/assets/Imagenes/user phot.jpg"
-                  alt="photoUser"
-                />
-                <BoxName>
-                  <NameReview>Kusnaidi Anderson</NameReview>
-                  <BoxTime>
-                    <TimeReview>4m ago</TimeReview>
-                    <BoxIcon>
-                      <CancelIcon />
-                      <CheckIcon />
-                    </BoxIcon>
-                  </BoxTime>
-                </BoxName>
-              </BoxCard>
-            </BoxReviews>
-            <BoxReviews>
-              <Review>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam
-              </Review>
-              <BoxCard>
-                <ImgUser
-                  src="/src/assets/Imagenes/user phot.jpg"
-                  alt="photoUser"
-                />
-                <BoxName>
-                  <NameReview>Kusnaidi Anderson</NameReview>
-                  <BoxTime>
-                    <TimeReview>4m ago</TimeReview>
-                    <BoxIcon>
-                      <CancelIcon />
-                      <CheckIcon />
-                    </BoxIcon>
-                  </BoxTime>
-                </BoxName>
-              </BoxCard>
-            </BoxReviews>
+            <Swiper
+              direction="horizontal"
+              spaceBetween={0}
+              slidesPerView={3}
+              navigation={false}
+              pagination={{ clickable: true }}
+              loop={true}
+            >
+              {DataContact.map((contact, index) => (
+                <SwiperSlide>
+                  <BoxReviews>
+                    <Review>{contact.comment}</Review>
+                    <BoxCard>
+                      <ImgUser
+                        src="/src/assets/Imagenes/user phot.jpg"
+                        alt="photoUser"
+                      />
+                      <BoxName>
+                        <NameReview>{contact.full_name}</NameReview>
+                        <BoxTime>
+                          <TimeReview>{contact.date}</TimeReview>
+                          <BoxIcon>
+                            <CancelIcon />
+                            <CheckIcon />
+                          </BoxIcon>
+                        </BoxTime>
+                      </BoxName>
+                    </BoxCard>
+                  </BoxReviews>
+                  <BoxReviews></BoxReviews>
+                </SwiperSlide>
+              ))}
+              ...
+            </Swiper>
           </SliderReviews>
-        </SectionContact>
+        </SectionContact> */}
         <SectionTable>
           <BoxSelect>
             <ContainerSelect>
-              <SelectTitle onClick={hanldeAllContacts} type= "secundary">
+              <SelectTitle onClick={hanldeAllContacts} type={showAllContact ? "primaryActive" : "secundary"}>
                 All Contacts
               </SelectTitle>
-              <SelectTitle onClick={() => setArchive(!archive)} type="primary">
+              <SelectTitle onClick={() => setArchive(!archive)} type={archive ? "primaryActive" : "primary"}>
                 Archived
               </SelectTitle>
             </ContainerSelect>
@@ -226,14 +188,18 @@ export const Contact = () => {
                   <TableButton>
                     {contact.archived ? (
                       <CancelArchive
-                      onClick={() => handleArchive(contact.id)}
-                    />
+                        onClick={() => handleArchive(contact.id)}
+                      />
                     ) : (
-                    <ButtonDefault onClick={() => handleArchive(contact.id)}>
-                      ARCHIVE
-                    </ButtonDefault>
+                      <ButtonDefault onClick={() => handleArchive(contact.id)}>
+                        ARCHIVE
+                      </ButtonDefault>
                     )}
-                    <ButtonDelete onClick={() => handleDeleteContact(contact.id)}>DELETE</ButtonDelete>
+                    <ButtonDelete
+                      onClick={() => handleDeleteContact(contact.id)}
+                    >
+                      DELETE
+                    </ButtonDelete>
                   </TableButton>
                 </TableR>
               ))}

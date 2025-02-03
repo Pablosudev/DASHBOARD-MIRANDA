@@ -17,7 +17,7 @@ display:flex;
 export const BoxReviews = styled.div`
 background-color: #ffffff;
 box-shadow: 0px 4px 4px #00000005;
-max-width: 27rem;
+width: 27rem;
 border-radius: 0.8rem;
 margin-right: 3rem;
 padding-left: 1rem;
@@ -44,7 +44,6 @@ color: #799283;
 export const Review = styled.p`
 text-align: left;
 font: normal normal normal 16px/28px "Poppins";
-letter-spacing: 0px;
 color: #4E4E4E;
 margin-bottom: 2.5rem;
 `
