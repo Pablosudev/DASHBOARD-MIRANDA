@@ -12,6 +12,8 @@ import {
   SliderReviews,
   NameReview,
   BoxIcon,
+  CancelArchive,
+  ButtonDelete,
 } from "../Components/Contact";
 import {
   SectionTable,
@@ -33,18 +35,20 @@ import {
   ContainerButtons,
   ContainerFake,
 } from "../../Rooms/Components/RoomsList.js";
+import { DeleteIcon } from "../../Bookings/Components/BookingsDetails.js";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake.js";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen.js";
 import { ButtonDefault } from "../../commons/Buttons/Button.js";
 import { useEffect } from "react";
 import {
   ContactAllThunks,
+  ContactDeleteThunk,
   ContactSaveThunk,
 } from "../Features/ContactThunks.js";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { AllDataContact, AllStatusContact} from "../Features/ContacSlice.js";
+import { AllDataContact, AllStatusContact } from "../Features/ContacSlice.js";
 import { useParams } from "react-router-dom";
 export const Contact = () => {
   const StatusContact = useSelector(AllStatusContact);
@@ -56,26 +60,24 @@ export const Contact = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const contactPerPage = 10;
   const [archive, setArchive] = useState(false);
-  const [ showAllContact, setShowAllcontact] = useState(true)
+  const [showAllContact, setShowAllcontact] = useState(true);
 
-
-//FILTRADO SEGÚN ARCHIVO
+  //FILTRADO SEGÚN ARCHIVO
   const filteredContact = Array.isArray(DataContact)
-  ? DataContact.filter((contact) =>
-      contact.full_name.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  : [];
+    ? DataContact.filter((contact) =>
+        contact.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
   const filteredContactArchive = archive
-  ? filteredContact.filter((contact) => contact.archived === true)
-  : filteredContact;
-  showAllContact 
-  ? [...contact , ...DataContact]
-  : archive
-  ? archivedContact
-  : contact;
+    ? filteredContact.filter((contact) => contact.archived === true)
+    : filteredContact;
+  showAllContact
+    ? [...contact, ...DataContact]
+    : archive
+    ? archivedContact
+    : contact;
 
-
-//FILTRADO PÁGINAS
+  //FILTRADO PÁGINAS
   const indexOfLastContact = currentPage * contactPerPage;
   const indexOfFirstContact = indexOfLastContact - contactPerPage;
   const currentContact = filteredContactArchive.slice(
@@ -88,14 +90,18 @@ export const Contact = () => {
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
 
-//CONTROL DE CONTACTS
+  //CONTROL DE CONTACTS
   const handleArchive = (id) => {
-    dispatch(ContactSaveThunk(id))
+    dispatch(ContactSaveThunk(id));
   };
   const hanldeAllContacts = (id) => {
     setShowAllcontact(true);
-    setArchive(false)
-  }
+    setArchive(false);
+  };
+  // MANEJAR DELETE
+  const handleDeleteContact = (id) => {
+    dispatch(ContactDeleteThunk(id));
+  };
 
   useEffect(() => {
     if (StatusContact === "idle") {
@@ -186,11 +192,10 @@ export const Contact = () => {
         <SectionTable>
           <BoxSelect>
             <ContainerSelect>
-              <SelectTitle onClick={hanldeAllContacts}>All Contacts</SelectTitle>
-              <SelectTitle
-                onClick={() => setArchive(!archive)}
-                type="primary"
-              >
+              <SelectTitle onClick={hanldeAllContacts} type= "secundary">
+                All Contacts
+              </SelectTitle>
+              <SelectTitle onClick={() => setArchive(!archive)} type="primary">
                 Archived
               </SelectTitle>
             </ContainerSelect>
@@ -215,9 +220,20 @@ export const Contact = () => {
                     {contact.full_name} <br /> {contact.email} <br />{" "}
                     {contact.phone}
                   </TableAmenities>
-                  <TableContact onClick={() => handleOpenPopUp(PopUpContacts)}>{contact.comment}</TableContact>
+                  <TableContact onClick={() => handleOpenPopUp(PopUpContacts)}>
+                    {contact.comment}
+                  </TableContact>
                   <TableButton>
-                    <ButtonDefault onClick={() => handleArchive(contact.id)}>ARCHIVE</ButtonDefault>
+                    {contact.archived ? (
+                      <CancelArchive
+                      onClick={() => handleArchive(contact.id)}
+                    />
+                    ) : (
+                    <ButtonDefault onClick={() => handleArchive(contact.id)}>
+                      ARCHIVE
+                    </ButtonDefault>
+                    )}
+                    <ButtonDelete onClick={() => handleDeleteContact(contact.id)}>DELETE</ButtonDelete>
                   </TableButton>
                 </TableR>
               ))}

@@ -145,17 +145,15 @@ export const ContactSaveThunk = createAsyncThunk(
       }
 
       
-      const archivedContact = {
+      const updatedContact = {
         ...contact,
-        archived: true,  
+        archived: !contact.archived,  
       };
-
-      
-      const updatedContact = await new Promise((resolve) => {
+      await new Promise((resolve => {
         setTimeout(() => {
-          resolve(archivedContact);
-        }, 200);
-      });
+          resolve(updatedContact)
+        }, 200)
+      }))
 
       return updatedContact; 
     } catch (error) {
@@ -163,6 +161,33 @@ export const ContactSaveThunk = createAsyncThunk(
     }
   }
 );
+
+//THUNK POPUP
+
+export const ContactPopUpThunk = createAsyncThunk (
+  "popUp / getPopUp",
+  async (id) => {
+    const popUp = await new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try{
+          const response = await fetch("/Data/contact.json");
+          if (!response.ok){
+            reject ("Problema con los datos del PopUp")
+          }
+          const data = await response.json();
+          const contactData = data.finde(contact => contact.id === id);
+          if(!contactData){
+            reject("No se encontró el contacto")
+          }
+          resolve(contactData);
+        }catch (error){
+          reject("Error al obtener los datos")
+        }
+      },200);
+    });
+    return popUp
+  }
+)
 
 
 

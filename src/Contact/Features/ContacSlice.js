@@ -3,6 +3,7 @@ import {
   ContactAllThunks,
   ContactDeleteThunk,
   ContactIdThunks,
+  ContactPopUpThunk,
   ContactSaveThunk,
 } from "./ContactThunks";
 
@@ -12,6 +13,7 @@ export const ContactSlice = createSlice({
     status: "idle",
     error: null,
     data: [],
+    isOpen: false,
     contactId: {
       status: "idle",
       data: null,
@@ -19,7 +21,7 @@ export const ContactSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    //contactsThunk
+    //SLICE THUNK
     builder
       .addCase(ContactAllThunks.pending, (state) => {
         state.status = "pending";
@@ -90,11 +92,29 @@ export const ContactSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       });
+
+    //SLICE POPUP
+    builder
+    .addCase(ContactPopUpThunk.pending,(state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(ContactPopUpThunk.fulfilled,(state) => {
+      state.loading = false;
+      state.data = action.payload;
+      state.isOpen = true;
+    })
+    .addCase(ContactPopUpThunk.rejected, (state) => {
+      state.loading = false;
+      state.error = action.error.message;
+      state.isOpen = false;
+    })
   },
 });
 
 export const AllDataContact = (state) => state.contact.data;
 export const AllStatusContact = (state) => state.contact.status;
 export const ContactId = (state) => state.contact.contactId.data;
+
 
 export default ContactSlice.reducer;

@@ -141,7 +141,7 @@ export const RoomsList = () => {
                 />
               </TableTd>
               <ContainerId>
-                <Night>#{room.room_number}</Night> <p>{room.id}</p>
+                <Night>{room.room_number}</Night> <p>#{room.id}</p>
               </ContainerId>
               <TableAmenities>{room.room_type}</TableAmenities>
               <TableAmenities>
