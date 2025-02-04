@@ -92,7 +92,6 @@ padding-right: 2rem;
 border-radius: .8rem; 
 display: flex;
 align-items: center;
-
 `
 export const ButtonEditDetails = styled(CiEdit)`
 color: #ffffff;
@@ -236,4 +235,8 @@ background-color: ${(props) =>
     props.status === 'Check In' ? '#5AD07A' :
     props.status === 'Check Out' ? '#E23428' :
     'yellow'};
+`
+export const Edit = styled.p`
+ text-decoration: none;
+ color: inherit;     
 `

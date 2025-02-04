@@ -87,7 +87,74 @@ export const DeleteBookingsThunk = createAsyncThunk("bookings/deleteBookings",
       })
       return BookingsId
     } catch (error) {
-      throw new Error ("Error al eliminar la habitación");
+      throw new Error ("Error al eliminar la reserva");
+    }
+  }
+);
+//THUNK CREATE
+export const CreateBookingThunk = createAsyncThunk(
+  "bookings/createBookings",
+  async (newBooking, { rejectWithValue }) => {
+    try {
+      const bookingId = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            const newBookingWithId = {
+              ...newBooking,
+              id: Date.now(),
+            };
+
+            
+            resolve(newBookingWithId);
+          } catch (error) {
+            reject("Error al crear la reserva");
+          }
+        }, 200);
+      });
+
+      return bookingId; 
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+//THUNK EDIT
+export const EditBookingThunk = createAsyncThunk(
+  "booking/editBooking",
+  async ({ id, updatedBooking }, { rejectWithValue }) => {
+    try {
+      const bookingId = await new Promise((resolve, reject) => {
+        setTimeout(async () => {
+          try {
+           
+            const response = await fetch("/Data/bookings.json");
+            if (!response.ok) {
+              reject("Error al cargar los datos");
+            }
+            const jsonData = await response.json();
+            const updatedData = jsonData.map((booking) =>
+              booking.id === Number(id) ? { ...booking, ...updatedBooking } : booking
+            );
+            const updatedBookingData = updatedData.find(
+              (booking) => booking.id === Number(id)
+            );
+            if (updatedBookingData) {
+              
+              resolve(updatedBookingData);
+            } else {
+    
+              reject("Reserva no encontrada");
+            }
+          } catch (error) {
+            
+            reject(error);
+          }
+        }, 200);
+      });
+      return bookingId;
+    } catch (error) {
+      
+      return rejectWithValue(error.message || "Error al editar la reserva");
     }
   }
 );

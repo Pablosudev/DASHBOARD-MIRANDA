@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import {
   TypeSlide,
   BoxDescription,
@@ -63,6 +63,7 @@ export const BookingsDetails = () => {
   const BookingsId = useSelector(getBookingsId);
   const dispatch = useDispatch();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   //BOTONES PARA IMG
   const handleButtonNext = () => {
@@ -74,6 +75,9 @@ export const BookingsDetails = () => {
       (prevIndex) => (prevIndex - 1 + images.length) % images.length
     );
   };
+  const handleChangeEdit = () => {
+    navigate(`/bookings/edit/${bookingsDetails.id}`)
+  }
   
   useEffect(() => {
     if (StatusBookingsId === "idle") {
@@ -110,10 +114,8 @@ export const BookingsDetails = () => {
             <ButtonMessage>
               <IconMessage /> Send Message
             </ButtonMessage>
-            <ButtonMessage>
-              
+            <ButtonMessage onClick={() => handleChangeEdit(id)}>
               Edit <ButtonEditDetails />
-              
             </ButtonMessage>
           </BoxMessage>
 

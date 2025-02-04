@@ -21,15 +21,17 @@ import {
   TitleSection,
   ContainerSections,
 } from "../../Rooms/Components/RoomsCreate";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getBookingsId, getStatusId } from "../Features/BookingsSlice";
 import { IdRoomThunk } from "../../Rooms/Features/RoomsThunk";
+import { EditBookingThunk } from "../Features/BookingsThunk";
 
 export const BookingsEdit = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {id} = useParams();
   const BookingId = useSelector(getBookingsId);
   const StatusBookingId = useSelector(getStatusId);
   const [newBooking, setNewBooking] = useState({
@@ -41,6 +43,24 @@ export const BookingsEdit = () => {
     special_request: "",
     status: "",
   });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewBoo((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  const handleEditBookings = () => {
+      dispatch(EditBookingThunk({ id: Number(id), updatedBooking: bookingsId }))
+        .unwrap()
+        .then(() => {
+          alert("Habitación actualizada correctamente");
+          navigate("/bookings");
+        })
+        .catch((error) => {
+          alert("Error al actualizar la habitación: " + error.message);
+        });
+    };
 
   useEffect(() => {
     if (StatusBookingId === "idle") {
@@ -65,7 +85,7 @@ export const BookingsEdit = () => {
       <ContainerSections>
         <IconClose
           onClick={() => {
-            navigate("/rooms");
+            navigate("/bookings");
           }}
         />
         <RoomInfo>Room Info</RoomInfo>
@@ -84,7 +104,7 @@ export const BookingsEdit = () => {
             <InputCreate
               type="text"
               name="room_number"
-              value={newRoom.room_number}
+              value={newBooking.room_number}
               onChange={handleInputChange}
             />
           </div>
@@ -95,7 +115,7 @@ export const BookingsEdit = () => {
             <Price
               type="text"
               name="room_price"
-              value={newRoom.room_price}
+              value={newBooking.room_price}
               onChange={handleInputChange}
             />
           </PriceBox>
@@ -129,7 +149,7 @@ export const BookingsEdit = () => {
             <InputDiscount
               type="text"
               name="room_discount"
-              value={newRoom.room_discount}
+              value={newBooking.room_discount}
               onChange={handleInputChange}
             />
           </PriceBox>
@@ -141,7 +161,7 @@ export const BookingsEdit = () => {
             <InputDescription
               type="text"
               name="room_description"
-              value={newRoom.room_description}
+              value={newBooking.room_description}
               onChange={handleInputChange}
             />
           </div>
@@ -189,7 +209,7 @@ export const BookingsEdit = () => {
             changes or cancellations, please contact the hotel directly.
           </p>
         </CancellationBox>
-        <ButtonSave onClick={handleCreateRoom}>SAVE</ButtonSave>
+        <ButtonSave onClick={handleEditBookings}>SAVE</ButtonSave>
       </ContainerSections>
     </CardCreate>
   );
