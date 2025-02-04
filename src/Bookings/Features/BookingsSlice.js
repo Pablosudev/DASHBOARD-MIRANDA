@@ -20,16 +20,16 @@ export const BookingsSlice = createSlice({
     builder
       .addCase(AllBookingsThunk.pending, (state) => {
         state.status = "pending";
-        console.log("Estado Bookings en pending...");
+        
       })
       .addCase(AllBookingsThunk.fulfilled, (state, action) => {
-        console.log("Estado Bookings en fulfilled...");
+
         state.status = "fulfilled";
         state.data = action.payload;
         state.error = null;
       })
       .addCase(AllBookingsThunk.rejected, (state,action) => {
-        console.log("Estado Rooms en rejected...");
+        
         state.status = "rejected";
         state.error = action.error.message;
       });
@@ -38,12 +38,12 @@ export const BookingsSlice = createSlice({
       builder
         .addCase(BookingsIdThunk.pending, (state) => {
           state.bookingsId.status = "pending";
-          console.log("Estado NameBookings en pending...");
+          console.log("Estado ID en pending...");
         })
         .addCase(BookingsIdThunk.fulfilled, (state, action) => {
-          state.bookingsId.status = "fulfilled"
-          state.data = action.payload;
-          state.error = null;
+          state.bookingsId.status = "fulfilled";
+          state.bookingsId.data = action.payload;
+          state.bookingsId.error = null;
         })
         .addCase(BookingsIdThunk.rejected, (state, action) => {
           state.bookingsId.status = "rejected"

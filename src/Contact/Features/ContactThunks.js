@@ -45,11 +45,11 @@ export const ContactIdThunks = createAsyncThunk(
 
             
             const jsonData = await response.json();
-            console.log('Datos obtenidos:', jsonData);
             
             
-            const contact = jsonData.find((contact) => contact.id );
-            console.log('Contacto encontrado:', contact);
+            
+            const contact = jsonData.find((contact) => contact.id === (1) );
+            
 
             if (contact) {
               resolve(contact); 

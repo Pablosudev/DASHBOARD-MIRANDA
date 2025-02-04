@@ -6,6 +6,7 @@ import { LuMessageCircleMore } from "react-icons/lu";
 import { GrView } from "react-icons/gr";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { CiEdit } from "react-icons/ci";
 
 export const CardBookings = styled.section`
 background-color: #ffffff;
@@ -74,7 +75,6 @@ color:#135846;
 border: 1px solid #E8F2EF;
 padding: 1rem;
 border-radius: 0.8rem;
-margin-right:2rem;
 `
 export const IconMessage = styled(LuMessageCircleMore)`
 color: #ffffff;
@@ -89,12 +89,18 @@ font-family: "Poppins";
 font-size:1rem;
 padding-left: 2rem;
 padding-right: 2rem;
-padding-bottom: 0%.9;
-padding-top: 0%.9 ;
 border-radius: .8rem; 
 display: flex;
 align-items: center;
+
 `
+export const ButtonEditDetails = styled(CiEdit)`
+color: #ffffff;
+font-family: "Poppins";
+font-size:1.5rem;
+margin-left: 1rem;
+`
+
 export const IdBookings = styled.p`
 font-family: "Poppins";
 font-size: 0.8rem;
@@ -103,8 +109,8 @@ text-align: center;
 `
 export const BoxMessage = styled.div`
 display: flex;
-padding-left: 8rem;
-margin-top: 0.5rem;
+justify-content: space-around;
+margin-top: 2rem;
 margin-bottom: 0.5rem;
 `
 export const ContainerDetails = styled.article`
@@ -112,6 +118,8 @@ display: flex;
 border-bottom:2px solid #C5C5C5;
 margin-right: 1rem;
 margin-left: 1rem;
+margin-top: 2rem;
+justify-content: center ;
 `
 export const BoxCheck = styled.div`
 margin-right: 2rem;
@@ -131,6 +139,7 @@ font-size: 1rem;
 export const NameBooking = styled.h1`
 font-family: "Poppins";
 font-size: 1.8rem;
+margin-top: 5rem;
 text-align: center;
 margin-bottom: 0%;
 `
@@ -157,6 +166,7 @@ margin-top: 1rem;
 `
 export const ContainerRoom = styled.div`
 display: flex;
+justify-content: center;
 margin-top: 2rem;
 `
 export const Request = styled.p`

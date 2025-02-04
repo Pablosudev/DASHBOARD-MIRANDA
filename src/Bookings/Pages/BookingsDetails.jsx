@@ -31,6 +31,7 @@ import {
   IdBookings,
   Request,
   CloseIcon,
+  ButtonEditDetails,
 } from "../Components/BookingsDetails";
 import { useSelector } from "react-redux";
 import {
@@ -44,7 +45,6 @@ import { BookingsIdThunk } from "../Features/BookingsThunk";
 export const BookingsDetails = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [booking, setBooking] = useState(null);
-  const navigate = useNavigate();
   const images = [
     "/src/assets/Imagenes/room1.jpg",
     "/src/assets/Imagenes/room2.jpg",
@@ -63,11 +63,8 @@ export const BookingsDetails = () => {
   const BookingsId = useSelector(getBookingsId);
   const dispatch = useDispatch();
   const { id } = useParams();
-
-  const handleClose = () => {
-    navigate("/bookings");
-  };
-
+  
+  //BOTONES PARA IMG
   const handleButtonNext = () => {
     setCurrentImage((prevIndex) => (prevIndex + 1) % images.length);
   };
@@ -77,11 +74,14 @@ export const BookingsDetails = () => {
       (prevIndex) => (prevIndex - 1 + images.length) % images.length
     );
   };
-
+  console.log(BookingsId)
   useEffect(() => {
     if (StatusBookingsId === "idle") {
       dispatch(BookingsIdThunk(id));
     } else if (StatusBookingsId === "fulfilled") {
+      if(BookingsId.id !=id){
+        dispatch(BookingsIdThunk(id))
+      }
       setBookingDetails({
         full_name: BookingsId.full_name,
         check_in: BookingsId.check_in,
@@ -93,7 +93,7 @@ export const BookingsDetails = () => {
     } else if ( StatusBookingsId === "rejected") { 
       alert("Error al cargar los datos de la reserva")
     }
-  },[dispatch, id , StatusBookingsId]);
+  },[dispatch, id , StatusBookingsId, BookingsId]);
 
   return (
     <>
@@ -109,6 +109,9 @@ export const BookingsDetails = () => {
             <ButtonMessage>
               <IconMessage /> Send Message
             </ButtonMessage>
+            <ButtonMessage>
+              Edit <ButtonEditDetails/>
+            </ButtonMessage>
           </BoxMessage>
 
           <ContainerDetails>
@@ -121,12 +124,11 @@ export const BookingsDetails = () => {
               <DataCheck>{bookingsDetails.check_out}</DataCheck>
             </BoxCheck>
           </ContainerDetails>
-
           <ContainerRoom>
             <BoxRoom>
               <TitleData>Room Info</TitleData>
               <TypeRoom>
-                {bookingsDetails.room_type} - {bookingsDetails.number_room}
+                {bookingsDetails.room_type}  {bookingsDetails.number_room}
               </TypeRoom>
             </BoxRoom>
             <BoxRoom>
@@ -163,9 +165,9 @@ export const BookingsDetails = () => {
             <IconArrowLeft />
           </ButtonSlideLeft>
           <BoxDescription>
-            <TypeSlide>Deluxe</TypeSlide>
+            <TypeSlide>{bookingsDetails.room_type}</TypeSlide>
             <DescriptionRoom>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              {bookingsDetails.special_request}
             </DescriptionRoom>
           </BoxDescription>
         </CardSlide>

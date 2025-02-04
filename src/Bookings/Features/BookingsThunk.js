@@ -23,7 +23,7 @@ export const AllBookingsThunk = createAsyncThunk(
       });
       return bookings;
     } catch (error) {
-      throw new Error("Error al obtener los datos de las habitaciones");
+      throw new Error("Error al obtener los datos de las reservas");
     }
   }
 );
@@ -31,13 +31,13 @@ export const AllBookingsThunk = createAsyncThunk(
 
 //THUNKS ID
 export const BookingsIdThunk = createAsyncThunk(
-  "BookingsId/getNameBookings",
+  "bookingsId/getIdBookings",
   async (id, {rejectWithValue}) => {
     try {
-      const BookingsId = await new Promise((resolve, reject) => {
+      const bookingsId = await new Promise((resolve, reject) => {
         setTimeout(async () => {
           try {
-            const response = await fetch(`/Data/bookings.json/`);
+            const response = await fetch("/Data/bookings.json");
 
             if (!response.ok) {
               reject("Error al cargar los datos");
@@ -56,11 +56,11 @@ export const BookingsIdThunk = createAsyncThunk(
           }
         }, 200);
       });
-      return BookingsId;
+      return bookingsId;
     } catch (error) {
-      console.log("Error al obtener los datos de Bookings");
+      console.log("Error al obtener los datos de BookingsID");
       return rejectWithValue(
-        error.message ||"Error al obtener los datos de Bookings"
+        error.message ||"Error al obtener los datos de BookingsID"
       )
     }
   }
