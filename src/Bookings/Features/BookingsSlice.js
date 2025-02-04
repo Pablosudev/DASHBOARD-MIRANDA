@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AllBookingsThunk, NameBookingsThunk } from "./BookingsThunk";
-import { NameBooking } from "../Components/BookingsDetails";
+import { AllBookingsThunk, BookingsIdThunk, DeleteBookingsThunk } from "./BookingsThunk";
+
 
 export const BookingsSlice = createSlice({
   name: "bookings",
@@ -8,10 +8,10 @@ export const BookingsSlice = createSlice({
     status: "idle",
     error: null,
     data: [],
-    nameBookings: {
+    BookingsId: {
       status: "idle",
       error: null,
-      data: {},
+      data: null,
     },
   },
   extraReducers: (builder) => {
@@ -32,20 +32,44 @@ export const BookingsSlice = createSlice({
         state.data = action.payload;
         state.error = null;
       });
-
+      //SLICE ID
       builder
-        .addCase(NameBookingsThunk.pending, (state) => {
+        .addCase(BookingsIdThunk.pending, (state) => {
           state.status = "pending";
           console.log("Estado NameBookings en pending...");
         })
-        .addCase(NameBookingsThunk.fulfilled, (state, action) => {
+        .addCase(BookingsIdThunk.fulfilled, (state, action) => {
           state.status = "fulfilled"
           state.data = action.payload;
           state.error = null;
         })
-        .addCase(NameBookingsThunk.rejected, (state, action) => {
-          
-        })
+        .addCase(BookingsIdThunk.rejected, (state, action) => {
+          state.BookingsId.status = "rejected"
+          state.BookingsId.error = action.error.message;
+        });
+
+        //SLICE DELETE
+        builder
+        .addCase(DeleteBookingsThunk.pending, (state) => {
+                  state.BookingsId.statusDelete = "pending";
+                })
+                .addCase(DeleteBookingsThunk.fulfilled, (state, action) => {
+                  state.statusDelete = "fulfilled";
+                 
+                  state.data = state.data.filter(
+                    (bookings) => bookings.id !== action.payload.id
+                  );
+                  
+                  if (state.BookingsId.data && state.BookingsId.data.id === action.payload) {
+                    state.BookingsId.data = null;
+                  }
+        
+                  state.error = null;
+                })
+                .addCase(DeleteBookingsThunk.rejected, (state, action) => {
+                  state.BookingsId.statusDelete = "rejected";
+                  state.BookingsId.error = action.error.message;
+                });
   },
 });
 
@@ -54,6 +78,6 @@ export const BookingsSlice = createSlice({
 //Selectores
 export const getAllBookingsData = (state) => state.bookings?.data || []; 
 export const getAllBookingsStatus = (state) => state.bookings?.status || [];
-export const getAllBookingsError = (state) => state.bookings.error;
+export const getBookingsId = (state) => state.bookings.BookingsId.data
 
 export default BookingsSlice.reducer;

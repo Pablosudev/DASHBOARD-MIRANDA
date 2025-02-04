@@ -48,16 +48,14 @@ export const SliceRooms = createSlice({
         state.roomId.status = "fulfilled";
         state.roomId.data = action.payload;
         state.roomId.error = null;
-        console.log("Datos de la habitación cargados:", action.payload);
+        
       })
       .addCase(IdRoomThunk.rejected, (state, action) => {
         state.roomId.status = "rejected";
         state.roomId.error = action.error.message;
       });
 
-    // EditRoomThunk Reducers
-    
-    
+    // SLICE EDIT
       builder
         .addCase(EditRoomThunk.pending, (state) => {
           state.roomId.status = "pending";

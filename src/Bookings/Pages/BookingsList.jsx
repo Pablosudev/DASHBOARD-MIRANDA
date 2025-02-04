@@ -27,33 +27,63 @@ import {
 import { DeleteIcon, EditIcon } from "../Components/BookingsDetails";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllBookingsData,
   getAllBookingsStatus,
 } from "../Features/BookingsSlice";
-import { AllBookingsThunk } from "../Features/BookingsThunk";
-import { useMemo } from "react";
+import { AllBookingsThunk, DeleteBookingsThunk } from "../Features/BookingsThunk";
+
 
 export const BookingsList = () => {
   const dispatch = useDispatch();
-  const AllDataBookings = useSelector(getAllBookingsData);
-  const AllStatusBookings = useSelector(getAllBookingsStatus);
-  console.log(AllDataBookings)
+  const DataBookings = useSelector(getAllBookingsData);
+  const StatusBookings = useSelector(getAllBookingsStatus);
+  const [bookingsData, setBookingData] = useState(DataBookings);
+  const {id} = useParams()
+  const [searchTerm , setSearchTerm ] = useState ("")
+  const bookingsPerPage= 10 ;
+  const [ currentPage, setCurrentPage ] = useState(1);
+  const handleDeleteBookings = () => {
+    dispatch(DeleteBookingsThunk(id))
+  }
+
 
   useEffect(() => {
-    if (AllStatusBookings === "idle") {
+    if (StatusBookings === "idle") {
       console.log("Despachando");
       dispatch(AllBookingsThunk());
-    } else if (AllStatusBookings === "fulfilled") {
-    } else if (AllStatusBookings === "rejected") {
+    } else if (StatusBookings === "fulfilled") {
+      setBookingData(DataBookings)
+    } else if (StatusBookings === "rejected") {
       alert("Error");
     }
-  }, [AllStatusBookings, dispatch]);
+  }, [StatusBookings, dispatch]);
 
-  const bookingsList = useMemo(() => AllDataBookings, [AllDataBookings]);
+  //FILTRADO DE BOOKINGS
+  const filteredBookings = DataBookings.filter(
+    (bookings) =>
+      bookings.full_name.toString().includes(searchTerm) ||
+      bookings.room_type.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  //PAGINACIÓN 
+  const totalPages = Math.ceil(filteredBookings.lenght / bookingsPerPage);
+  const indexOfLastBookings = currentPage * bookingsPerPage;
+  const indexOfFirstBookings = indexOfLastBookings - bookingsPerPage;
+  const currentBookings = filteredBookings.slice(indexOfFirstBookings,indexOfLastBookings);
+  //BOTONES DE PAGINACIÓN
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
   
 
   return (
@@ -87,7 +117,7 @@ export const BookingsList = () => {
               </TableR>
             </TableHead>
             <TableBody>
-              {bookingsList.slice(0, 10).map((booking) => (
+              {bookingsData.slice(0, 10).map((booking) => (
                 <TableR key={booking.id_booking}>
                   <TableGuest>
                     {booking.full_name} <br /> #{booking.id_booking}
@@ -108,7 +138,7 @@ export const BookingsList = () => {
                     <Link to={`/bookings/details/${booking.id_booking}`}>
                       <EditIcon />
                     </Link>
-                    <DeleteIcon />
+                    <DeleteIcon onClick={handleDeleteBookings(booking.id)}/>
                   </td>
                 </TableR>
               ))}
