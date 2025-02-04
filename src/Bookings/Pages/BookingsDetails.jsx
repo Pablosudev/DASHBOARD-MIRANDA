@@ -1,45 +1,109 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
-  TypeSlide, BoxDescription, ButtonDetails, BoxRoom, CardInfo, ContainerRoom,
-  TypeRoom, BoxPrice, Price, ImgSlide, Night, ButtonSlideLeft, ButtonSlideRight,
-  IconArrowLeft, IconArrowRight, DescriptionRoom, CardBookings, CardSlide,
-  PhoneIcon, IconMessage, ButtonMessage, BoxMessage, ContainerDetails, BoxCheck,
-  TitleData, DataCheck, NameBooking, IdBookings, Request, CloseIcon
+  TypeSlide,
+  BoxDescription,
+  ButtonDetails,
+  BoxRoom,
+  CardInfo,
+  ContainerRoom,
+  TypeRoom,
+  BoxPrice,
+  Price,
+  ImgSlide,
+  Night,
+  ButtonSlideLeft,
+  ButtonSlideRight,
+  IconArrowLeft,
+  IconArrowRight,
+  DescriptionRoom,
+  CardBookings,
+  CardSlide,
+  PhoneIcon,
+  IconMessage,
+  ButtonMessage,
+  BoxMessage,
+  ContainerDetails,
+  BoxCheck,
+  TitleData,
+  DataCheck,
+  NameBooking,
+  IdBookings,
+  Request,
+  CloseIcon,
 } from "../Components/BookingsDetails";
-
+import { useSelector } from "react-redux";
+import {
+  getBookingsId,
+  getStatusId,
+} from "../Features/BookingsSlice";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { BookingsIdThunk } from "../Features/BookingsThunk";
 
 export const BookingsDetails = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const [booking, setBooking] = useState(null); 
+  const [booking, setBooking] = useState(null);
   const navigate = useNavigate();
   const images = [
     "/src/assets/Imagenes/room1.jpg",
     "/src/assets/Imagenes/room2.jpg",
     "/src/assets/Imagenes/room5.jpg",
-    "/src/assets/Imagenes/room4.jpg"
+    "/src/assets/Imagenes/room4.jpg",
   ];
-  
+  const [bookingsDetails, setBookingDetails] = useState({
+    full_name: "",
+    check_in: "",
+    check_out: "",
+    room_type: "",
+    price: "",
+    special_request: "",
+  });
+  const StatusBookingsId = useSelector(getStatusId);
+  const BookingsId = useSelector(getBookingsId);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
   const handleClose = () => {
-    navigate("/bookings")
-  }
-  
+    navigate("/bookings");
+  };
 
   const handleButtonNext = () => {
     setCurrentImage((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   const handleButtonPrev = () => {
-    setCurrentImage((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    setCurrentImage(
+      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+    );
   };
+
+  useEffect(() => {
+    if (StatusBookingsId === "idle") {
+      dispatch(BookingsIdThunk(id));
+    } else if (StatusBookingsId === "fulfilled") {
+      setBookingDetails({
+        full_name: BookingsId.full_name,
+        check_in: BookingsId.check_in,
+        check_out: BookingsId.check_out,
+        room_type: BookingsId.room_type,
+        price:BookingsId.price,
+        special_request: BookingsId.special_request,
+      })
+    } else if ( StatusBookingsId === "rejected") { 
+      alert("Error al cargar los datos de la reserva")
+    }
+  },[dispatch, id , StatusBookingsId]);
 
   return (
     <>
-      <CardBookings key={booking.id_booking}>
+      <CardBookings key={bookingsDetails.id}>
         <CardInfo>
-          <CloseIcon onClick={handleClose}/>
-          <NameBooking>{booking.full_name}</NameBooking>
-          <IdBookings>{booking.id_booking}</IdBookings>
+          <Link to={"/bookings"}>
+          <CloseIcon/>
+          </Link>
+          <NameBooking>{bookingsDetails.full_name}</NameBooking>
+          <IdBookings>{bookingsDetails.id}</IdBookings>
           <BoxMessage>
             <PhoneIcon />
             <ButtonMessage>
@@ -50,42 +114,44 @@ export const BookingsDetails = () => {
           <ContainerDetails>
             <BoxCheck>
               <TitleData>Check In</TitleData>
-              <DataCheck>{booking.check_in}</DataCheck> 
+              <DataCheck>{bookingsDetails.check_in}</DataCheck>
             </BoxCheck>
             <BoxCheck>
               <TitleData>Check Out</TitleData>
-              <DataCheck>{booking.check_out}</DataCheck> 
+              <DataCheck>{bookingsDetails.check_out}</DataCheck>
             </BoxCheck>
           </ContainerDetails>
 
           <ContainerRoom>
             <BoxRoom>
               <TitleData>Room Info</TitleData>
-              <TypeRoom>{booking.room_type} - {booking.number_room}</TypeRoom> 
+              <TypeRoom>
+                {bookingsDetails.room_type} - {bookingsDetails.number_room}
+              </TypeRoom>
             </BoxRoom>
             <BoxRoom>
               <TitleData>Price</TitleData>
               <BoxPrice>
-                <Price>${booking.price}</Price> 
+                <Price>${bookingsDetails.price}</Price>
                 <Night>/night</Night>
               </BoxPrice>
             </BoxRoom>
           </ContainerRoom>
 
-          <Request>{booking.special_request}</Request> 
+          <Request>{bookingsDetails.special_request}</Request>
 
           <TitleData>Amenities</TitleData>
-        <div>
-          <ButtonDetails>FREE WIFI</ButtonDetails>
-          <ButtonDetails>TV LED</ButtonDetails>
-          <ButtonDetails>2 BATHROOM</ButtonDetails>
-          <ButtonDetails>AC</ButtonDetails>
-          <ButtonDetails>3 BED SPACE</ButtonDetails>
-          <ButtonDetails>COFEE SET</ButtonDetails>
-          <ButtonDetails>BATHUP</ButtonDetails>
-          <ButtonDetails>TOWEL</ButtonDetails>
-          <ButtonDetails>SHOWER</ButtonDetails>
-        </div>
+          <div>
+            <ButtonDetails>FREE WIFI</ButtonDetails>
+            <ButtonDetails>TV LED</ButtonDetails>
+            <ButtonDetails>2 BATHROOM</ButtonDetails>
+            <ButtonDetails>AC</ButtonDetails>
+            <ButtonDetails>3 BED SPACE</ButtonDetails>
+            <ButtonDetails>COFEE SET</ButtonDetails>
+            <ButtonDetails>BATHUP</ButtonDetails>
+            <ButtonDetails>TOWEL</ButtonDetails>
+            <ButtonDetails>SHOWER</ButtonDetails>
+          </div>
         </CardInfo>
 
         <CardSlide>

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { PiBookBookmarkThin } from "react-icons/pi";
+
 
 
 //THUNKS TODOS
@@ -70,7 +70,7 @@ export const BookingsIdThunk = createAsyncThunk(
 export const DeleteBookingsThunk = createAsyncThunk("bookings/deleteBookings",
   async (id) => {
     try {
-      const bookingsId = await new Promise ((resolve,reject) => {
+      const BookingsId = await new Promise ((resolve,reject) => {
         setTimeout(async() => {
           try{
             const response = await fetch(`/Data/bookings.json?id=${id}`,
@@ -85,7 +85,7 @@ export const DeleteBookingsThunk = createAsyncThunk("bookings/deleteBookings",
           }
         }, 200)
       })
-      return bookingsId
+      return BookingsId
     } catch (error) {
       throw new Error ("Error al eliminar la habitación");
     }

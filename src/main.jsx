@@ -32,7 +32,7 @@ createRoot(document.getElementById('root')).render(
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/bookings'>
                 <Route path='' element = {<BookingsList/>}/>
-                <Route path='details/:id_booking' element = {<BookingsDetails/>}/>
+                <Route path='/bookings/details/:id' element = {<BookingsDetails/>}/>
               </Route>
               <Route path='/rooms'>
                 <Route path='' element={<RoomsList />} />

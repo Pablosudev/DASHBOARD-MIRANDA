@@ -6,9 +6,10 @@ export const BookingsSlice = createSlice({
   name: "bookings",
   initialState: {
     status: "idle",
+    statusDelete:"idle",
     error: null,
     data: [],
-    BookingsId: {
+    bookingsId: {
       status: "idle",
       error: null,
       data: null,
@@ -21,37 +22,38 @@ export const BookingsSlice = createSlice({
         state.status = "pending";
         console.log("Estado Bookings en pending...");
       })
-      .addCase(AllBookingsThunk.rejected, (state,action) => {
-        console.log("Estado Rooms en rejected...");
-        state.status = "rejected";
-        state.error = action.error.message;
-      })
       .addCase(AllBookingsThunk.fulfilled, (state, action) => {
         console.log("Estado Bookings en fulfilled...");
         state.status = "fulfilled";
         state.data = action.payload;
         state.error = null;
+      })
+      .addCase(AllBookingsThunk.rejected, (state,action) => {
+        console.log("Estado Rooms en rejected...");
+        state.status = "rejected";
+        state.error = action.error.message;
       });
+      ;
       //SLICE ID
       builder
         .addCase(BookingsIdThunk.pending, (state) => {
-          state.status = "pending";
+          state.bookingsId.status = "pending";
           console.log("Estado NameBookings en pending...");
         })
         .addCase(BookingsIdThunk.fulfilled, (state, action) => {
-          state.status = "fulfilled"
+          state.bookingsId.status = "fulfilled"
           state.data = action.payload;
           state.error = null;
         })
         .addCase(BookingsIdThunk.rejected, (state, action) => {
-          state.BookingsId.status = "rejected"
-          state.BookingsId.error = action.error.message;
+          state.bookingsId.status = "rejected"
+          state.bookingsId.error = action.error.message;
         });
 
         //SLICE DELETE
         builder
         .addCase(DeleteBookingsThunk.pending, (state) => {
-                  state.BookingsId.statusDelete = "pending";
+                  state.bookingsId.statusDelete = "pending";
                 })
                 .addCase(DeleteBookingsThunk.fulfilled, (state, action) => {
                   state.statusDelete = "fulfilled";
@@ -60,15 +62,15 @@ export const BookingsSlice = createSlice({
                     (bookings) => bookings.id !== action.payload.id
                   );
                   
-                  if (state.BookingsId.data && state.BookingsId.data.id === action.payload) {
-                    state.BookingsId.data = null;
+                  if (state.bookingsId.data && state.bookingsId.data.id === action.payload) {
+                    state.bookingsId.data = null;
                   }
         
                   state.error = null;
                 })
                 .addCase(DeleteBookingsThunk.rejected, (state, action) => {
-                  state.BookingsId.statusDelete = "rejected";
-                  state.BookingsId.error = action.error.message;
+                  state.bookingsId.statusDelete = "rejected";
+                  state.bookingsId.error = action.error.message;
                 });
   },
 });
@@ -76,8 +78,8 @@ export const BookingsSlice = createSlice({
 
 
 //Selectores
-export const getAllBookingsData = (state) => state.bookings?.data || []; 
-export const getAllBookingsStatus = (state) => state.bookings?.status || [];
-export const getBookingsId = (state) => state.bookings.BookingsId.data
-
+export const getAllBookingsData = (state) => state.bookings.data ; 
+export const getAllBookingsStatus = (state) => state.bookings.status ;
+export const getBookingsId = (state) => state.bookings.bookingsId.data
+export const getStatusId = (state) => state.bookings.bookingsId.status;
 export default BookingsSlice.reducer;

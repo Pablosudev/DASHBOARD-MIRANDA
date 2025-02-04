@@ -33,45 +33,46 @@ import {
   getAllBookingsData,
   getAllBookingsStatus,
 } from "../Features/BookingsSlice";
-import { AllBookingsThunk, DeleteBookingsThunk } from "../Features/BookingsThunk";
-
+import {
+  AllBookingsThunk,
+  DeleteBookingsThunk,
+} from "../Features/BookingsThunk";
 
 export const BookingsList = () => {
   const dispatch = useDispatch();
   const DataBookings = useSelector(getAllBookingsData);
   const StatusBookings = useSelector(getAllBookingsStatus);
-  const [bookingsData, setBookingData] = useState(DataBookings);
-  const {id} = useParams()
-  const [searchTerm , setSearchTerm ] = useState ("")
-  const bookingsPerPage= 10 ;
-  const [ currentPage, setCurrentPage ] = useState(1);
-  const handleDeleteBookings = () => {
-    dispatch(DeleteBookingsThunk(id))
-  }
-
-
+  const { id } = useParams();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [bookingsData, setBookingsData] = useState (DataBookings);
+  const bookingsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  console.log(DataBookings)
   useEffect(() => {
-    if (StatusBookings === "idle") {
-      console.log("Despachando");
-      dispatch(AllBookingsThunk());
-    } else if (StatusBookings === "fulfilled") {
-      setBookingData(DataBookings)
-    } else if (StatusBookings === "rejected") {
-      alert("Error");
-    }
-  }, [StatusBookings, dispatch]);
-
+      if (StatusBookings === "idle") {
+        dispatch(AllBookingsThunk(id));
+      } else if (StatusBookings === "fulfilled") {
+        setBookingsData(DataBookings);
+      } else if (StatusBookings === "rejected") {
+        alert("Error al cargar los datos de los usuarios");
+      }
+    },[dispatch, id, StatusBookings, DataBookings]);
   //FILTRADO DE BOOKINGS
   const filteredBookings = DataBookings.filter(
     (bookings) =>
       bookings.full_name.toString().includes(searchTerm) ||
       bookings.room_type.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  //PAGINACIÓN 
-  const totalPages = Math.ceil(filteredBookings.lenght / bookingsPerPage);
+  
+  //PAGINACIÓN
+  const totalPages = Math.ceil(filteredBookings.length / bookingsPerPage);
   const indexOfLastBookings = currentPage * bookingsPerPage;
   const indexOfFirstBookings = indexOfLastBookings - bookingsPerPage;
-  const currentBookings = filteredBookings.slice(indexOfFirstBookings,indexOfLastBookings);
+  const currentBookings = filteredBookings.slice(
+    indexOfFirstBookings,
+    indexOfLastBookings
+  );
   //BOTONES DE PAGINACIÓN
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -84,8 +85,10 @@ export const BookingsList = () => {
       setCurrentPage(currentPage + 1);
     }
   };
-  
-
+  const handleDeleteBookings = (id) => {
+    dispatch(DeleteBookingsThunk(id))
+  }
+ 
   return (
     <>
       <section>
@@ -117,10 +120,10 @@ export const BookingsList = () => {
               </TableR>
             </TableHead>
             <TableBody>
-              {bookingsData.slice(0, 10).map((booking) => (
-                <TableR key={booking.id_booking}>
+              {currentBookings.map((booking) => (
+                <TableR key={booking.id}>
                   <TableGuest>
-                    {booking.full_name} <br /> #{booking.id_booking}
+                    {booking.full_name} <br /> #{booking.id}
                   </TableGuest>
                   <ContainerId>{booking.date_booking}</ContainerId>
                   <TableAmenities>{booking.check_in}</TableAmenities>
@@ -135,24 +138,41 @@ export const BookingsList = () => {
                     </ButtonBookings>
                   </td>
                   <td>
-                    <Link to={`/bookings/details/${booking.id_booking}`}>
+                    <Link to={`/bookings/details/${booking.id}`}>
                       <EditIcon />
                     </Link>
-                    <DeleteIcon onClick={handleDeleteBookings(booking.id)}/>
+                    <DeleteIcon onClick={() => handleDeleteBookings(booking.id)}/>
                   </td>
                 </TableR>
               ))}
             </TableBody>
           </TableRooms>
           <ContainerButtons>
-            <ButtonGreen type="primary">Prev</ButtonGreen>
+            <ButtonGreen
+              type="primary"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </ButtonGreen>
             <ContainerFake>
-              <ButtonFake>1</ButtonFake>
-              <ButtonFake>2</ButtonFake>
-              <ButtonFake>3</ButtonFake>
-              <ButtonFake>4</ButtonFake>
+              {[...Array(totalPages)].map((_, index) => (
+                <ButtonFake
+                  key={index}
+                  onClick={() => handlePageClick(index + 1)}
+                  active={currentPage === index + 1}
+                >
+                  {index + 1}
+                </ButtonFake>
+              ))}
             </ContainerFake>
-            <ButtonGreen type="primary">Next</ButtonGreen>
+            <ButtonGreen
+              type="primary"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </ButtonGreen>
           </ContainerButtons>
         </SectionTable>
       </section>
