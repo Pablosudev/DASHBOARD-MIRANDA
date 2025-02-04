@@ -17,6 +17,7 @@ import { RoomsEdit } from './Rooms/Pages/RoomsEdit.jsx'
 import { Provider } from 'react-redux'
 import Store from './App/Store.js'
 import { UserEdit } from './Users/Page/UserEdit.jsx'
+import { BookingsEdit } from './Bookings/Pages/BookingsEdit.jsx'
 
 
 
@@ -33,6 +34,7 @@ createRoot(document.getElementById('root')).render(
               <Route path='/bookings'>
                 <Route path='' element = {<BookingsList/>}/>
                 <Route path='/bookings/details/:id' element = {<BookingsDetails/>}/>
+                
               </Route>
               <Route path='/rooms'>
                 <Route path='' element={<RoomsList />} />

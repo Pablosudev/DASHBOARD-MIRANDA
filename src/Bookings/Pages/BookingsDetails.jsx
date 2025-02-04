@@ -40,6 +40,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BookingsIdThunk } from "../Features/BookingsThunk";
 
+
 export const BookingsDetails = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [booking, setBooking] = useState(null);
@@ -73,7 +74,7 @@ export const BookingsDetails = () => {
       (prevIndex) => (prevIndex - 1 + images.length) % images.length
     );
   };
-
+  
   useEffect(() => {
     if (StatusBookingsId === "idle") {
       dispatch(BookingsIdThunk(id));
@@ -110,7 +111,9 @@ export const BookingsDetails = () => {
               <IconMessage /> Send Message
             </ButtonMessage>
             <ButtonMessage>
+              
               Edit <ButtonEditDetails />
+              
             </ButtonMessage>
           </BoxMessage>
 
@@ -153,10 +156,11 @@ export const BookingsDetails = () => {
             <ButtonDetails>TOWEL</ButtonDetails>
             <ButtonDetails>SHOWER</ButtonDetails>
           </div>
+          
         </CardInfo>
 
         <CardSlide>
-          <ButtonBookingsDetails status={bookingsDetails.status}>
+          <ButtonBookingsDetails status = {bookingsDetails.status}>
             {bookingsDetails.status}
           </ButtonBookingsDetails>
           <ImgSlide src={images[currentImage]} alt="photo room" />
