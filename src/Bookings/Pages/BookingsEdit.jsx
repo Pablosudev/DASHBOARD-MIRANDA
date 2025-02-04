@@ -45,16 +45,16 @@ export const BookingsEdit = () => {
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewBoo((prevState) => ({
+    setNewBooking((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
   const handleEditBookings = () => {
-      dispatch(EditBookingThunk({ id: Number(id), updatedBooking: bookingsId }))
+      dispatch(EditBookingThunk({ id: Number(id), updatedBooking: newBooking }))
         .unwrap()
         .then(() => {
-          alert("Habitación actualizada correctamente");
+          alert("Reserva actualizada correctamente");
           navigate("/bookings");
         })
         .catch((error) => {
@@ -67,18 +67,18 @@ export const BookingsEdit = () => {
       dispatch(IdRoomThunk(id));
     } else if (StatusBookingId === "fulfilled") {
       setNewBooking({
-        full_name: newBooking.full_name,
-        check_in: newBooking.check_in,
-        check_out: newBooking.check_out,
-        room_type: newBooking.room_type,
-        price: newBooking.price,
-        special_request: newBooking.special_request,
-        status: newBooking.status,
+        full_name: BookingId.full_name,
+        check_in: BookingId.check_in,
+        check_out: BookingId.check_out,
+        room_type: BookingId.room_type,
+        price: BookingId.price,
+        special_request: BookingId.special_request,
+        status: BookingId.status,
       });
     } else if (StatusBookingId === "rejected") {
       alert("Error al cargar los datos de la reserva");
     }
-  }, []);
+  }, [StatusBookingId, id , dispatch , BookingId]);
 
   return (
     <CardCreate>
@@ -88,7 +88,7 @@ export const BookingsEdit = () => {
             navigate("/bookings");
           }}
         />
-        <RoomInfo>Room Info</RoomInfo>
+        <RoomInfo>Bookings Edit </RoomInfo>
         <BoxTitle>
           <div>
             <TitleSection>Name</TitleSection>
@@ -100,11 +100,11 @@ export const BookingsEdit = () => {
             />
           </div>
           <div>
-            <TitleSection>Room Number</TitleSection>
+            <TitleSection>Room Type</TitleSection>
             <InputCreate
               type="text"
-              name="room_number"
-              value={newBooking.room_number}
+              name="room_type"
+              value={newBooking.room_type}
               onChange={handleInputChange}
             />
           </div>
@@ -115,41 +115,34 @@ export const BookingsEdit = () => {
             <Price
               type="text"
               name="room_price"
-              value={newBooking.room_price}
+              value={newBooking.price}
               onChange={handleInputChange}
             />
           </PriceBox>
           <PriceBox>
-            <TitlePrice>Offer</TitlePrice>
-            <div>
-              <ButtonOffer
-                onClick={() =>
-                  setNewRoom((prevState) => ({
-                    ...prevState,
-                    room_offer: 10,
-                  }))
-                }
-              >
-                10%
-              </ButtonOffer>
-              <ButtonOffer
-                onClick={() =>
-                  setNewRoom((prevState) => ({
-                    ...prevState,
-                    room_offer: 15,
-                  }))
-                }
-              >
-                15%
-              </ButtonOffer>
-            </div>
+          <TitlePrice>Check-In</TitlePrice>
+            <Price
+              type="text"
+              name="room_price"
+              value={new Date(newBooking.check_in)}
+              onChange={handleInputChange}
+            />
           </PriceBox>
           <PriceBox>
-            <TitlePrice>Discount</TitlePrice>
+          <TitlePrice>Check-Out</TitlePrice>
+            <Price
+              type="text"
+              name="room_price"
+              value={new Date(newBooking.check_out)}
+              onChange={handleInputChange}
+            />
+          </PriceBox>
+          <PriceBox>
+            <TitlePrice>Status</TitlePrice>
             <InputDiscount
               type="text"
-              name="room_discount"
-              value={newBooking.room_discount}
+              name="status"
+              value={newBooking.status}
               onChange={handleInputChange}
             />
           </PriceBox>
@@ -160,8 +153,8 @@ export const BookingsEdit = () => {
             <TitleDescripition>Description</TitleDescripition>
             <InputDescription
               type="text"
-              name="room_description"
-              value={newBooking.room_description}
+              name="special_request"
+              value={newBooking.special_request}
               onChange={handleInputChange}
             />
           </div>
