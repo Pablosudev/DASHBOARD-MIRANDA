@@ -27,7 +27,7 @@ import {
 import { DeleteIcon, EditIcon } from "../Components/BookingsDetails";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllBookingsData,
@@ -44,29 +44,30 @@ export const BookingsList = () => {
   const StatusBookings = useSelector(getAllBookingsStatus);
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
-  const [bookingsData, setBookingsData] = useState (DataBookings);
+  const [bookingsData, setBookingsData] = useState(DataBookings);
   const bookingsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
-  
-  console.log(DataBookings)
-  useEffect(() => {
-      if (StatusBookings === "idle") {
-        dispatch(AllBookingsThunk(id));
-      } else if (StatusBookings === "fulfilled") {
-        setBookingsData(DataBookings);
-      } else if (StatusBookings === "rejected") {
-        alert("Error al cargar los datos de los usuarios");
-      }
-    },[dispatch, id, StatusBookings, DataBookings]);
+  const navigate = useNavigate();
 
-    
+  console.log(DataBookings);
+  useEffect(() => {
+    if (StatusBookings === "idle") {
+      dispatch(AllBookingsThunk(id));
+    } else if (StatusBookings === "fulfilled") {
+      setBookingsData(DataBookings);
+    } else if (StatusBookings === "rejected") {
+      alert("Error al cargar los datos de los usuarios");
+    }
+  }, [dispatch, id, StatusBookings, DataBookings]);
+
   //FILTRADO DE BOOKINGS
-  const filteredBookings = DataBookings.filter(
-    (bookings) =>
-      bookings.full_name.toString().includes(searchTerm) ||
-      bookings.room_type.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredBookings = DataBookings.filter((bookings) =>
+    bookings.full_name.toLowerCase().toString().includes(searchTerm)
   );
-  
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1);
+  };
   //PAGINACIÓN
   const totalPages = Math.ceil(filteredBookings.length / bookingsPerPage);
   const indexOfLastBookings = currentPage * bookingsPerPage;
@@ -81,16 +82,19 @@ export const BookingsList = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
   const handleDeleteBookings = (id) => {
-    dispatch(DeleteBookingsThunk(id))
-  }
- 
+    dispatch(DeleteBookingsThunk(id));
+  };
+
+  const handleNewBooking = () => {
+    navigate("/rooms/create");
+  };
+
   return (
     <>
       <section>
@@ -103,11 +107,18 @@ export const BookingsList = () => {
               <SelectTitle>In Progress</SelectTitle>
             </ContainerSelect>
             <ContainerInput>
-              <UsersInput type="text" />
+              <UsersInput
+                type="text"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
               <label>
                 <IconSearch />
               </label>
             </ContainerInput>
+            <ButtonGreen type="secundary" onClick={handleNewBooking}>
+              + New Room
+            </ButtonGreen>
           </BoxSelect>
           <TableRooms>
             <TableHead>
@@ -143,7 +154,9 @@ export const BookingsList = () => {
                     <Link to={`/bookings/details/${booking.id}`}>
                       <EditIcon />
                     </Link>
-                    <DeleteIcon onClick={() => handleDeleteBookings(booking.id)}/>
+                    <DeleteIcon
+                      onClick={() => handleDeleteBookings(booking.id)}
+                    />
                   </td>
                 </TableR>
               ))}
