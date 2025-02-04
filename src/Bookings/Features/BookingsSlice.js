@@ -38,12 +38,13 @@ export const BookingsSlice = createSlice({
       builder
         .addCase(BookingsIdThunk.pending, (state) => {
           state.bookingsId.status = "pending";
-          console.log("Estado ID en pending...");
+          
         })
         .addCase(BookingsIdThunk.fulfilled, (state, action) => {
           state.bookingsId.status = "fulfilled";
           state.bookingsId.data = action.payload;
           state.bookingsId.error = null;
+         
         })
         .addCase(BookingsIdThunk.rejected, (state, action) => {
           state.bookingsId.status = "rejected"

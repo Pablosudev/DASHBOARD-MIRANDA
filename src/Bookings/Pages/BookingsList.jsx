@@ -58,6 +58,8 @@ export const BookingsList = () => {
         alert("Error al cargar los datos de los usuarios");
       }
     },[dispatch, id, StatusBookings, DataBookings]);
+
+    
   //FILTRADO DE BOOKINGS
   const filteredBookings = DataBookings.filter(
     (bookings) =>

@@ -220,3 +220,20 @@ top: 4%;
 left: 5%;
 color: #135846;
 `
+export const ButtonBookingsDetails = styled.button`
+position: absolute;
+right: 2%;
+top:2%;
+padding-left: 1rem;
+padding-right: 1rem;
+padding-top: 1rem;
+padding-bottom: 1rem;
+border-radius: 0.8rem;
+font-family: "Poppins";
+border: transparent;
+background-color: ${(props) => 
+    props.status === 'In Progress' ? 'yellow' :
+    props.status === 'Check In' ? '#5AD07A' :
+    props.status === 'Check Out' ? '#E23428' :
+    'yellow'};
+`

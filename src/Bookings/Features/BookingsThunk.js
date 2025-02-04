@@ -44,7 +44,7 @@ export const BookingsIdThunk = createAsyncThunk(
             }
 
             const jsonData = await response.json();
-            const bookings = jsonData.find((bookings) => bookings.id);
+            const bookings = jsonData.find((bookings) => bookings.id === Number(id));
 
             if (bookings) {
               resolve(bookings);
