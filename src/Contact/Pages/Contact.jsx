@@ -42,6 +42,9 @@ import {
   ContactId,
 } from "../Features/ContacSlice.js";
 import { useParams } from "react-router-dom";
+import { SectionContact } from "../Components/Contact";
+import { SliderReviews } from "../Components/Contact";
+import { BoxReviews, Review, BoxCard, ImgUser, BoxName, NameReview, BoxTime, TimeReview,BoxIcon, CancelIcon, CheckIcon } from "../Components/Contact";
 
 export const Contact = () => {
   const StatusContact = useSelector(AllStatusContact);
@@ -113,7 +116,7 @@ export const Contact = () => {
   return (
     <>
       <section>
-        {/* <SectionContact>
+        <SectionContact>
           <SliderReviews>
             <Swiper
               direction="horizontal"
@@ -123,7 +126,7 @@ export const Contact = () => {
               pagination={{ clickable: true }}
               loop={true}
             >
-              {DataContact.map((contact, index) => (
+              {DataContact.slice(0, 1).map((contact, index) => (
                 <SwiperSlide>
                   <BoxReviews>
                     <Review>{contact.comment}</Review>
@@ -150,7 +153,7 @@ export const Contact = () => {
               ...
             </Swiper>
           </SliderReviews>
-        </SectionContact> */}
+        </SectionContact>
         <SectionTable>
           <BoxSelect>
             <ContainerSelect>
