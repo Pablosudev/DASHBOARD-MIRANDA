@@ -4,13 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { CreateUserThunk } from "../Features/UsersThunk";
+import React from "react";
+import { AppDispatch } from "../../App/Store";
+import { UsersCreate } from "../Interfaces/UsersInterfaces";
 
 
 export const UserCreate = () => {
-    const dispatch= useDispatch();
+    const dispatch= useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
-    const[ newUser, setNewUser] = useState({
+    const[ newUser, setNewUser] = useState<UsersCreate>({
         full_name: "",
         start_date:"",
         job_description: "",
@@ -18,10 +21,13 @@ export const UserCreate = () => {
         email:"",
         job_desk:"",
         password:"",
-        status: "Active"
+        status: "Active",
+        id:0,
+        department:"",
+
     })
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e:any) => {
         const { name, value } = e.target;
         setNewUser((prevState) => ({
           ...prevState,
@@ -79,13 +85,13 @@ export const UserCreate = () => {
                 <BoxArticle>
                     <div>
                         <TypeInput>Job</TypeInput>
-                        <SelectCreate type="text" name="job_description" value={newUser.job_description} onChange={handleInputChange}>
+                        <SelectCreate typeof="text" name="job_description" value={newUser.job_description} onChange={handleInputChange}>
                         <option value="MANAGER">MANAGER</option>
                         <option value="RECEPTIONIST">RECEPTIONIST</option>
                         <option value="ROOM SERVICE">ROOM SERVICE</option>
                         </SelectCreate> 
                         <TypeInput>Status</TypeInput>
-                        <SelectCreate type="text" name="status" value={newUser.status} onChange={handleInputChange}>
+                        <SelectCreate typeof="text" name="status" value={newUser.status} onChange={handleInputChange}>
                         <option value="Active">Active</option>
                         <option value="Inactive">Inactive</option>
                         

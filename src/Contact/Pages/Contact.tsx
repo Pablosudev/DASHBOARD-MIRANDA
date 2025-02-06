@@ -1,7 +1,7 @@
 import {
   CancelArchive,
   ButtonDelete,
-} from "../Components/Contact";
+} from "../Components/Contact.js";
 import {
   SectionTable,
   TableBody,
@@ -14,7 +14,7 @@ import {
   TableButton,
   TableComment,
   PopUpContacts,
-} from "../../commons/Table";
+} from "../../commons/Table.js";
 import {
   BoxSelect,
   ContainerSelect,
@@ -42,22 +42,24 @@ import {
   ContactId,
 } from "../Features/ContacSlice.js";
 import { useParams } from "react-router-dom";
-import { SectionContact } from "../Components/Contact";
-import { SliderReviews } from "../Components/Contact";
-import { BoxReviews, Review, BoxCard, ImgUser, BoxName, NameReview, BoxTime, TimeReview,BoxIcon, CancelIcon, CheckIcon } from "../Components/Contact";
-
+import { SectionContact } from "../Components/Contact.js";
+import { SliderReviews } from "../Components/Contact.js";
+import { BoxReviews, Review, BoxCard, ImgUser, BoxName, NameReview, BoxTime, TimeReview,BoxIcon, CancelIcon, CheckIcon } from "../Components/Contact.js";
+import React from "react";
+import { AppDispatch } from "../../App/Store.js";
+import { Contacts } from "../Interfaces/ContactInterfaces.js";
 export const Contact = () => {
   const StatusContact = useSelector(AllStatusContact);
   const DataContact = useSelector(AllDataContact);
   const DataId = useSelector(ContactId);
-  const dispatch = useDispatch();
-  const [contact, setContact] = useState(DataContact);
-  const [contactId, setContactId] = useState(DataId);
-  const { id } = useParams();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useDispatch<AppDispatch>();
+  const [contact, setContact] = useState<Contacts []>(DataContact);
+
+  const { id } = useParams<{id: string}>();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const contactPerPage = 10;
-  const [archive, setArchive] = useState(false);
+  const [archive, setArchive] = useState<boolean>(false);
   const [showAllContact, setShowAllcontact] = useState(true);
 
   //FILTRADO SEGÚN ARCHIVO
@@ -72,12 +74,12 @@ export const Contact = () => {
   showAllContact
     ? [...contact, ...DataContact]
     : archive
-    ? archivedContact
+    ? archive
     : contact;
 
   //FILTRADO PÁGINAS
   const sortedContact = [...filteredContactArchive].sort((a, b) => {
-    return new Date(a.date) - new Date(b.date);
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
   });
   const indexOfLastContact = currentPage * contactPerPage;
   const indexOfFirstContact = indexOfLastContact - contactPerPage;
@@ -90,10 +92,12 @@ export const Contact = () => {
   const prevPage = () => setCurrentPage(currentPage - 1);
 
   //CONTROL DE CONTACTS
-  const handleArchive = (id) => {
+  
+  const handleArchive = (id:number) => {
+    
     dispatch(ContactSaveThunk(id));
   };
-  const hanldeAllContacts = (id) => {
+  const hanldeAllContacts = () => {
     setShowAllcontact(true);
     setArchive(false);
   };
@@ -105,11 +109,11 @@ export const Contact = () => {
   useEffect(() => {
     if (StatusContact === "idle") {
       dispatch(ContactAllThunks(id));
-      dispatch(ContactIdThunks(id));
+      dispatch(ContactIdThunks( Number(id)));
     } else if (StatusContact === "fulfilled") {
       setContact(DataContact);
-    } else if (StatusContact === "reject") {
-      error("fallo datos de contact");
+    } else if (StatusContact === "rejected") {
+      Error("fallo datos de contact");
     }
   }, [dispatch, id, StatusContact, DataContact]);
 
@@ -157,10 +161,10 @@ export const Contact = () => {
         <SectionTable>
           <BoxSelect>
             <ContainerSelect>
-              <SelectTitle onClick={hanldeAllContacts} type={showAllContact ? "primaryActive" : "secundary"}>
+              <SelectTitle onClick={hanldeAllContacts} typeof={showAllContact ? "primaryActive" : "secundary"}>
                 All Contacts
               </SelectTitle>
-              <SelectTitle onClick={() => setArchive(!archive)} type={archive ? "primaryActive" : "primary"}>
+              <SelectTitle onClick={() => setArchive(!archive)} typeof={archive ? "primaryActive" : "primary"}>
                 Archived
               </SelectTitle>
             </ContainerSelect>
@@ -185,7 +189,7 @@ export const Contact = () => {
                     {contact.full_name} <br /> {contact.email} <br />{" "}
                     {contact.phone}
                   </TableAmenities>
-                  <TableContact onClick={() => handleOpenPopUp(PopUpContacts)}>
+                  <TableContact>
                     {contact.comment}
                   </TableContact>
                   <TableButton>
@@ -211,7 +215,7 @@ export const Contact = () => {
           <ContainerButtons>
             <ButtonGreen
               onClick={prevPage}
-              type="primary"
+              typeof="primary"
               disabled={currentPage === 1}
             >
               Prev
@@ -231,7 +235,7 @@ export const Contact = () => {
             </ContainerFake>
             <ButtonGreen
               onClick={nextPage}
-              type="primary"
+              typeof="primary"
               disabled={currentPage * contactPerPage >= sortedContact.length}
             >
               Next

@@ -1,19 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Contacts } from "../Interfaces/ContactInterfaces";
+import { RootState } from "../../App/Store";
 
 
 //THUNK ALL
-export const ContactAllThunks = createAsyncThunk(
+export const ContactAllThunks = createAsyncThunk<Contacts [], string | undefined>(
   "contact/getContact",
   async () => {
     try {
-      const contact = await new Promise((resolve, reject) => {
+      const contact = await new Promise<Contacts []>((resolve, reject) => {
         setTimeout(async () => {
           try {
             const response = await fetch("/Data/contact.json");
             if (!response.ok) {
               reject("Error al cargar los datos");
             }
-            const json = await response.json();
+            const json: Contacts [] = await response.json();
             resolve(json);
           } catch (error) {
             reject(error);
@@ -28,11 +30,11 @@ export const ContactAllThunks = createAsyncThunk(
 );
 
 //THUNK ID
-export const ContactIdThunks = createAsyncThunk(
+export const ContactIdThunks = createAsyncThunk<Contacts , number>(
   "contactId/getIdContact",
-  async (id, { rejectWithValue }) => {
+  async (id: number , { rejectWithValue }) => {
     try {
-      const contactId = await new Promise((resolve, reject) => {
+      const contactId = await new Promise<Contacts>((resolve, reject) => {
         setTimeout(async () => {
           try {
             
@@ -44,7 +46,7 @@ export const ContactIdThunks = createAsyncThunk(
             }
 
             
-            const jsonData = await response.json();
+            const jsonData: Contacts [] = await response.json();
             
             
             
@@ -73,11 +75,11 @@ export const ContactIdThunks = createAsyncThunk(
 
 //THUNK DELETE
 
-export const ContactDeleteThunk = createAsyncThunk(
+export const ContactDeleteThunk = createAsyncThunk<{id: number}, number >(
   "contact/deletecontact",
-  async (id) => {
+  async (id: number ) => {
     try {
-      const contactId = await new Promise((resolve, reject) => {
+      const contactId = await new Promise<{id : number}>((resolve, reject) => {
         setTimeout(async () => {
           try {
             const response = await fetch(`/Data/contact.json?id=${id}`, {method: 'DELETE'});
@@ -101,11 +103,11 @@ export const ContactDeleteThunk = createAsyncThunk(
 
 // THUNK EDIT
 
-export const ContactEditThunks = createAsyncThunk(
+export const ContactEditThunks = createAsyncThunk<Contacts, {id: number, updatedcontact: Contacts}>(
   "contact/editContact",
   async ({ id, updatedcontact }, { rejectWithValue }) => {
     try {
-      const contactId = await new Promise((resolve, reject) => {
+      const contactId = await new Promise<Contacts>((resolve, reject) => {
         setTimeout(async () => {
           try {
            
@@ -113,7 +115,7 @@ export const ContactEditThunks = createAsyncThunk(
             if (!response.ok) {
               reject("Error al cargar los datos");
             }
-            const jsonData = await response.json();
+            const jsonData: Contacts [] = await response.json();
             const updatedData = jsonData.map((contact) =>
               contact.id === Number(id) ? { ...contact, ...updatedcontact } : contact
             );
@@ -144,11 +146,11 @@ export const ContactEditThunks = createAsyncThunk(
 
 export const ContactSaveThunk = createAsyncThunk(
   "contact/archiveContact",
-  async (id, { getState, rejectWithValue }) => {
+  async (id: number, { getState, rejectWithValue }) => {
     try {
       
-      const state = getState();
-      const contact = state.contact.data.find((contact) => contact.id === id);
+      const state = getState() as RootState;
+      const contact = state.contact.data.find((contact) => contact.id );
       if (!contact) {
         return rejectWithValue("Contacto no encontrado");
       }

@@ -35,4 +35,17 @@ export interface UsersEdit{
     job_desk: string,
     password: string,
     status: string,
+    
+}
+export interface UsersCreate {
+    id: number,
+    full_name: string,
+    start_date: string,
+    job_description: string,
+    phone_number: string,
+    email: string,
+    job_desk: string,
+    password: string,
+    status: string,
+    department: string,
 }
