@@ -1,15 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { RoomsInter, RoomsEdit } from "../Interfaces/RoomsInterfaces";
 //FETCH TODOS
-export const RoomsThunk = createAsyncThunk("rooms/getRooms", async () => {
+export const RoomsThunk = createAsyncThunk<RoomsInter []>("rooms/getRooms", async () => {
   try{
-    const rooms = await new Promise ((resolve,reject) => {
+    const rooms = await new Promise<RoomsInter []>((resolve,reject) => {
       setTimeout(async () => {
         try {
           const response = await fetch("/Data/rooms.json");
           if(!response.ok){
             reject("Error al cargar los datos");
           }
-          const json = await response.json();
+          const json: RoomsInter []= await response.json();
           resolve(json);
         } catch(error) {
           reject(error)
@@ -23,11 +24,11 @@ export const RoomsThunk = createAsyncThunk("rooms/getRooms", async () => {
 });
 
 //FETCH UNO
-export const IdRoomThunk = createAsyncThunk(
+export const IdRoomThunk = createAsyncThunk<RoomsInter, number>(
   "roomId/getIdRoom",
-  async (id, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
-      const roomId = await new Promise((resolve, reject) => {
+      const roomId = await new Promise<RoomsInter>((resolve, reject) => {
         setTimeout(async () => {
           try {
             
@@ -35,7 +36,7 @@ export const IdRoomThunk = createAsyncThunk(
             if (!response.ok) {
               reject("Error al cargar los datos");
             }
-            const jsonData = await response.json();
+            const jsonData: RoomsInter [] = await response.json();
 
             const room = jsonData.find((room) => room.id === Number(id));
 
@@ -60,11 +61,11 @@ export const IdRoomThunk = createAsyncThunk(
 );
 
 //FETCH EDIT
-export const EditRoomThunk = createAsyncThunk(
+export const EditRoomThunk = createAsyncThunk<RoomsInter , {id:number , updatedRoom: RoomsEdit}>(
   "room/editRoom",
   async ({ id, updatedRoom }, { rejectWithValue }) => {
     try {
-      const roomId = await new Promise((resolve, reject) => {
+      const roomId = await new Promise<RoomsInter>((resolve, reject) => {
         setTimeout(async () => {
           try {
            
@@ -72,7 +73,7 @@ export const EditRoomThunk = createAsyncThunk(
             if (!response.ok) {
               reject("Error al cargar los datos");
             }
-            const jsonData = await response.json();
+            const jsonData: RoomsInter [] = await response.json();
             const updatedData = jsonData.map((room) =>
               room.id === Number(id) ? { ...room, ...updatedRoom } : room
             );
@@ -101,11 +102,11 @@ export const EditRoomThunk = createAsyncThunk(
 );
 
 //FETCH DELETE
-export const DeleteRoomThunk = createAsyncThunk(
+export const DeleteRoomThunk = createAsyncThunk<{id: number}, number>(
   "room/deleteRoom",
-  async (id) => {
+  async (id: number) => {
     try {
-      const roomId = await new Promise((resolve, reject) => {
+      const roomId = await new Promise<{id: number}>((resolve, reject) => {
         setTimeout(async () => {
           try {
             const response = await fetch(`/Data/rooms.json?id=${id}`, {method: 'DELETE'});
@@ -128,11 +129,11 @@ export const DeleteRoomThunk = createAsyncThunk(
 );
 
 //FETCH CREATE
-export const CreateRoomThunk = createAsyncThunk(
+export const CreateRoomThunk = createAsyncThunk<RoomsInter,  RoomsInter>(
   "room/createRoom",
   async (newRoom, { rejectWithValue }) => {
     try {
-      const roomId = await new Promise((resolve, reject) => {
+      const roomId = await new Promise<RoomsInter>((resolve, reject) => {
         setTimeout(() => {
           try {
             const newRoomWithId = {
@@ -140,7 +141,7 @@ export const CreateRoomThunk = createAsyncThunk(
               id: Date.now(),
             };
 
-            // Resolvemos la promesa con el nuevo objeto de la habitación
+            
             resolve(newRoomWithId);
           } catch (error) {
             reject("Error al crear la habitación");
@@ -148,7 +149,7 @@ export const CreateRoomThunk = createAsyncThunk(
         }, 200);
       });
 
-      return roomId; // Devolvemos la habitación creada
+      return roomId; 
     } catch (error) {
       return rejectWithValue(error);
     }

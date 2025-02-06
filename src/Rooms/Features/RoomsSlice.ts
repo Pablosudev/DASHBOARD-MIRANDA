@@ -6,22 +6,32 @@ import {
   DeleteRoomThunk,
   CreateRoomThunk,
 } from "./RoomsThunk";
+import { RoomsInter, RoomsState } from "../Interfaces/RoomsInterfaces";
+import { RootState } from "../../App/Store";
 
-export const SliceRooms = createSlice({
-  name: "rooms",
-  initialState: {
-    status: "idle", 
+
+
+const initialState: RoomsState = {
+  status: "idle", 
+  statusDelete: "idle",
+  statusEdit: "idle",
+  statusCreate: "idle",
+  error: undefined,
+  data: [],
+  roomId: {
+    status: "idle",
     statusDelete: "idle",
     statusEdit: "idle",
     statusCreate: "idle",
-    error: null,
-    data: [],
-    roomId: {
-      status: "idle",
-      error: null,
-      data: null,
-    },
-  },
+    error: undefined,
+    data: undefined,
+}
+}
+
+
+export const SliceRooms = createSlice({
+  name: "rooms",
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     // RoomsThunk Reducers
@@ -32,7 +42,7 @@ export const SliceRooms = createSlice({
       .addCase(RoomsThunk.fulfilled, (state, action) => {
         state.status = "fulfilled";
         state.data = action.payload;
-        state.error = null;
+        state.error = undefined;
       })
       .addCase(RoomsThunk.rejected, (state, action) => {
         state.status = "rejected";
@@ -47,7 +57,7 @@ export const SliceRooms = createSlice({
       .addCase(IdRoomThunk.fulfilled, (state, action) => {
         state.roomId.status = "fulfilled";
         state.roomId.data = action.payload;
-        state.roomId.error = null;
+        state.roomId.error = undefined;
         
       })
       .addCase(IdRoomThunk.rejected, (state, action) => {
@@ -63,9 +73,9 @@ export const SliceRooms = createSlice({
         })
         .addCase(EditRoomThunk.fulfilled, (state, action) => {
           state.roomId.status = "fulfilled";
-          state.roomId.data = action.payload; // Actualiza los datos de la habitación
+          state.roomId.data = action.payload; 
     
-          // Actualiza la lista de habitaciones con la habitación editada
+          
           const index = state.data.findIndex((room) => room.id === action.payload.id);
           if (index !== -1) {
             state.data[index] = action.payload;
@@ -92,11 +102,11 @@ export const SliceRooms = createSlice({
             (room) => room.id !== action.payload.id
           );
           
-          if (state.roomId.data && state.roomId.data.id === action.payload) {
-            state.roomId.data = null;
+          if (state.roomId.data && state.roomId.data.id === action.payload.id) {
+            state.roomId.data = undefined;
           }
 
-          state.error = null;
+          state.error = undefined;
         })
         .addCase(DeleteRoomThunk.rejected, (state, action) => {
           state.roomId.statusDelete = "rejected";
@@ -112,7 +122,7 @@ export const SliceRooms = createSlice({
       .addCase(CreateRoomThunk.fulfilled, (state, action) => {
         state.status = "fulfilled";
         state.data.push(action.payload);
-        state.error = null;
+        state.error = undefined;
       })
       .addCase(CreateRoomThunk.rejected, (state, action) => {
         state.roomId.status = "rejected";
@@ -122,10 +132,9 @@ export const SliceRooms = createSlice({
 });
 
 // Selectores
-export const getAllRoomsData = (state) => state.rooms.data;
-export const getAllRoomsStatus = (state) => state.rooms.status;
-export const getAllRoomsError = (state) => state.rooms.error;
-export const getDeleteStatus = (state) => state.rooms.roomId.statusDelete
-export const getIdRoomsData = (state) => state.rooms.roomId.data;
-export const getIdRoomsStatus = (state) => state.rooms.roomId.status;
+export const getAllRoomsData = (state: RootState): RoomsInter [] => state.rooms.data;
+export const getAllRoomsStatus = (state: RootState): 'idle' | 'pending' | 'fulfilled' | 'rejected' => state.rooms.status;
+export const getDeleteStatus = (state: RootState): 'idle' | 'pending' | 'fulfilled' | 'rejected'=> state.rooms.roomId.statusDelete
+export const getIdRoomsData = (state: RootState): RoomsInter | undefined  => state.rooms.roomId.data;
+export const getIdRoomsStatus = (state: RootState): 'idle' | 'pending' | 'fulfilled' | 'rejected' => state.rooms.roomId.status;
 export default SliceRooms.reducer;
