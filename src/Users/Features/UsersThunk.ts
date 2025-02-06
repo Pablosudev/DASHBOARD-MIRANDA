@@ -1,16 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Users, UsersEdit } from "../Interfaces/UsersInterfaces"
 
-
-export const UsersAllThunk = createAsyncThunk("users/getUsers" , async () => {
+export const UsersAllThunk = createAsyncThunk<Users [], string | undefined>("users/getUsers" , async () => {
     try{
-        const users = await new Promise ((resolve, reject) => {
+        const users = await new Promise<Users []> ((resolve, reject) => {
             setTimeout(async () => {
                 try {
                     const response = await fetch ("/Data/users.json");
                     if(!response.ok){
                         reject("Error al cargar los datos");
                     }
-                    const json = await response.json();
+                    const json: Users [] = await response.json();
                     resolve(json);
                 } catch(error) {
                     reject(error);
@@ -24,11 +24,11 @@ export const UsersAllThunk = createAsyncThunk("users/getUsers" , async () => {
 });
 
 //FETCH ID
-export const IdUserThunk = createAsyncThunk(
+export const IdUserThunk = createAsyncThunk<Users , number>(
   "userId/getIdUser",
-  async (id, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
-      const userId = await new Promise((resolve, reject) => {
+      const userId = await new Promise<Users>((resolve, reject) => {
         setTimeout(async () => {
           try {
             
@@ -36,7 +36,7 @@ export const IdUserThunk = createAsyncThunk(
             if (!response.ok) {
               reject("Error al cargar los datos");
             }
-            const jsonData = await response.json();
+            const jsonData: Users[] = await response.json();
 
             const users = jsonData.find((users) => users.id === Number(id));
            
@@ -65,11 +65,11 @@ export const IdUserThunk = createAsyncThunk(
 
 //FETCH DELETE
 
-export const DeleteUserThunk = createAsyncThunk(
+export const DeleteUserThunk = createAsyncThunk<{id:number}, number>(
   "user/deleteUser",
-  async (id) => {
+  async (id: number) => {
     try {
-      const userId = await new Promise((resolve, reject) => {
+      const userId = await new Promise<{ id: number}> ((resolve, reject) => {
         setTimeout(async () => {
           try {
             const response = await fetch(`/Data/users.json?id=${id}`, {method: 'DELETE'});
@@ -92,18 +92,18 @@ export const DeleteUserThunk = createAsyncThunk(
 );
 
 //FETCH CREATE
-export const CreateUserThunk = createAsyncThunk(
+export const CreateUserThunk = createAsyncThunk<Users, Users>(
   "user/createUser",
   async (newUser, { rejectWithValue }) => {
     try {
-      const userId = await new Promise((resolve, reject) => {
+      const userId = await new Promise<Users>((resolve, reject) => {
         setTimeout(() => {
           try {
             const newUserWithId = {
               ...newUser,
               id: Date.now(),
             };
-            
+            console.log(typeof(newUser))
             resolve(newUserWithId);
           } catch (error) {
             reject("Error al crear la habitación");
@@ -119,11 +119,11 @@ export const CreateUserThunk = createAsyncThunk(
 );
 
 //FETCH EDIT
-export const EditUserThunk = createAsyncThunk(
+export const EditUserThunk  = createAsyncThunk<Users, {id: number , updatedUser: UsersEdit}>(
   "user/editUser",
-  async ({ id, updatedUser }, { rejectWithValue }) => {
+  async ({ id, updatedUser}, { rejectWithValue }) => {
     try {
-      const userId = await new Promise((resolve, reject) => {
+      const userId = await new Promise<Users>((resolve, reject) => {
         setTimeout(async () => {
           try {
            
@@ -131,7 +131,7 @@ export const EditUserThunk = createAsyncThunk(
             if (!response.ok) {
               reject("Error al cargar los datos");
             }
-            const jsonData = await response.json();
+            const jsonData: Users[] = await response.json();
             const updatedData = jsonData.map((user) =>
               user.id === Number(id) ? { ...user, ...updatedUser } : user
             );

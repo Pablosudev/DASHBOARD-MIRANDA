@@ -20,21 +20,35 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IdData, StatusId } from "../Features/UsersSlice";
 import { IdUserThunk, EditUserThunk } from "../Features/UsersThunk";
+import { AppDispatch } from "../../App/Store";
+import { Users, UsersEdit } from "../Interfaces/UsersInterfaces";
+import React from "react";
 
 export const UserEdit = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const Users = useSelector(IdData);
   const UserStatus = useSelector(StatusId);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setNewUser((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
+
+  const [newUser, setNewUser] = useState<UsersEdit>({
+    full_name: "",
+    start_date: "",
+    job_description: "",
+    phone_number: "",
+    email: "",
+    job_desk: "",
+    password: "",
+    status,
+  });
 
   const handleSave = () => {
       dispatch(EditUserThunk({ id: Number(id), updatedUser: newUser }))
@@ -47,21 +61,17 @@ export const UserEdit = () => {
           alert("Error al actualizar la habitación: " + error.message);
         });
     };
-  const [newUser, setNewUser] = useState({
-    full_name: "",
-    start_date: "",
-    job_description: "",
-    phone_number: "",
-    email: "",
-    job_desk: "",
-    password: "",
-  });
-
+  
+  const numericId = id ? Number (id) : NaN
   useEffect(() => {
     if (UserStatus === "idle") {
-      dispatch(IdUserThunk(id));
+      if (!isNaN(numericId)) {
+        dispatch(IdUserThunk(numericId));  
+      } else {
+        alert("ID inválido");
+      }
     } else if (UserStatus === "fulfilled") {
-    
+      if (Users){
       setNewUser({
         full_name: Users.full_name,
         start_date: Users.start_date,
@@ -70,9 +80,15 @@ export const UserEdit = () => {
         email: Users.email,
         job_desk: "",
         password: "",
+        status,
       });
-      if (Users.id != id) {
-        dispatch(IdUserThunk(id));
+    }
+      if (Users?.id != id) {
+        if (!isNaN(numericId)) {
+          dispatch(IdUserThunk(numericId));  
+        } else {
+          alert("ID inválido");
+        }
       }
     } else if (UserStatus === "rejected") {
       alert("Error al cargar los datos de la habitación");
@@ -130,7 +146,7 @@ export const UserEdit = () => {
             <div>
               <TypeInput>Job</TypeInput>
               <SelectCreate
-                type="text"
+                typeof="text"
                 name="job_description"
                 value={newUser.job_description}
                 onChange={handleInputChange}
@@ -141,7 +157,7 @@ export const UserEdit = () => {
               </SelectCreate>
               <TypeInput>Status</TypeInput>
               <SelectCreate
-                type="text"
+                typeof  ="text"
                 name="status"
                 value={newUser.status}
                 onChange={handleInputChange}

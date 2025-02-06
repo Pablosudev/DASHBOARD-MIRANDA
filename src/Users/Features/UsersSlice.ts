@@ -1,19 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CreateUserThunk, DeleteUserThunk, EditUserThunk, IdUserThunk, UsersAllThunk } from "./UsersThunk";
+import { Users, UserState } from "../Interfaces/UsersInterfaces";
+import { RootState } from "../../App/Store";
+
+
+
+
+const initialState: UserState = {
+  status: 'idle',
+  statusDelete: 'idle',
+  error: undefined,
+  data: [],
+  userId: {
+    status: 'idle',
+    statusDelete: 'idle',
+    data: null,
+    error: undefined,
+  }
+};
+
 
 export const UsersSlice = createSlice({
   name: "users",
-  initialState: {
-    status: "idle",
-    statusDelete: "idle",
-    error: null,
-    data: [],
-    userId: {
-      status: "idle",
-      data: null,
-      error: null,
-    },
-  },
+  initialState,
+  reducers: {},
   extraReducers: (builder) => {
     //UsersThunk
     builder
@@ -22,8 +32,8 @@ export const UsersSlice = createSlice({
       })
       .addCase(UsersAllThunk.fulfilled, (state, action) => {
         state.status = "fulfilled";
-        state.data = action.payload;
-        state.error = null;
+        state.data = action.payload ;
+        state.error = undefined;
       })
       .addCase(UsersAllThunk.rejected, (state, action) => {
         state.status = "rejected";
@@ -38,8 +48,8 @@ export const UsersSlice = createSlice({
       })
       .addCase(IdUserThunk.fulfilled, (state, action) => {
         state.userId.status = "fulfilled";
-        state.userId.data = action.payload;
-        state.userId.error = null;
+        state.userId.data = action.payload ;
+        state.userId.error = undefined;
         console.log("Datos de la habitación cargados:", action.payload);
       })
       .addCase(IdUserThunk.rejected, (state, action) => {
@@ -56,20 +66,20 @@ export const UsersSlice = createSlice({
         state.statusDelete = "fulfilled";
 
         state.data = state.data.filter(
-          (users) => users.id !== action.payload.id
+          (users) => users.id !== action.payload.id 
         );
 
-        if (state.userId.data && state.userId.data.id === action.payload) {
+        if (state.userId.data && state.userId.data.id === action.payload.id) {
           state.userId.data = null;
         }
 
-        state.error = null;
+        state.error = undefined;
       })
       .addCase(DeleteUserThunk.rejected, (state, action) => {
         state.userId.statusDelete = "rejected";
         state.userId.error = action.error.message;
       });
-      //UserCreate
+    //UserCreate
     builder
       .addCase(CreateUserThunk.pending, (state) => {
         state.userId.status = "pending";
@@ -77,38 +87,38 @@ export const UsersSlice = createSlice({
       .addCase(CreateUserThunk.fulfilled, (state, action) => {
         state.status = "fulfilled";
         state.data.push(action.payload);
-        state.error = null;
+        state.error = undefined;
       })
       .addCase(CreateUserThunk.rejected, (state, action) => {
         state.userId.status = "rejected";
         state.userId.error = action.error.message;
       });
 
-      //UserEdit
-      builder
-        .addCase(EditUserThunk.pending, (state) => {
-          state.userId.status = "pending";
-        })
-        .addCase(EditUserThunk.fulfilled, (state, action) => {
-          state.userId.status = "fulfilled";
-          state.userId.data = action.payload; 
-          
-          const index = state.data.findIndex((user) => user.id === action.payload.id);
-          if (index !== -1) {
-            state.data[index] = action.payload;
-          }
-          
-        })
-        .addCase(EditUserThunk.rejected, (state, action) => {
-          state.userId.status = "rejected";
-          state.userId.error = action.error.message;
-        });
+    //UserEdit
+    builder
+      .addCase(EditUserThunk.pending, (state) => {
+        state.userId.status = "pending";
+      })
+      .addCase(EditUserThunk.fulfilled, (state, action) => {
+        state.userId.status = "fulfilled";
+        state.userId.data = action.payload ;
+
+        const index = state.data.findIndex((user) => user.id === action.payload.id);
+        if (index !== -1) {
+          state.data[index] = action.payload ;
+        }
+
+      })
+      .addCase(EditUserThunk.rejected, (state, action) => {
+        state.userId.status = "rejected";
+        state.userId.error = action.error.message;
+      });
   },
 });
 
-export const AllDataUsers = (state) => state.users.data;
-export const AllStatusUsers = (state) => state.users.status;
-export const IdData = (state) => state.users.userId.data;
-export const StatusIdDelete = (state) => state.users.userId.statusDelete;
-export const StatusId = (state) => state.users.userId.status;
+export const AllDataUsers = (state: RootState): Users[] => state.users.data;
+export const AllStatusUsers = (state: RootState): 'idle' | 'pending' | 'fulfilled' | 'rejected' => state.users.status;
+export const IdData = (state: RootState): Users | null => state.users.userId.data;
+export const StatusIdDelete = (state: RootState): 'idle' | 'pending' | 'fulfilled' | 'rejected' => state.users.userId.statusDelete;
+export const StatusId = (state: RootState): 'idle' | 'pending' | 'fulfilled' | 'rejected' => state.users.userId.status;
 export default UsersSlice.reducer;

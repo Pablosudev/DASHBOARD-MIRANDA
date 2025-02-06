@@ -25,26 +25,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { AllDataUsers, AllStatusUsers } from "../Features/UsersSlice";
 import { DeleteUserThunk, UsersAllThunk } from "../Features/UsersThunk";
 import { StatusUsers } from "../../commons/Table";
+import { Users } from "../Interfaces/UsersInterfaces";
 import {
   DeleteIcon,
   EditIcon,
 } from "../../Bookings/Components/BookingsDetails";
 import { Link } from "react-router-dom";
+import React from "react";
+import { AppDispatch } from "../../App/Store";
 
 export const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
   const DataUsers = useSelector(AllDataUsers);
-  const [users, setUsers] = useState(DataUsers);
+  const [users, setUsers] = useState<Users []>(DataUsers);
   const StatusUser = useSelector(AllStatusUsers);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const {id} = useParams();
-  const [searchTerm, setSearchTerm] = useState("");
-  const sortedUsers = [...users].sort((a, b) => {
-    return new Date(a.start_date) - new Date(b.start_date);
+  const {id} = useParams<{id:string}>();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const sortedUsers: Users [] = [...users].sort((a, b) => {
+    return new Date(a.start_date).getTime() - new Date(b.start_date).getTime();
   });
-  const filteredUsers = DataUsers.filter((user) =>
+  const filteredUsers: Users[] = DataUsers.filter((user) =>
     user.full_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const indexOfLastUser = currentPage * usersPerPage;
@@ -61,10 +64,11 @@ export const UserList = () => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
-  const handleDeleteUser = (id) => {
+  const handleDeleteUser = (id: number) => {
     dispatch(DeleteUserThunk(id));
   };
 
+  
 
   useEffect(() => {
     if (StatusUser === "idle") {
@@ -93,7 +97,7 @@ export const UserList = () => {
             </label>
           </ContainerInput>
           <div>
-            <ButtonGreen type="secondary" onClick={handleCreateUser}>
+            <ButtonGreen typeof ="secondary" onClick={handleCreateUser}>
               Create User
             </ButtonGreen>
           </div>
@@ -129,7 +133,7 @@ export const UserList = () => {
                 <TableAmenities>{user.phone_number}</TableAmenities>
                 <TableAmenities>{user.email}</TableAmenities>
                 <td>
-                  <StatusUsers status={user.status}>{user.status}</StatusUsers>
+                  <StatusUsers typeof ={user.status}>{user.status}</StatusUsers>
                 </td>
                 <td>
                   <Link to= {`/users/edit/${user.id}`}> <EditIcon /></Link>
@@ -147,7 +151,7 @@ export const UserList = () => {
         <ContainerButtons>
           <ButtonGreen
             onClick={prevPage}
-            type="primary"
+            typeof ="primary"
             disabled={currentPage === 1}
           >
             Prev
@@ -158,7 +162,7 @@ export const UserList = () => {
                 <ButtonFake
                   key={index + 1}
                   onClick={() => setCurrentPage(index + 1)}
-                  active={currentPage === index + 1}
+                  active ={currentPage === index + 1}
                 >
                   {index + 1}
                 </ButtonFake>
@@ -167,7 +171,7 @@ export const UserList = () => {
           </ContainerFake>
           <ButtonGreen
             onClick={nextPage}
-            type="primary"
+            typeof ="primary"
             disabled={currentPage * usersPerPage >= sortedUsers.length}
           >
             Next

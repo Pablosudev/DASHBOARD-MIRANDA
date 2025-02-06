@@ -1,7 +1,7 @@
 import styled from "styled-components"
+import { ButtonFakeProps } from "../../Users/Interfaces/UsersInterfaces"
 
-
-export const ButtonFake = styled.button`
+export const ButtonFake = styled.button<ButtonFakeProps>`
 background-color: ${(props) => (props.active ? '#135846' : '#F5F5F5')};
 color: ${(props) => (props.active ? 'white' : 'black')};
 padding-top:1rem;
