@@ -114,7 +114,7 @@ export const UserCreate = () => {
                 </BoxArticle>
             </ContainerInput>
             <ContainerButton>
-                <ButtonGreen onClick={handleCreateUser}>SAVE</ButtonGreen>
+                <ButtonGreen type="" onClick={handleCreateUser}>SAVE</ButtonGreen>
             </ContainerButton>
             
             </ContainerNewUsers>

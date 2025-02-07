@@ -51,7 +51,7 @@ export const ContactSlice = createSlice({
         state.contactId.status = "fulfilled";
         state.contactId.data = action.payload;
         state.contactId.error = undefined;
-        console.log("Datos de la habitación cargados:", action.payload);
+       
       })
       .addCase(ContactIdThunks.rejected, (state, action) => {
         state.contactId.status = "rejected";

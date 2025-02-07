@@ -2,10 +2,12 @@ export interface RoomsInter {
   room_number: number;
   id: number;
   room_price: number;
-  rooom_offer: number;
+  room_offer: number;
   status: string;
   room_type: string;
   amenities: string;
+  room_discount: number ,
+  room_description: string,
 }
 export interface RoomsState {
   status: "idle" | "fulfilled" | "rejected" | "pending";
@@ -23,11 +25,12 @@ export interface RoomsState {
     data: RoomsInter | undefined;
   };
 }
-export interface RoomsEdit {
+export interface RoomsEdits {
     room_type:string,
     room_number: number,
     room_price: number,
     room_offer: number,
     room_discount: number ,
     room_description: string,
+    amenities: [],
 }

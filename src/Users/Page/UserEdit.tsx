@@ -197,7 +197,7 @@ export const UserEdit = () => {
           </BoxArticle>
         </ContainerInput>
         <ContainerButton>
-          <ButtonGreen onClick={handleSave}>Edit User</ButtonGreen>
+          <ButtonGreen onClick={handleSave} type="">Edit User</ButtonGreen>
         </ContainerButton>
       </ContainerNewUsers>
     </>

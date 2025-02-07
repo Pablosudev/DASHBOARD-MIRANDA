@@ -50,13 +50,11 @@ import { AppDispatch } from "../../App/Store.js";
 import { Contacts } from "../Interfaces/ContactInterfaces.js";
 export const Contact = () => {
   const StatusContact = useSelector(AllStatusContact);
-  const DataContact = useSelector(AllDataContact);
-  const DataId = useSelector(ContactId);
+  const DataContact: Contacts [] = useSelector(AllDataContact);
   const dispatch = useDispatch<AppDispatch>();
   const [contact, setContact] = useState<Contacts []>(DataContact);
-
   const { id } = useParams<{id: string}>();
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>(""); //Solucionar
   const [currentPage, setCurrentPage] = useState<number>(1);
   const contactPerPage = 10;
   const [archive, setArchive] = useState<boolean>(false);
@@ -130,7 +128,7 @@ export const Contact = () => {
               pagination={{ clickable: true }}
               loop={true}
             >
-              {DataContact.slice(0, 1).map((contact, index) => (
+              {DataContact.slice(0, 1).map((contact) => (
                 <SwiperSlide>
                   <BoxReviews>
                     <Review>{contact.comment}</Review>
@@ -215,7 +213,7 @@ export const Contact = () => {
           <ContainerButtons>
             <ButtonGreen
               onClick={prevPage}
-              typeof="primary"
+              type="primary"
               disabled={currentPage === 1}
             >
               Prev
@@ -235,7 +233,7 @@ export const Contact = () => {
             </ContainerFake>
             <ButtonGreen
               onClick={nextPage}
-              typeof="primary"
+              type="primary"
               disabled={currentPage * contactPerPage >= sortedContact.length}
             >
               Next

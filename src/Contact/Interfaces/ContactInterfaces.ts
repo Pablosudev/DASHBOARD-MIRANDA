@@ -11,6 +11,8 @@ export interface Contacts{
     asunto: string,
     comment: string, 
 }
+
+
 export interface ContactState {
     status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
     statusDelete: 'idle' | 'pending' | 'fulfilled' | 'rejected';

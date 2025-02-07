@@ -36,15 +36,16 @@ import {
   EditIcon,
 } from "../../Bookings/Components/BookingsDetails";
 import { Link } from "react-router-dom";
+import { AppDispatch } from "../../App/Store";
 
 export const RoomsList = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const DataAllRooms = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const roomsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   
   useEffect(() => {
     if (StatusAllRooms === "idle") {
@@ -114,7 +115,7 @@ export const RoomsList = () => {
           </label>
         </ContainerInput>
         <div>
-          <ButtonGreen type="secundary" onClick={handleNewRoom}>
+          <ButtonGreen typeof="secundary" onClick={handleNewRoom}>
             + New Room
           </ButtonGreen>
         </div>
@@ -133,7 +134,7 @@ export const RoomsList = () => {
         </TableHead>
         <TableBody>
           {currentRooms.map((room, index ) => (
-            <TableR key={room.room_number}index={index}>
+            <TableR key={room.room_number} index ={index}>
               <TableTd>
                 <TableImg
                   src={room.image_url || "/src/assets/Imagenes/room10.jpg"}
@@ -179,7 +180,7 @@ export const RoomsList = () => {
       </TableRooms>
       <ContainerButtons>
         <ButtonGreen
-          type="primary"
+          typeof ="primary"
           onClick={handlePrevPage}
           disabled={currentPage === 1}
         >
@@ -197,7 +198,7 @@ export const RoomsList = () => {
           ))}
         </ContainerFake>
         <ButtonGreen
-          type="primary"
+          typeof="primary"
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
         >

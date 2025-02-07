@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
+export interface ButtonGreenProps {
+    type: string,
+}
 
-
-export const ButtonGreen = styled.button`
+export const ButtonGreen = styled.button<ButtonGreenProps>`
 font-family: "Poppins"; 
 padding-left:1.5rem;
 padding-right:1.5rem;
@@ -13,3 +15,4 @@ border-radius: 12px;
 background-color: ${props => props.type === 'primary' ? '#ffffff' : '#135846'};
 color: ${props => props.type === 'primary' ? '#135846' : '#ffffff'};
 `
+

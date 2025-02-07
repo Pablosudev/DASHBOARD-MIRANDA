@@ -97,7 +97,7 @@ export const UserList = () => {
             </label>
           </ContainerInput>
           <div>
-            <ButtonGreen typeof ="secondary" onClick={handleCreateUser}>
+            <ButtonGreen type ="secondary" onClick={handleCreateUser}>
               Create User
             </ButtonGreen>
           </div>
@@ -151,7 +151,7 @@ export const UserList = () => {
         <ContainerButtons>
           <ButtonGreen
             onClick={prevPage}
-            typeof ="primary"
+            type ="primary"
             disabled={currentPage === 1}
           >
             Prev
@@ -171,7 +171,7 @@ export const UserList = () => {
           </ContainerFake>
           <ButtonGreen
             onClick={nextPage}
-            typeof ="primary"
+            type ="primary"
             disabled={currentPage * usersPerPage >= sortedUsers.length}
           >
             Next

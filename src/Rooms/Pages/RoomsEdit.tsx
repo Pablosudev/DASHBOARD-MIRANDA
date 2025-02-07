@@ -24,23 +24,26 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { IdRoomThunk, EditRoomThunk } from "../Features/RoomsThunk";
 import { useEffect, useState } from "react";
 import { getIdRoomsData, getIdRoomsStatus } from "../Features/RoomsSlice";
+import { AppDispatch } from "../../App/Store";
+import { RoomsEdits, RoomsInter } from "../Interfaces/RoomsInterfaces";
+import React from "react";
 
 export const RoomsEdit = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
+  const { id } = useParams<{id: string}>();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const RoomID = useSelector(getIdRoomsData);
+  const RoomID: RoomsInter | undefined = useSelector(getIdRoomsData);
   const StatusRoom = useSelector(getIdRoomsStatus);
-  const [roomId, setRoomId] = useState({
+  const [roomId, setRoomId] = useState<RoomsEdits>({
     room_type:"",
-    room_number: "",
-    room_price: "",
-    room_offer: "",
-    room_discount: "" ,
+    room_number: 0,
+    room_price: 0,
+    room_offer: 0,
+    room_discount: 0,
     room_description: "",
   });
   
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     const { name, value } = e.target;
     setRoomId((prevState) => ({
       ...prevState,
@@ -64,12 +67,14 @@ export const RoomsEdit = () => {
   useEffect(() => {
     
     if (StatusRoom === "idle") {
-      dispatch(IdRoomThunk(id));
+
+      dispatch(IdRoomThunk(parseInt(id!)));
       
     } else if (StatusRoom === "fulfilled") {
-      if(RoomID.id != id){
-        dispatch(IdRoomThunk(id))
+      if(RoomID?.id != id){
+        dispatch(IdRoomThunk(parseInt(id!)))
       }
+      if(RoomID){
       setRoomId({
         room_type: RoomID.room_type,
         room_number: RoomID.room_number,
@@ -78,6 +83,7 @@ export const RoomsEdit = () => {
         room_discount: RoomID.room_discount ,
         room_description: RoomID.room_description,
       })
+    }
     } else if (StatusRoom === "rejected") {
       alert("Error al cargar los datos de la habitación");
     } 
@@ -127,7 +133,7 @@ export const RoomsEdit = () => {
                 onClick={() =>
                   setRoomId((prevState) => ({
                     ...prevState,
-                    room_offer: "10",
+                    room_offer: 10,
                   }))
                 }
               >
@@ -137,7 +143,7 @@ export const RoomsEdit = () => {
                 onClick={() =>
                   setRoomId((prevState) => ({
                     ...prevState,
-                    room_offer: "15",
+                    room_offer: 15,
                   }))
                 }
               >
@@ -168,35 +174,31 @@ export const RoomsEdit = () => {
           <div>
             <TitleDescripition>Amenities</TitleDescripition>
             <div>
-              <ButtonAmenities onClick={() => handleAmenityChange("FREE WIFI")}>
+              <ButtonAmenities>
                 FREE WIFI
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenityChange("TV LED")}>
+              <ButtonAmenities >
                 TV LED
               </ButtonAmenities>
-              <ButtonAmenities
-                onClick={() => handleAmenityChange("2 BATHROOM")}
-              >
+              <ButtonAmenities>
                 2 BATHROOM
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenityChange("AC")}>
+              <ButtonAmenities>
                 AC
               </ButtonAmenities>
-              <ButtonAmenities
-                onClick={() => handleAmenityChange("3 BED SPACE")}
-              >
+              <ButtonAmenities>
                 3 BED SPACE
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenityChange("COFEE SET")}>
+              <ButtonAmenities>
                 COFEE SET
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenityChange("BATHUP")}>
+              <ButtonAmenities>
                 BATHUP
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenityChange("TOWEL")}>
+              <ButtonAmenities>
                 TOWEL
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenityChange("SHOWER")}>
+              <ButtonAmenities>
                 SHOWER
               </ButtonAmenities>
             </div>

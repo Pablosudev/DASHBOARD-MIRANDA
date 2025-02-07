@@ -25,6 +25,7 @@ import {
 } from "../Components/RoomsCreate";
 
 
+
 export const RoomsCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,12 +33,11 @@ export const RoomsCreate = () => {
   
   const [newRoom, setNewRoom] = useState({
     room_type: "",
-    room_number: "",
-    room_price: "",
-    room_offer: "",
-    room_discount: "",
+    room_number: 0,
+    room_price: 0,
+    room_offer: 0,
+    room_discount: 0,
     room_description: "",
-    amenities: [],
     status: "Available",
   });
 
