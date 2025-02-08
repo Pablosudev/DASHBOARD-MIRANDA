@@ -38,7 +38,7 @@ export const ContactIdThunks = createAsyncThunk<Contacts , number>(
         setTimeout(async () => {
           try {
             
-            console.log('ID recibido:', id, 'Tipo:', typeof id);
+            
 
             const response = await fetch("/Data/contact.json");
             if (!response.ok) {
@@ -67,7 +67,7 @@ export const ContactIdThunks = createAsyncThunk<Contacts , number>(
       return contactId; 
 
     } catch (error) {
-      console.error("Error en el thunk:", error);
+
       return rejectWithValue(error.message || "Error al obtener los datos del contacto");
     }
   }

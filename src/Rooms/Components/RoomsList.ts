@@ -7,12 +7,27 @@ display: flex;
 font-size: 1rem;
 border-bottom: 2px solid #6E6E6E;
 `
-export const SelectTitle = styled.h3`
-margin-left: 2rem;
-margin-right: 2rem; 
-font-family: "Poppins";
-color: #6E6E6E;
+export const SelectTitle = styled.h3<{ isActive: boolean }>`
+  margin-left: 2rem;
+  margin-right: 2rem;
+  font-family: "Poppins";
+  color: ${(props) => (props.isActive ? "#135846" : "#6E6E6E")}; 
+  cursor: pointer; 
+  transition: color 0.3s ease; 
+  
+  
+  ${(props) =>
+    props.isActive &&
+    `
+    border-bottom: 2px solid #135846;
+    font-weight: bold; 
+  `}
+
+  &:hover {
+    color: #135846; 
+  }
 `
+
 export const ContainerButtons = styled.div`
 display:flex;
 justify-content: end;

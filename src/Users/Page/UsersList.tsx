@@ -133,7 +133,7 @@ export const UserList = () => {
                 <TableAmenities>{user.phone_number}</TableAmenities>
                 <TableAmenities>{user.email}</TableAmenities>
                 <td>
-                  <StatusUsers typeof ={user.status}>{user.status}</StatusUsers>
+                  <StatusUsers status ={user.status}>{user.status}</StatusUsers>
                 </td>
                 <td>
                   <Link to= {`/users/edit/${user.id}`}> <EditIcon /></Link>

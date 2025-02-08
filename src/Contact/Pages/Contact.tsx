@@ -152,7 +152,7 @@ export const Contact = () => {
                   <BoxReviews></BoxReviews>
                 </SwiperSlide>
               ))}
-              ...
+            
             </Swiper>
           </SliderReviews>
         </SectionContact>

@@ -38,11 +38,12 @@ import {
 } from "../../Bookings/Components/BookingsDetails";
 import { Link } from "react-router-dom";
 import { AppDispatch } from "../../App/Store";
+import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 
 export const RoomsList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const DataAllRooms = useSelector(getAllRoomsData);
+  const DataAllRooms: RoomsInter [] = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const roomsPerPage = 10;

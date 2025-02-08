@@ -1,9 +1,11 @@
 import { useLocation, useNavigate} from "react-router-dom";
-import { LeftIcon, NavbarStyled, RightIcon, TitleNavbar, ContainerPage, MailIcon, BellIcon, MessageIcon, LogOut} from "./Navbar";
-import { ContainerLogo, CustomIcon, ContainerTitle, TitleLogo , SubtitleLogo } from "./DashboardSide";
+import { LeftIcon, NavbarStyled, RightIcon, TitleNavbar, ContainerPage, MailIcon, BellIcon, MessageIcon, LogOut} from "./Navbar.ts";
+import { ContainerLogo, CustomIcon, ContainerTitle, TitleLogo , SubtitleLogo } from "./DashboardSide.ts";
 import { useState } from "react";
-import { DashboardSide } from "./DashboardSide.jsx";
+import { DashboardSide } from "./DashboardSide.tsx";
 import { useAuthContext } from "../../UseContext/AuthContext.jsx";
+import React from "react";
+import { AppDispatch } from "../../App/Store.ts";
 
 
 
@@ -13,7 +15,7 @@ export const DashboardNavbar = () => {
     const [arrow,setArrow] = useState(true)
     const location = useLocation();
     const navigate = useNavigate();
-    const { dispatch } = useAuthContext();
+    const { dispatch } = useAuthContext() as { dispatch: AppDispatch };
 
     const handleSideMenu = () => {
         setSide(!side);

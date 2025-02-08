@@ -1,17 +1,25 @@
 import { useReducer , createContext, useContext } from "react";
+import { AuthState } from "./Interface/AuthContextInterface";
+import React from "react";
+const initialState: AuthState = {
+  email: "",
+  authenticated: false,
+  password: ""
+};
 
-
-
-const AuthContext = createContext();
+const AuthContext = createContext<{
+  state: AuthState;
+  dispatch: React.Dispatch<any>;
+}>({
+  state: initialState,
+  dispatch: () => null,
+});
 
 const useAuthContext = () => {
   return useContext(AuthContext);
 }
 
-const initialState = {
-    email: "",
-    authenticated: false,
-}
+
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -35,7 +43,7 @@ const reducer = (state, action) => {
   }
 }
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({children}: { children: React.ReactNode }) => {
 
   const [state, dispatch] = useReducer( reducer, initialState )
 

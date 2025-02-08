@@ -29,6 +29,7 @@ import {
   BoxIcon,
 } from "../Contact/Components/Contact";
 import { Swiper, SwiperSlide } from "swiper/react";
+import React from "react";
 export const Dashboard = () => {
   return (
     <>
