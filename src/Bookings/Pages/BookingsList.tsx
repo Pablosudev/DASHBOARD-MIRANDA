@@ -71,10 +71,10 @@ export const BookingsList = () => {
   }
   //FILTRADO DE BOOKINGS
   const filteredBookings = DataBookings.filter((booking) => {
-    const matchesSearchTerm = booking.full_name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus =
+    const stateSearchTerm = booking.full_name.toLowerCase().includes(searchTerm.toLowerCase());
+    const stateStatus =
       selectedStatus === "all" || booking.status.toLowerCase() === selectedStatus.toLowerCase();
-    return matchesSearchTerm && matchesStatus;
+    return stateSearchTerm && stateStatus;
   });
   const handleSearch = (event: any) => {
     setSearchTerm(event.target.value);

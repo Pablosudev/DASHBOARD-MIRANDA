@@ -27,6 +27,11 @@ export const SelectTitle = styled.h3<{ isActive: boolean }>`
     color: #135846; 
   }
 `
+export const SelectTitleRooms = styled.h4`
+margin-left: 2rem;
+  margin-right: 2rem;
+  font-family: "Poppins";
+`
 
 export const ContainerButtons = styled.div`
 display:flex;
