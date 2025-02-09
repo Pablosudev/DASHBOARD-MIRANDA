@@ -152,7 +152,11 @@ export const Contact = () => {
                   <BoxReviews></BoxReviews>
                 </SwiperSlide>
               ))}
+<<<<<<< HEAD
             
+=======
+              ...
+>>>>>>> 20e8c94a76ff30b63110851212c9fe8cc4b6849c
             </Swiper>
           </SliderReviews>
         </SectionContact>

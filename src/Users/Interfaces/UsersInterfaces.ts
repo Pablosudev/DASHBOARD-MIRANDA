@@ -22,6 +22,13 @@ export interface UserState {
     }
 }
 
+<<<<<<< HEAD
+=======
+export interface ButtonFakeProps {
+    active: boolean,
+}
+
+>>>>>>> 20e8c94a76ff30b63110851212c9fe8cc4b6849c
 export interface UsersEdit{
     full_name: string,
     start_date: string,

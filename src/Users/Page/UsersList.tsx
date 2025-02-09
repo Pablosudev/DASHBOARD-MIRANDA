@@ -133,7 +133,11 @@ export const UserList = () => {
                 <TableAmenities>{user.phone_number}</TableAmenities>
                 <TableAmenities>{user.email}</TableAmenities>
                 <td>
+<<<<<<< HEAD
                   <StatusUsers status ={user.status}>{user.status}</StatusUsers>
+=======
+                  <StatusUsers typeof ={user.status}>{user.status}</StatusUsers>
+>>>>>>> 20e8c94a76ff30b63110851212c9fe8cc4b6849c
                 </td>
                 <td>
                   <Link to= {`/users/edit/${user.id}`}> <EditIcon /></Link>
