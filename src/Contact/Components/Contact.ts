@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { GiCancel } from "react-icons/gi";
 import { FaRegCircleCheck } from "react-icons/fa6"
 import { MdOutlineCancel } from "react-icons/md";
-
+import { SelectContact } from "../Interfaces/ContactInterfaces";
 export const Contact = styled.section`
 display:flex;
 flex-direction:column;
@@ -96,4 +96,9 @@ export const ButtonDelete = styled.button`
     padding-top:3%;
     padding-bottom: 3%;
     margin-top: 1rem;
+`
+export const SelecTitleContact = styled.h4<SelectContact>`
+margin-left: 2rem;
+  margin-right: 2rem;
+  font-family: "Poppins";
 `

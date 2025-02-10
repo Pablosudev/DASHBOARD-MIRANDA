@@ -25,3 +25,6 @@ export interface ContactState {
         error: string | undefined;
     }
 }
+export interface SelectContact {
+    type: string;
+}

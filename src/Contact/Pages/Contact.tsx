@@ -12,16 +12,14 @@ import {
   TableAmenities,
   TableContact,
   TableButton,
-  TableComment,
-  PopUpContacts,
-} from "../../commons/Table.js";
+  TableComment
+} from "../../commons/Table.ts";
 import {
   BoxSelect,
   ContainerSelect,
-  SelectTitle,
   ContainerButtons,
   ContainerFake,
-} from "../../Rooms/Components/RoomsList.js";
+} from "../../Rooms/Components/RoomsList.ts";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake.js";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen.js";
@@ -44,7 +42,7 @@ import {
 import { useParams } from "react-router-dom";
 import { SectionContact } from "../Components/Contact.js";
 import { SliderReviews } from "../Components/Contact.js";
-import { BoxReviews, Review, BoxCard, ImgUser, BoxName, NameReview, BoxTime, TimeReview,BoxIcon, CancelIcon, CheckIcon } from "../Components/Contact.js";
+import { BoxReviews, Review, BoxCard, ImgUser, BoxName, NameReview, BoxTime, TimeReview,BoxIcon, CancelIcon, CheckIcon, SelecTitleContact } from "../Components/Contact.js";
 import React from "react";
 import { AppDispatch } from "../../App/Store.js";
 import { Contacts } from "../Interfaces/ContactInterfaces.js";
@@ -152,23 +150,19 @@ export const Contact = () => {
                   <BoxReviews></BoxReviews>
                 </SwiperSlide>
               ))}
-<<<<<<< HEAD
             
-=======
-              ...
->>>>>>> 20e8c94a76ff30b63110851212c9fe8cc4b6849c
             </Swiper>
           </SliderReviews>
         </SectionContact>
         <SectionTable>
           <BoxSelect>
             <ContainerSelect>
-              <SelectTitle onClick={hanldeAllContacts} typeof={showAllContact ? "primaryActive" : "secundary"}>
+              <SelecTitleContact onClick={hanldeAllContacts} type ={showAllContact ? "primaryActive" : "secundary"}>
                 All Contacts
-              </SelectTitle>
-              <SelectTitle onClick={() => setArchive(!archive)} typeof={archive ? "primaryActive" : "primary"}>
+              </SelecTitleContact>
+              <SelecTitleContact onClick={() => setArchive(!archive)} type ={archive ? "primaryActive" : "primary"}>
                 Archived
-              </SelectTitle>
+              </SelecTitleContact>
             </ContainerSelect>
           </BoxSelect>
           <TableRooms>

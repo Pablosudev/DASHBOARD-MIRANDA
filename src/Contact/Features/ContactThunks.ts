@@ -38,11 +38,7 @@ export const ContactIdThunks = createAsyncThunk<Contacts , number>(
         setTimeout(async () => {
           try {
             
-<<<<<<< HEAD
             
-=======
-            console.log('ID recibido:', id, 'Tipo:', typeof id);
->>>>>>> 20e8c94a76ff30b63110851212c9fe8cc4b6849c
 
             const response = await fetch("/Data/contact.json");
             if (!response.ok) {
@@ -71,11 +67,6 @@ export const ContactIdThunks = createAsyncThunk<Contacts , number>(
       return contactId; 
 
     } catch (error) {
-<<<<<<< HEAD
-
-=======
-      console.error("Error en el thunk:", error);
->>>>>>> 20e8c94a76ff30b63110851212c9fe8cc4b6849c
       return rejectWithValue(error.message || "Error al obtener los datos del contacto");
     }
   }
