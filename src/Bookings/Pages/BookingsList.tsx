@@ -38,7 +38,7 @@ import {
   DeleteBookingsThunk,
 } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
-import { BookingsInter, BookingsState } from "../Interfaces/BookingsInterfaces";
+import { BookingsInter } from "../Interfaces/BookingsInterfaces";
 
 export const BookingsList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -57,7 +57,7 @@ export const BookingsList = () => {
     
     if (StatusBookings === "idle" ) {
       setLoading(true)
-      dispatch(AllBookingsThunk(id));
+      dispatch(AllBookingsThunk(id!));
     } else if (StatusBookings === "fulfilled") {
       setBookingsData(DataBookings);
       setLoading(false)
