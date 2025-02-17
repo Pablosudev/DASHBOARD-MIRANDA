@@ -128,7 +128,7 @@ margin-left: 2rem;
 text-align:left;
 
 `
-export const TitleData = styled.h3`
+export const TitleData = styled.h1`
 font-family: "Poppins";
 font-size: 0.87rem;
 color: #6E6E6E;
@@ -137,7 +137,7 @@ export const DataCheck = styled.p`
 font-family: "Poppins";
 font-size: 1rem; 
 `
-export const NameBooking = styled.h1`
+export const NameBooking = styled.h3`
 font-family: "Poppins";
 font-size: 1.8rem;
 margin-top: 5rem;
@@ -189,7 +189,7 @@ padding-bottom:0.5rem;
 margin-right: 0.5rem;
 margin-bottom: 0.5rem;
 `
-export const TypeSlide = styled.h3`
+export const TypeSlide = styled.h5`
 font-family: "Poppins";
 font-size: 1.5rem;
 color: #ffffff;

@@ -2,12 +2,12 @@ import styled from "styled-components"
 import { CiSearch } from "react-icons/ci";
 
 
-export const ContainerSelect = styled.h3`
+export const ContainerSelect = styled.div`
 display: flex;
-font-size: 1rem;
+margin-bottom: 2rem;
 border-bottom: 2px solid #6E6E6E;
 `
-export const SelectTitle = styled.h3<{ isActive: boolean }>`
+export const SelectTitle = styled.h2<{ isActive: boolean }>`
   margin-left: 2rem;
   margin-right: 2rem;
   font-family: "Poppins";
@@ -27,7 +27,7 @@ export const SelectTitle = styled.h3<{ isActive: boolean }>`
     color: #135846; 
   }
 `
-export const SelectTitleRooms = styled.h4`
+export const SelectTitleRooms = styled.h3`
 margin-left: 2rem;
   margin-right: 2rem;
   font-family: "Poppins";

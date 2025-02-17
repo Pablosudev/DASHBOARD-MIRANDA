@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { GiCancel } from "react-icons/gi";
 import { FaRegCircleCheck } from "react-icons/fa6"
 import { MdOutlineCancel } from "react-icons/md";
-import { SelectContact } from "../Interfaces/ContactInterfaces";
 export const Contact = styled.section`
 display:flex;
 flex-direction:column;
@@ -12,7 +11,9 @@ margin-left: 6%;
 margin-top: 10%;
 `
 export const SliderReviews = styled.div`
-display:flex;
+ width: 100%; // Asegúrate de que tenga un ancho definido
+  max-width: 1200px; // O un valor específico
+  margin: 0 auto; // Centrar el contenedor
 `
 export const BoxReviews = styled.div`
 background-color: #ffffff;
@@ -97,8 +98,35 @@ export const ButtonDelete = styled.button`
     padding-bottom: 3%;
     margin-top: 1rem;
 `
-export const SelecTitleContact = styled.h4<SelectContact>`
-margin-left: 2rem;
+
+export const SelectTitle = styled.h3<{ $isActive: boolean }>`
+  margin-left: 2rem;
   margin-right: 2rem;
   font-family: "Poppins";
+  color: ${(props) => (props.$isActive ? "#135846" : "#6E6E6E")}; 
+  cursor: pointer; 
+  transition: color 0.3s ease; 
+  
+  ${(props) =>
+    props.$isActive &&
+    `
+    border-bottom: 2px solid #135846;
+    font-weight: bold; 
+  `}
+
+  &:hover {
+    color: #135846; 
+  }
+`;
+
+
+
+export const ContactInput = styled.input`
+border:transparent;
+background-color:#ffffff;
+padding-left:2rem;
+padding-right:2rem;
+padding-top:0.7rem;
+padding-bottom:0.7rem; 
+border-radius: 12px
 `
