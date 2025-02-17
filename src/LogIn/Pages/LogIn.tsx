@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonStyled, CustomIcon, DivStyled, InputStyled} from "../Components/LogInStyle";
 import { useAuthContext } from "../../UseContext/AuthContext";
-
+import { LogInInterface } from "../Interface/LogInInterface";
 
 export const LogIn = () => {
 
-    const {email, password, setEmail, setAuthenticated , setPassword } = useAuthContext();
+    const {email, password, setEmail, setAuthenticated , setPassword }  = useAuthContext();
   
 
     const  navigate = useNavigate();
@@ -43,7 +43,7 @@ export const LogIn = () => {
               <InputStyled type="text" placeholder="Email" value={email} onChange={handleChangeEmail} data-cy = "InputEmail"/>
             </div>
             <div>
-              <InputStyled type="password" placeholder="Contraseña" value={password} onChange={handleChangePassword} data-cy = "InputPassword"/>
+              <InputStyled type="text" placeholder="Contraseña" value={password} onChange={handleChangePassword} data-cy = "InputPassword"/>
             </div>
             <ButtonStyled type="submit" data-cy="ButtonStyled">Login</ButtonStyled>
           </form>

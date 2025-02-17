@@ -11,7 +11,6 @@ import {
 } from "../../commons/Table";
 import {
   ContainerSelect,
-  SelectTitle,
   ContainerButtons,
   ContainerFake,
   BoxSelect,
@@ -19,7 +18,7 @@ import {
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 import { useEffect, useState } from "react";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake";
-import { ContainerInput, IconSearch, UsersInput } from "../Components/Users";
+import { ContainerInput, IconSearch, UsersInput, SelectTitle } from "../Components/Users";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AllDataUsers, AllStatusUsers } from "../Features/UsersSlice";
@@ -44,12 +43,17 @@ export const UserList = () => {
   const navigate = useNavigate();
   const {id} = useParams<{id:string}>();
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedStatus , setSelectedStatus] = useState<string>("all")
+
+  //FILTRADO DE USUARIOS
   const sortedUsers: Users [] = [...users].sort((a, b) => {
     return new Date(a.start_date).getTime() - new Date(b.start_date).getTime();
   });
-  const filteredUsers: Users[] = DataUsers.filter((user) =>
-    user.full_name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredUsers: Users[] = DataUsers.filter((user) => {
+    const usersSearchTerm = user.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+    const usersStatus = selectedStatus === "all" || user.status === selectedStatus
+    return usersSearchTerm && usersStatus
+  });
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser)
@@ -67,6 +71,10 @@ export const UserList = () => {
   const handleDeleteUser = (id: number) => {
     dispatch(DeleteUserThunk(id));
   };
+  const handleStatusChange = ( status: string) => {
+    setSelectedStatus(status);
+    setCurrentPage(1);
+  }
 
   
 
@@ -86,9 +94,9 @@ export const UserList = () => {
       <SectionTable>
         <BoxSelect>
           <ContainerSelect>
-            <SelectTitle>All Employee</SelectTitle>
-            <SelectTitle>Active Employee</SelectTitle>
-            <SelectTitle>Inactive Employee</SelectTitle>
+            <SelectTitle onClick={() => handleStatusChange("all")} isActive = {selectedStatus === "all"}>All Employee</SelectTitle>
+            <SelectTitle onClick={() => handleStatusChange("Active")} isActive = {selectedStatus === "Active"}>Active Employee</SelectTitle>
+            <SelectTitle onClick={() => handleStatusChange("Inactive")} isActive = {selectedStatus === "Inactive"}>Inactive Employee</SelectTitle>
           </ContainerSelect>
           <ContainerInput>
             <UsersInput type="text" value={searchTerm} onChange={handleSearch}/>

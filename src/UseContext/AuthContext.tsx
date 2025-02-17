@@ -52,7 +52,7 @@ const AuthProvider = ({children}: { children: React.ReactNode }) => {
       dispatch,
       email: state.email,
       password: state.password,
-      authenticated: state.autheticated,
+      authenticated: state.authenticated,
       setEmail: (email) => dispatch({ type: "SET_EMAIL", payload: email }),
       setPassword: (password) => dispatch({ type: "SET_PASSWORD", payload: password }),
       setAuthenticated: (status) => dispatch({ type: "SET_AUTHENTICATED", payload: status }),

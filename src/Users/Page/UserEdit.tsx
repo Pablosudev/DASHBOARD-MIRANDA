@@ -61,7 +61,10 @@ export const UserEdit = () => {
           alert("Error al actualizar la habitación: " + error.message);
         });
     };
-  
+    const formatDate = (date) => {
+      const newDate = new Date(date);
+      return newDate.toISOString().split('T')[0]; 
+    };
   const numericId = id ? Number (id) : NaN
   useEffect(() => {
     if (UserStatus === "idle") {
@@ -74,7 +77,7 @@ export const UserEdit = () => {
       if (Users){
       setNewUser({
         full_name: Users.full_name,
-        start_date: Users.start_date,
+        start_date: formatDate(Users.start_date),
         job_description: Users.job_description,
         phone_number: Users.phone_number,
         email: Users.email,
@@ -187,9 +190,8 @@ export const UserEdit = () => {
             <div>
               <TypeInput>Star Date</TypeInput>
               <InputName
-                type="text"
-                name="start_Date"
-                placeholder="0/00/0000"
+                type="date"
+                name="start_date"
                 value={newUser.start_date}
                 onChange={handleInputChange}
               />
