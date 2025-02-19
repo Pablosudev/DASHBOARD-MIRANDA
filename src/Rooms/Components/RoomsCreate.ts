@@ -18,6 +18,7 @@ export const ContainerSections = styled.div`
 `;
 export const TitleSection = styled.h3`
   font-family: "Poppins";
+  text-align: center;
 `;
 export const BoxTitle = styled.div`
   margin-top: 3rem;
@@ -49,6 +50,8 @@ export const InputCreate = styled.input`
   padding-bottom: 1rem;
   padding-right: 1rem;
   margin-bottom: 2rem;
+  font-family: 'Poppins';
+  text-align: center;
 `;
 export const PriceBox = styled.div`
   display: flex;
@@ -69,6 +72,8 @@ export const Price = styled.input`
   padding-right: 0%.8;
   margin-bottom: 2rem;
   margin-left: 2rem;
+  font-family: 'Poppins';
+  text-align: center;
 `;
 export const ButtonOffer = styled.button`
   background-color: #c5c5c5;
@@ -113,6 +118,8 @@ export const InputDiscount = styled.input`
   padding-bottom: 1rem;
   margin-bottom: 2rem;
   margin-left: 2rem;
+  font-family: 'Poppins';
+  text-align: center;
 `;
 export const BoxDescription = styled.div`
   display: flex;

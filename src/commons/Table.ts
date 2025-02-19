@@ -11,6 +11,9 @@ export const TableR = styled.tr`
     border-top: transparent;
     border-bottom: 1px solid rgba(248, 248, 248, 1);
 `
+export const TableHeadName = styled.th`
+    padding-left: 1rem;
+`
 export const TableRow= styled.tr<TableRowProps>`
     border-left: transparent;
     border-right: transparent;

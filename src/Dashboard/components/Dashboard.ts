@@ -133,3 +133,7 @@ bottom: 40%;
 export const IconArrowRight = styled(FaArrowRight)`
 font-size: 1.5rem;
 `
+export const SectionDashboard = styled.section`
+margin: 2%;
+margin-top: 10%;
+`

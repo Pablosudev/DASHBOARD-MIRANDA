@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import {
   CardCreate,
   IconClose,
@@ -108,7 +107,7 @@ export const BookingsEdit = () => {
             <TitleSection>Name</TitleSection>
             <InputCreate
               type="text"
-              name="room_type"
+              name="full"
               value={newBooking.full_name}
               onChange={handleInputChange}
             />
@@ -128,33 +127,33 @@ export const BookingsEdit = () => {
             <TitlePrice>Price/Night</TitlePrice>
             <Price
               type="text"
-              name="room_price"
+              name="price"
               value={newBooking.price}
               onChange={handleInputChange}
             />
           </PriceBox>
           <PriceBox>
-          <TitlePrice>Check-In</TitlePrice>
+          <TitleSection>Check-In</TitleSection>
             <Price
-              type="text"
-              name="room_price"
+              type="date"
+              name="check_in"
               value={newBooking.check_in ? new Date(newBooking.check_in).toISOString().split('T')[0] : ''}
               onChange={handleInputChange}
             />
           </PriceBox>
           <PriceBox>
-          <TitlePrice>Check-Out</TitlePrice>
+          <TitleSection>Check-Out</TitleSection>
             <Price
-              type="text"
-              name="room_price"
-              value={newBooking.check_out ? new Date(newBooking.check_out).toISOString().split('T')[0] : ''}
-              onChange={handleInputChange}
+              type ="date"
+              name ="check_out"
+              value = {newBooking.check_out ? new Date(newBooking.check_out).toISOString().split('T')[0] : ''}
+              onChange = {handleInputChange}
             />
           </PriceBox>
           <PriceBox>
-            <TitlePrice>Status</TitlePrice>
+            <TitleSection>Status</TitleSection>
             <InputDiscount
-              type="text"
+              typeof ="text"
               name="status"
               value={newBooking.status}
               onChange={handleInputChange}

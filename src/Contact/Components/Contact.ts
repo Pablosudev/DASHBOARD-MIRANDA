@@ -12,7 +12,7 @@ display:flex;
 flex-direction:column;
 `
 export const SectionContact = styled.section`
-
+margin: 5%;
 margin-top: 10%;
 `
 export const SliderReviews = styled.div`

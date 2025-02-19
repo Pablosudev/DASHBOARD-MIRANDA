@@ -12,6 +12,7 @@ import {
   IconLogIn,
   IconBed,
   IconCalendary,
+  SectionDashboard,
 } from "./components/Dashboard";
 import {
   CancelIcon,
@@ -92,7 +93,7 @@ export const Dashboard = () => {
         </ContainerKpis>
         <ContainerReviews>
           <Reviews>Latest Review By Customers</Reviews>
-          <SectionContact>
+          <SectionDashboard>
             <SliderReviews>
               <StyledSwiper
                 direction="horizontal"
@@ -125,7 +126,7 @@ export const Dashboard = () => {
                 ))}
               </StyledSwiper>
             </SliderReviews>
-          </SectionContact>
+          </SectionDashboard>
         </ContainerReviews>
       </DashboardSection>
     </>

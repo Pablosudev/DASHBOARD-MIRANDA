@@ -25,7 +25,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { CreateBookingThunk } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
-import { BookingsCreateInter, BookingsDetailsInter, BookingsEditInter } from "../Interfaces/BookingsInterfaces";
+import { BookingsCreateInter} from "../Interfaces/BookingsInterfaces";
 
 
 export const BookingsCreate = () => {
@@ -82,7 +82,7 @@ export const BookingsCreate = () => {
             <TitleSection>Name</TitleSection>
             <InputCreate
               type="text"
-              name="room_type"
+              name="full_name"
               value={newBooking.full_name}
               onChange={handleInputChange}
             />
@@ -102,7 +102,7 @@ export const BookingsCreate = () => {
             <TitlePrice>Price/Night</TitlePrice>
             <Price
               type="text"
-              name="room_price"
+              name="price"
               value={newBooking.price}
               onChange={handleInputChange}
             />
@@ -110,8 +110,8 @@ export const BookingsCreate = () => {
           <PriceBox>
           <TitlePrice>Check-In</TitlePrice>
             <Price
-              type="text"
-              name="room_price"
+              type="date"
+              name="check_in"
               value={newBooking.check_in ? new Date(newBooking.check_in).toISOString().split('T')[0] : ''}
               onChange={handleInputChange}
             />
@@ -119,8 +119,8 @@ export const BookingsCreate = () => {
           <PriceBox>
           <TitlePrice>Check-Out</TitlePrice>
             <Price
-              type="text"
-              name="room_price"
+              type="date"
+              name="check_out"
               value={newBooking.check_out ? new Date(newBooking.check_out).toISOString().split('T')[0] : ''}
               onChange={handleInputChange}
             />
