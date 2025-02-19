@@ -12,8 +12,6 @@ import {
   IconLogIn,
   IconBed,
   IconCalendary,
-  ButtonSlider,
-  IconArrowRight,
 } from "./components/Dashboard";
 import {
   CancelIcon,
@@ -27,10 +25,38 @@ import {
   SliderReviews,
   NameReview,
   BoxIcon,
+  SectionContact,
+  StyledSwiperSlide,
+  StyledSwiper,
 } from "../Contact/Components/Contact";
-import { Swiper, SwiperSlide } from "swiper/react";
-import React from "react";
+import 'swiper/css';
+import 'swiper/css/pagination';
+import React, { useEffect, useState } from "react";
+import { Contacts } from "../Contact/Interfaces/ContactInterfaces";
+import { useSelector } from "react-redux";
+import { AllDataContact, AllStatusContact } from "../Contact/Features/ContacSlice";
+import { useDispatch } from "react-redux";
+import { ContactAllThunks } from "../Contact/Features/ContactThunks";
+import { useParams } from "react-router-dom";
+import { AppDispatch } from "../App/Store";
 export const Dashboard = () => {
+
+  const DataContact: Contacts[] = useSelector(AllDataContact);
+  const StatusContact = useSelector(AllStatusContact)
+  const dispatch = useDispatch<AppDispatch>();
+  const [ contact, setContact ] = useState<Contacts[]>(DataContact)
+  const {id} = useParams<{id: string}>();
+
+
+  useEffect(() => {
+    if(StatusContact === 'idle'){
+      dispatch(ContactAllThunks(id))
+    } else if (StatusContact === 'fulfilled'){
+      setContact(DataContact);
+    } else if (StatusContact === 'rejected'){
+      Error('Error contact')
+    }
+  },[StatusContact, id , DataContact])
   return (
     <>
       <DashboardSection>
@@ -66,80 +92,40 @@ export const Dashboard = () => {
         </ContainerKpis>
         <ContainerReviews>
           <Reviews>Latest Review By Customers</Reviews>
-          <SliderReviews>
-            <BoxReviews>
-              <Review>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam
-              </Review>
-              <BoxCard>
-                <ImgUser
-                  src="/src/assets/Imagenes/user phot.jpg"
-                  alt="photoUser"
-                />
-                <BoxName>
-                  <NameReview>Kusnaidi Anderson</NameReview>
-                  <BoxTime>
-                    <TimeReview>4m ago</TimeReview>
-                    <BoxIcon>
-                      <CancelIcon />
-                      <CheckIcon />
-                    </BoxIcon>
-                  </BoxTime>
-                </BoxName>
-              </BoxCard>
-            </BoxReviews>
-            <BoxReviews>
-              <Review>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam
-              </Review>
-              <BoxCard>
-                <ImgUser
-                  src="/src/assets/Imagenes/user phot.jpg"
-                  alt="photoUser"
-                />
-                <BoxName>
-                  <NameReview>Kusnaidi Anderson</NameReview>
-                  <BoxTime>
-                    <TimeReview>4m ago</TimeReview>
-                    <BoxIcon>
-                      <CancelIcon />
-                      <CheckIcon />
-                    </BoxIcon>
-                  </BoxTime>
-                </BoxName>
-              </BoxCard>
-            </BoxReviews>
-            <BoxReviews>
-              <Review>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam
-              </Review>
-              <BoxCard>
-                <ImgUser
-                  src="/src/assets/Imagenes/user phot.jpg"
-                  alt="photoUser"
-                />
-                <BoxName>
-                  <NameReview>Kusnaidi Anderson</NameReview>
-                  <BoxTime>
-                    <TimeReview>4m ago</TimeReview>
-                    <BoxIcon>
-                      <CancelIcon />
-                      <CheckIcon />
-                    </BoxIcon>
-                  </BoxTime>
-                </BoxName>
-              </BoxCard>
-            </BoxReviews>
-          </SliderReviews>
-          <ButtonSlider>
-            <IconArrowRight />
-          </ButtonSlider>
+          <SectionContact>
+            <SliderReviews>
+              <StyledSwiper
+                direction="horizontal"
+                slidesPerView={3}
+                spaceBetween={20}
+                loop={true}
+              >
+                {DataContact.map((contact) => (
+                  <StyledSwiperSlide key={contact.id}>
+                    <BoxReviews>
+                      <Review>{contact.comment}</Review>
+                      <BoxCard>
+                        <ImgUser
+                          src="/src/assets/Imagenes/user phot.jpg"
+                          alt="photoUser"
+                        />
+                        <BoxName>
+                          <NameReview>{contact.full_name}</NameReview>
+                          <BoxTime>
+                            <TimeReview>{contact.date}</TimeReview>
+                            <BoxIcon>
+                              <CancelIcon />
+                              <CheckIcon />
+                            </BoxIcon>
+                          </BoxTime>
+                        </BoxName>
+                      </BoxCard>
+                    </BoxReviews>
+                  </StyledSwiperSlide>
+                ))}
+              </StyledSwiper>
+            </SliderReviews>
+          </SectionContact>
         </ContainerReviews>
       </DashboardSection>
     </>

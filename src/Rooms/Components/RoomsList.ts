@@ -11,6 +11,7 @@ export const SelectTitle = styled.h2<{ isActive: boolean }>`
   margin-left: 2rem;
   margin-right: 2rem;
   font-family: "Poppins";
+  font-size: 1.3rem;
   color: ${(props) => (props.isActive ? "#135846" : "#6E6E6E")}; 
   cursor: pointer; 
   transition: color 0.3s ease; 

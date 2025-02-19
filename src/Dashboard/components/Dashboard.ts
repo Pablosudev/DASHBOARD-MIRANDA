@@ -102,12 +102,11 @@ background-color: #ffffff;
 box-shadow: 0px 4px 4px #00000005;
 border-radius: 0.8rem;
 padding-top: 1.5rem;
-padding-left: 1rem;
+
+padding-right: 1rem;
 padding-bottom: 4rem;
 margin-top: 4rem;
 max-width: 93rem;
-position: relative;
-
 `
 export const BoxReviews = styled.div`
 background-color: #ffffff;

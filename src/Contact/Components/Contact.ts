@@ -2,25 +2,30 @@ import styled from "styled-components";
 import { GiCancel } from "react-icons/gi";
 import { FaRegCircleCheck } from "react-icons/fa6"
 import { MdOutlineCancel } from "react-icons/md";
+import { SwiperSlide } from "swiper/react";
+import { Swiper } from "swiper/react";
+
+
+
 export const Contact = styled.section`
 display:flex;
 flex-direction:column;
 `
 export const SectionContact = styled.section`
-margin-left: 6%;
+
 margin-top: 10%;
 `
 export const SliderReviews = styled.div`
- width: 100%; // Asegúrate de que tenga un ancho definido
-  max-width: 1200px; // O un valor específico
-  margin: 0 auto; // Centrar el contenedor
+  width: 100%; 
+  max-width: 1555px; 
+   
 `
 export const BoxReviews = styled.div`
 background-color: #ffffff;
 box-shadow: 0px 4px 4px #00000005;
 width: 27rem;
+height: 20rem;
 border-radius: 0.8rem;
-margin-right: 3rem;
 padding-left: 1rem;
 padding-right:1rem;
 padding-top: 1rem;
@@ -128,5 +133,14 @@ padding-left:2rem;
 padding-right:2rem;
 padding-top:0.7rem;
 padding-bottom:0.7rem; 
-border-radius: 12px
+
 `
+export const  StyledSwiper = styled(Swiper)`
+
+ 
+`;
+export const StyledSwiperSlide = styled(SwiperSlide)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;

@@ -3,6 +3,8 @@ import {
   ButtonDelete,
   SelectTitle,
   ContactInput,
+  StyledSwiperSlide,
+  StyledSwiper,
 } from "../Components/Contact.js";
 import {
   SectionTable,
@@ -23,7 +25,6 @@ import {
   ContainerFake,
   ContainerInput,
 } from "../../Rooms/Components/RoomsList.ts";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake.js";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen.js";
 import { ButtonDefault } from "../../commons/Buttons/Button.js";
@@ -58,7 +59,6 @@ import React from "react";
 import { AppDispatch } from "../../App/Store.js";
 import { Contacts } from "../Interfaces/ContactInterfaces.js";
 import { IconSearch } from "../../Users/Components/Users.ts";
-import { Pagination } from "swiper/modules";
 import 'swiper/css';
 import 'swiper/css/pagination';
 export const Contact = () => {
@@ -141,16 +141,14 @@ export const Contact = () => {
       <section>
         <SectionContact>
           <SliderReviews>
-            <Swiper
+            <StyledSwiper
               direction="horizontal"
               slidesPerView={3} 
-              spaceBetween={10}
-              loop={false}
-              pagination={{ clickable: true }}
-              modules={[Pagination]}
+              spaceBetween={20}
+              loop={true}
             >
               {DataContact.map((contact) => (
-                <SwiperSlide key={contact.id}>
+                <StyledSwiperSlide key={contact.id}>
                   <BoxReviews>
                     <Review>{contact.comment}</Review>
                     <BoxCard>
@@ -170,9 +168,9 @@ export const Contact = () => {
                       </BoxName>
                     </BoxCard>
                   </BoxReviews>
-                </SwiperSlide>
+                </StyledSwiperSlide>
               ))}
-            </Swiper>
+            </StyledSwiper>
           </SliderReviews>
         </SectionContact>
         <SectionTable>

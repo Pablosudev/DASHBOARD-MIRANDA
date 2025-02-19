@@ -149,7 +149,7 @@ export const ContactSaveThunk = createAsyncThunk(
     try {
       
       const state = getState() as RootState;
-      const contact = state.contact.data.find((contact) => contact.id );
+      const contact = state.contact.data.find((contact) => contact.id === id );
       if (!contact) {
         return rejectWithValue("Contacto no encontrado");
       }
