@@ -9,6 +9,7 @@ import {
   TableAmenities,
   ContainerId,
   TableHeadName,
+  TableUsers,
 } from "../../commons/Table";
 import {
   ContainerSelect,
@@ -112,7 +113,7 @@ export const UserList = () => {
           </div>
         </BoxSelect>
 
-        <TableRooms>
+        <TableUsers>
           <TableHead>
             <TableR>
               <TableHeadName>Name</TableHeadName>
@@ -155,7 +156,7 @@ export const UserList = () => {
               </TableR>
             ))}
           </TableBody>
-        </TableRooms>
+        </TableUsers>
 
         <ContainerButtons>
           <ButtonGreen

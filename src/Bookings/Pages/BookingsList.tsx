@@ -12,7 +12,7 @@ import {
   TableHead,
   TableGuest,
   TableR,
-  TableRooms,
+  TableBookings,
   TableAmenities,
   TablePrice,
   TableStatus,
@@ -139,7 +139,7 @@ export const BookingsList = () => {
               + New Booking
             </ButtonGreen>
           </BoxSelect>
-          <TableRooms>
+          <TableBookings>
             <TableHead>
               <TableR>
                 <TableGuest>Guest</TableGuest>
@@ -180,7 +180,7 @@ export const BookingsList = () => {
                 </TableR>
               ))}
             </TableBody>
-          </TableRooms>
+          </TableBookings>
           <ContainerButtons>
             <ButtonGreen
               type="primary"

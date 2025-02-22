@@ -17,6 +17,7 @@ import {
   TableContact,
   TableButton,
   TableComment,
+  TableContacts,
 } from "../../commons/Table.ts";
 import {
   BoxSelect,
@@ -200,7 +201,7 @@ export const Contact = () => {
               </label>
             </ContainerInput>
           </BoxSelect>
-          <TableRooms>
+          <TableContacts>
             <TableHead>
               <TableR>
                 <TableDate>Date</TableDate>
@@ -240,7 +241,7 @@ export const Contact = () => {
                 </TableR>
               ))}
             </TableBody>
-          </TableRooms>
+          </TableContacts>
           <ContainerButtons>
             <ButtonGreen
               onClick={prevPage}
