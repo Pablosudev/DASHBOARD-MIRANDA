@@ -42,48 +42,45 @@ import { BookingsInter } from "../Interfaces/BookingsInterfaces";
 
 export const BookingsList = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const DataBookings:BookingsInter [] = useSelector(getAllBookingsData);
+  const DataBookings: BookingsInter[] = useSelector(getAllBookingsData);
   const StatusBookings = useSelector(getAllBookingsStatus);
   const { id } = useParams<string>();
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [bookingsData, setBookingsData] = useState<BookingsInter []>(DataBookings);
-  const bookingsPerPage:number = 10;
+  const [bookingsData, setBookingsData] =
+    useState<BookingsInter[]>(DataBookings);
+  const bookingsPerPage: number = 10;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const navigate = useNavigate();
-  const [ loading, setLoading ] = useState<boolean>(true)
-  const [ selectedStatus , setSelectedStatus ] = useState<string>("all")
-  
+  const [selectedStatus, setSelectedStatus] = useState<string>("all");
+
   useEffect(() => {
-    
-    if (StatusBookings === "idle" ) {
-      setLoading(true)
+    if (StatusBookings === "idle") {
       dispatch(AllBookingsThunk(id!));
     } else if (StatusBookings === "fulfilled") {
       setBookingsData(DataBookings);
-      setLoading(false)
     } else if (StatusBookings === "rejected") {
       alert("Error al cargar los datos de los usuarios");
     }
   }, [dispatch, id, StatusBookings, DataBookings]);
-  
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
   //FILTRADO DE BOOKINGS
   const filteredBookings = DataBookings.filter((booking) => {
-    const stateSearchTerm = booking.full_name.toLowerCase().includes(searchTerm.toLowerCase());
+    const stateSearchTerm = booking.full_name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     const stateStatus =
-      selectedStatus === "all" || booking.status.toLowerCase() === selectedStatus.toLowerCase();
+      selectedStatus === "all" ||
+      booking.status.toLowerCase() === selectedStatus.toLowerCase();
     return stateSearchTerm && stateStatus;
   });
   const handleSearch = (event: any) => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
-  const handleStatusChange = ( status: string) => {
+  const handleStatusChange = (status: string) => {
     setSelectedStatus(status);
     setCurrentPage(1);
-  }
+  };
   //PAGINACIÓN
   const totalPages = Math.ceil(filteredBookings.length / bookingsPerPage);
   const indexOfLastBookings = currentPage * bookingsPerPage;
@@ -120,10 +117,30 @@ export const BookingsList = () => {
         <SectionTable>
           <BoxSelect>
             <ContainerSelect>
-              <SelectTitle onClick={() => handleStatusChange("all")} isActive = {selectedStatus === "all"}>All Bookings</SelectTitle>
-              <SelectTitle onClick={() => handleStatusChange("Check In")}  isActive = {selectedStatus === "Check In"}>Check In</SelectTitle>
-              <SelectTitle onClick={() => handleStatusChange("Check Out")}  isActive = {selectedStatus === "Check Out"}>Check Out</SelectTitle>
-              <SelectTitle onClick={() => handleStatusChange("In Progress")}  isActive = {selectedStatus === "In Progress"}>In Progress</SelectTitle>
+              <SelectTitle
+                onClick={() => handleStatusChange("all")}
+                isActive={selectedStatus === "all"}
+              >
+                All Bookings
+              </SelectTitle>
+              <SelectTitle
+                onClick={() => handleStatusChange("Check In")}
+                isActive={selectedStatus === "Check In"}
+              >
+                Check In
+              </SelectTitle>
+              <SelectTitle
+                onClick={() => handleStatusChange("Check Out")}
+                isActive={selectedStatus === "Check Out"}
+              >
+                Check Out
+              </SelectTitle>
+              <SelectTitle
+                onClick={() => handleStatusChange("In Progress")}
+                isActive={selectedStatus === "In Progress"}
+              >
+                In Progress
+              </SelectTitle>
             </ContainerSelect>
             <ContainerInput>
               <UsersInput
