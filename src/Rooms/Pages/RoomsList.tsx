@@ -45,26 +45,46 @@ export const RoomsList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const DataAllRooms: RoomsInter[] = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
+  const [rooms , setRooms] = useState<RoomsInter []>(DataAllRooms);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const roomsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  
-  
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [selectedFilter, setSelectedFilter] = useState<string>("All Rooms");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [statusFilter, setStatusFilter] = useState<"Available" | "Booked">("Available");
 
   useEffect(() => {
     if (StatusAllRooms === "idle") {
       dispatch(RoomsThunk());
-    } else if (StatusAllRooms === "fulfilled") {
-      DataAllRooms;
+    }else if (StatusAllRooms === "fulfilled"){
+      setRooms(DataAllRooms)
     }
-  }, [StatusAllRooms, dispatch, DataAllRooms]);
+  }, [StatusAllRooms, dispatch]);
+ 
 
-  // Filtrar habitaciones
   let filteredRooms = DataAllRooms.filter((room) => 
     room.room_number.toString().includes(searchTerm) ||
-      room.room_type.toLowerCase().includes(searchTerm.toLowerCase())
-);
+    room.room_type.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
+  const sortRooms = (rooms: RoomsInter[]) => {
+    let sortedRooms = rooms;
+
+    if (selectedFilter === "Status") {
+      sortedRooms = sortedRooms.filter((room) => room.status === statusFilter);
+    }
+
+
+    if (selectedFilter === "Price") {
+      sortedRooms.sort((a, b) => 
+        sortOrder === "asc" ? a.room_price - b.room_price : b.room_price - a.room_price
+      );
+    }
+
+    return sortedRooms;
+  };
+
+  filteredRooms = sortRooms(filteredRooms);
 
   // Paginación
   const totalPages = Math.ceil(filteredRooms.length / roomsPerPage);
@@ -102,13 +122,45 @@ export const RoomsList = () => {
     dispatch(DeleteRoomThunk(id));
   };
 
+  const handleFilterChange = (filter: string) => {
+    setSelectedFilter(filter);
+    setCurrentPage(1); 
+  };
+
+  const handleStatusFilter = () => {
+    setStatusFilter((prev) => (prev === "Available" ? "Booked" : "Available"));
+  };
+
   return (
     <SectionTable>
       <BoxSelect>
         <ContainerSelect>
-          <SelectTitleRooms>All Rooms</SelectTitleRooms>
-          <SelectTitleRooms>Price</SelectTitleRooms>
-          <SelectTitleRooms>Status</SelectTitleRooms>
+          <SelectTitleRooms
+            isActive={selectedFilter === "All Rooms"}
+            onClick={() => {
+              handleFilterChange("All Rooms");
+            }}
+          >
+            All Rooms
+          </SelectTitleRooms>
+          <SelectTitleRooms
+            isActive={selectedFilter === "Price"}
+            onClick={() => {
+              handleFilterChange("Price");
+              setSortOrder(sortOrder === "asc" ? "desc" : "asc"); 
+            }}
+          >
+            Price {selectedFilter === "Price" && (sortOrder === "asc" ? "↑" : "↓")}
+          </SelectTitleRooms>
+          <SelectTitleRooms
+            isActive={selectedFilter === "Status"}
+            onClick={() => {
+              handleFilterChange("Status");
+              handleStatusFilter(); 
+            }}
+          >
+            Status {selectedFilter === "Status" && `(${statusFilter})`}
+          </SelectTitleRooms>
         </ContainerSelect>
         <ContainerInput>
           <UsersInput
@@ -140,8 +192,8 @@ export const RoomsList = () => {
           </TableR>
         </TableHead>
         <TableBody>
-          {currentRooms.map((room, index) => (
-            <TableRow key={room.id} index={index}>
+          {currentRooms.map((room) => (
+            <TableRow key={room.id} index={room.id}>
               <TableTd>
                 <TableImg
                   src={room.image_url || "/src/assets/Imagenes/room10.jpg"}

@@ -7,7 +7,7 @@ display: flex;
 margin-bottom: 2rem;
 border-bottom: 2px solid #6E6E6E;
 `
-export const SelectTitle = styled.h2<{ isActive: boolean }>`
+export const SelectTitleRooms = styled.h2<{ isActive: boolean }>`
   margin-left: 2rem;
   margin-right: 2rem;
   font-family: "Poppins";
@@ -28,11 +28,7 @@ export const SelectTitle = styled.h2<{ isActive: boolean }>`
     color: #135846; 
   }
 `
-export const SelectTitleRooms = styled.h3`
-margin-left: 2rem;
-  margin-right: 2rem;
-  font-family: "Poppins";
-`
+
 
 export const ContainerButtons = styled.div`
 display:flex;

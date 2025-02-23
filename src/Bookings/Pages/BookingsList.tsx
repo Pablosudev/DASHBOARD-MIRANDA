@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { SelectTitle } from "../../Users/Components/Users";
 import {
   ContainerSelect,
-  SelectTitle,
   ContainerButtons,
   ContainerFake,
   BoxSelect,
