@@ -7,18 +7,13 @@ import { Swiper } from "swiper/react";
 
 
 
-export const Contact = styled.section`
-display:flex;
-flex-direction:column;
-`
 export const SectionContact = styled.section`
-margin: 5%;
-margin-top: 10%;
+margin-left: 3%;
+margin-right: 6%;
+margin-top: 12%;
 `
 export const SliderReviews = styled.div`
-  width: 100%; 
-  max-width: 1555px; 
-   
+  max-width: 1300px; 
 `
 export const BoxReviews = styled.div`
 background-color: #ffffff;

@@ -205,7 +205,6 @@ export const Contact = () => {
             <TableHead>
               <TableR>
                 <TableDate>Date</TableDate>
-                <th></th>
                 <th>Customer</th>
                 <TableComment>Comment</TableComment>
               </TableR>
@@ -216,7 +215,6 @@ export const Contact = () => {
                   <TableDate>
                     {contact.date} <br /> #{contact.id}
                   </TableDate>
-                  <TableAmenities></TableAmenities>
                   <TableAmenities>
                     {contact.full_name} <br /> {contact.email} <br />{" "}
                     {contact.phone}

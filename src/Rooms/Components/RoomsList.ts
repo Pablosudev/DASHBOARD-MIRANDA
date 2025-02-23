@@ -32,7 +32,7 @@ export const SelectTitleRooms = styled.h2<{ isActive: boolean }>`
 
 export const ContainerButtons = styled.div`
 display:flex;
-justify-content: end;
+justify-content: center;
 margin-top: 2rem;
 `
 export const ContainerFake = styled.div`

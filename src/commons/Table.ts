@@ -38,26 +38,23 @@ export const TableRooms = styled.table`
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
   border-collapse: collapse;
-  width: 140%;
+
 `;
 export const TableBookings = styled.table`
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
   border-collapse: collapse;
-  width: 105%;
 `;
 export const TableContacts = styled.table`
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
   border-collapse: collapse;
-  width: 100%;
+  
 `;
 export const TableUsers = styled.table`
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
   border-collapse: collapse;
-  width: 73rem;
-  
 `;
 export const TableBody = styled.tbody`
   height: 7.5rem;
@@ -110,8 +107,9 @@ export const StatusUsers = styled.p<StatusUsersProps>`
 
 export const TableContact = styled.td`
   font-family: "Poppins";
-  padding-right: 5rem;
-  padding-left: 5rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  max-width: 38rem;
 `;
 export const TableDate = styled.td`
   font-family: "Poppins";
