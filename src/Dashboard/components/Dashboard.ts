@@ -8,11 +8,10 @@ import { FaArrowRight } from "react-icons/fa6";
 export const DashboardSection = styled.section`
     margin-top: 10%;
     margin-left: 2%;
-    max-width: 80%;
+    max-width: 78%;
 `
 export const ContainerKpis = styled.div`
    display: flex;
-   
 `
 export const Kpis = styled.div`
     display: flex;
@@ -48,7 +47,7 @@ export const TypeKpis = styled.p`
     margin-bottom: 1.5rem;
 `
 export const IconLogOut = styled(HiOutlineLogout)`
-    font-size: 2rem;
+    font-size: 4rem;
     color: #E23428;
     background-color:#FFEDEC;
     border-radius: 0.5rem;
@@ -59,7 +58,7 @@ export const IconLogOut = styled(HiOutlineLogout)`
     }
 `
 export const IconLogIn = styled(HiOutlineLogin)`
-    font-size: 2rem;
+    font-size: 4rem;
     color: #E23428;
     background-color:#FFEDEC;
     border-radius: 0.5rem;
@@ -71,7 +70,7 @@ export const IconLogIn = styled(HiOutlineLogin)`
 `
 
 export const IconBed = styled(LuBedDouble)`
-    font-size: 2rem;
+    font-size: 4rem;
     color: #E23428;
     background-color:#FFEDEC;
     border-radius: 0.5rem;
@@ -82,7 +81,7 @@ export const IconBed = styled(LuBedDouble)`
     }
 `
 export const IconCalendary = styled(TbCalendarCheck)`
-    font-size: 2rem;
+    font-size: 4rem;
     color: #E23428;
     background-color:#FFEDEC;
     border-radius: 0.5rem;
@@ -105,8 +104,10 @@ box-shadow: 0px 4px 4px #00000005;
 border-radius: 0.8rem;
 padding-top: 1.5rem;
 padding-right: 1rem;
+padding-left: 1rem;
 padding-bottom: 4rem;
 margin-top: 4rem;
+
 
 `
 export const BoxReviews = styled.div`

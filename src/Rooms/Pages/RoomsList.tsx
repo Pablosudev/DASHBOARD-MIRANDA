@@ -14,6 +14,8 @@ import {
   ContainerId,
   TableName,
   TableRow,
+  TableStatusRooms,
+  TableIcons,
 } from "../../commons/Table";
 import {
   ContainerSelect,
@@ -221,10 +223,10 @@ export const RoomsList = () => {
                   room.room_price * (room.room_offer / 100)
                 ).toFixed(2)}
               </OfferPrice>
-              <td>
+              <TableStatusRooms>
                 <ButtonTable status={room.status}>{room.status}</ButtonTable>
-              </td>
-              <td>
+              </TableStatusRooms>
+              <TableIcons>
                 <Link to={`/rooms/edit/${room.id}`} aria-label="Edit room">
                   <EditIcon />
                 </Link>
@@ -232,7 +234,7 @@ export const RoomsList = () => {
                   onClick={() => handleDeleteRoom(room.id)}
                   aria-label="Delete room"
                 />
-              </td>
+              </TableIcons>
             </TableRow>
           ))}
         </TableBody>

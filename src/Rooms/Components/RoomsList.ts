@@ -78,4 +78,5 @@ font-size: 1.5rem;
 `
 export const OfferPrice = styled.td`
 font-family: "Poppins";
+padding-right: 3rem;
 `

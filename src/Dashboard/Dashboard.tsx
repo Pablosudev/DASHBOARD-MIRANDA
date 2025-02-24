@@ -26,7 +26,6 @@ import {
   SliderReviews,
   NameReview,
   BoxIcon,
-  SectionContact,
   StyledSwiperSlide,
   StyledSwiper,
 } from "../Contact/Components/Contact";

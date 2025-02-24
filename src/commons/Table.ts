@@ -9,6 +9,8 @@ import {
 export const SectionTable = styled.section`
   margin-top: 8rem;
   margin-left: 2rem;
+  background-color: rgba(255, 255, 255, 1);
+ 
 `;
 export const TableR = styled.tr`
   border-left: transparent;
@@ -38,7 +40,6 @@ export const TableRooms = styled.table`
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
   border-collapse: collapse;
-
 `;
 export const TableBookings = styled.table`
   border-radius: 20px;
@@ -58,12 +59,14 @@ export const TableUsers = styled.table`
 `;
 export const TableBody = styled.tbody`
   height: 7.5rem;
+ 
 `;
 export const TableImg = styled.img`
   width: 9.3rem;
   height: 4.8rem;
   border-radius: 8px;
   margin-left: 1rem;
+  margin-right: 3rem;
 `;
 export const TableTd = styled.td`
   height: 7.5rem;
@@ -81,13 +84,15 @@ export const ButtonTable = styled.button<ButtonTableProps>`
 export const TableAmenities = styled.td`
   font-family: "Poppins";
   font-size: 1rem;
+  padding-right: 5rem;
+  padding-left: 3rem;
 `;
 export const TablePrice = styled.td`
   display: flex;
   font-family: "Poppins";
   align-items: center;
   margin-top: 2rem;
-  max-width: 6rem;
+ 
 `;
 export const Night = styled.p`
   color: #799283;
@@ -151,6 +156,15 @@ export const ButtonBookings = styled.button<ButtonBookingsProps>`
 export const TableName = styled.th`
   padding-left: 1rem;
 `;
+export const TableStatusRooms = styled.td`
+padding-left:1rem;
+padding-right:3rem;
+`
+export const TableIcons = styled.td`
+display: flex;
+flex-direction: column;
+padding-right: 2rem;
+`
 export const PopUpContacts = styled.div`
   padding-top: 4rem;
   padding-bottom: 4rem;

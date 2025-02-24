@@ -20,8 +20,7 @@ export const NavbarStyled = styled.nav`
 `
 export const ContainerPage = styled.div`
     display:flex;
-    align-items: center;
-    
+    align-items: center;   
 `
 export const LeftIcon = styled(FaArrowLeft)`
     font-size: 2.5rem;
