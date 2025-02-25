@@ -4,7 +4,6 @@ import {
   TableHead,
   TableImg,
   TableR,
-  TableRooms,
   TableTd,
   TableAmenities,
   ContainerId,
@@ -52,7 +51,7 @@ export const UserList = () => {
     return new Date(a.start_date).getTime() - new Date(b.start_date).getTime();
   });
   const filteredUsers: Users[] = DataUsers.filter((user) => {
-    const usersSearchTerm = user.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+    const usersSearchTerm = user.name.toLowerCase().includes(searchTerm.toLowerCase())
     const usersStatus = selectedStatus === "all" || user.status === selectedStatus
     return usersSearchTerm && usersStatus
   });
@@ -66,29 +65,30 @@ export const UserList = () => {
   const handleCreateUser = () => {
     navigate("/users/new")
   }
-  const handleSearch = (event) => {
+  const handleSearch = (event: any) => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
-  const handleDeleteUser = (id: number) => {
-    dispatch(DeleteUserThunk(id));
+  const handleDeleteUser = (_id: string) => {
+    dispatch(DeleteUserThunk(_id))
+    .then(()=> {
+      setUsers(prevUsers => prevUsers.filter(user => user._id !== _id))
+    })
   };
   const handleStatusChange = ( status: string) => {
     setSelectedStatus(status);
     setCurrentPage(1);
   }
-
   
-
   useEffect(() => {
     if (StatusUser === "idle") {
-      dispatch(UsersAllThunk(id));
+      dispatch(UsersAllThunk());
     } else if (StatusUser === "fulfilled") {
       setUsers(DataUsers);
     } else if (StatusUser === "rejected") {
       alert("Error al cargar los datos de los usuarios");
     }
-  },[dispatch, id, StatusUser, DataUsers]);
+  },[dispatch, StatusUser, DataUsers]);
 
 
   return (
@@ -119,7 +119,7 @@ export const UserList = () => {
               <TableHeadName>Name</TableHeadName>
               <th></th>
               <th>Start Date</th>
-              <th>Job Desk</th>
+              <th>Department</th>
               <th>Contact</th>
               <th>Email</th>
               <th>Status</th>
@@ -127,7 +127,7 @@ export const UserList = () => {
           </TableHead>
           <TableBody>
             {currentUsers.map((user) => (
-              <TableR key={user.id}>
+              <TableR key={user._id}>
                 <TableTd>
                   <TableImg
                     src="/src/assets/Imagenes/users logo.jpg"
@@ -135,21 +135,21 @@ export const UserList = () => {
                   />
                 </TableTd>
                 <ContainerId>
-                  {user.full_name} <br />
-                  {user.id}
+                  {user.name} <br />
+                  {user._id}
                 </ContainerId>
                 <TableAmenities>{user.start_date}</TableAmenities>
-                <TableAmenities>{user.job_description}</TableAmenities>
-                <TableAmenities>{user.phone_number}</TableAmenities>
+                <TableAmenities>{user.department}</TableAmenities>
+                <TableAmenities>{user.phone}</TableAmenities>
                 <TableAmenities>{user.email}</TableAmenities>
                 <td>
                   <StatusUsers status ={user.status}>{user.status}</StatusUsers>
                 </td>
                 <td>
-                  <Link to= {`/users/edit/${user.id}`}> <EditIcon /></Link>
+                  <Link to= {`/users/edit/${user._id}`}> <EditIcon /></Link>
                   
                   <DeleteIcon
-                    onClick={() => handleDeleteUser(user.id)}
+                    onClick={() => handleDeleteUser(user._id)}
                     aria-label="Delete user"
                   />
                 </td>

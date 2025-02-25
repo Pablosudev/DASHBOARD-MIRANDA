@@ -21,13 +21,13 @@ import { useSelector } from "react-redux";
 import { IdData, StatusId } from "../Features/UsersSlice";
 import { IdUserThunk, EditUserThunk } from "../Features/UsersThunk";
 import { AppDispatch } from "../../App/Store";
-import { Users, UsersEdit } from "../Interfaces/UsersInterfaces";
+import { UsersEdit } from "../Interfaces/UsersInterfaces";
 import React from "react";
 
 export const UserEdit = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { id } = useParams<{id: string}>();
+  const { id } = useParams<{ id: string }>();
   const Users = useSelector(IdData);
   const UserStatus = useSelector(StatusId);
 
@@ -40,63 +40,71 @@ export const UserEdit = () => {
   };
 
   const [newUser, setNewUser] = useState<UsersEdit>({
-    full_name: "",
+    name: "",
     start_date: "",
-    job_description: "",
-    phone_number: "",
+    description: "",
+    phone: "",
     email: "",
-    job_desk: "",
     password: "",
-    status,
+    status: "",
+    department: "",
+    _id: "",
+    
   });
 
   const handleSave = () => {
-      dispatch(EditUserThunk({ id: Number(id), updatedUser: newUser }))
-        .unwrap()
-        .then(() => {
-          alert("Habitación actualizada correctamente");
-          navigate("/users");
-        })
-        .catch((error) => {
-          alert("Error al actualizar la habitación: " + error.message);
-        });
-    };
-    const formatDate = (date) => {
-      const newDate = new Date(date);
-      return newDate.toISOString().split('T')[0]; 
-    };
-  const numericId = id ? Number (id) : NaN
+    if (!id) {
+      alert("ID no válido");
+      return;
+    }
+  
+    console.log("ID del usuario:", id);
+    console.log("Datos a enviar:", newUser);
+  
+    dispatch(EditUserThunk({ id, updatedUser: newUser }))
+      .unwrap()
+      .then(() => {
+        alert("Usuario actualizado correctamente");
+        navigate("/users");
+      })
+      .catch((error) => {
+        console.error("Error en handleSave:", error);
+        alert("Error al actualizar el usuario: " + (error.payload?.message || error.message || "Error desconocido"));
+        navigate("/users")
+      });
+  };
+  const formatDate = (date) => {
+    const newDate = new Date(date);
+    return newDate.toISOString().split("T")[0];
+  };
+  
   useEffect(() => {
-    if (UserStatus === "idle") {
-      if (!isNaN(numericId)) {
-        dispatch(IdUserThunk(numericId));  
-      } else {
-        alert("ID inválido");
+    if (UserStatus === "idle" ) {
+      if(id){
+      dispatch(IdUserThunk(id));
       }
     } else if (UserStatus === "fulfilled") {
-      if (Users){
-      setNewUser({
-        full_name: Users.full_name,
-        start_date: formatDate(Users.start_date),
-        job_description: Users.job_description,
-        phone_number: Users.phone_number,
-        email: Users.email,
-        job_desk: "",
-        password: "",
-        status,
-      });
-    }
-      if (Users?.id != id) {
-        if (!isNaN(numericId)) {
-          dispatch(IdUserThunk(numericId));  
-        } else {
-          alert("ID inválido");
+      if (Users) {
+        setNewUser({
+          name: Users.name,
+          start_date: formatDate(Users.start_date),
+          description: Users.description,
+          phone: Users.phone,
+          email: Users.email,
+          password: "",
+          status: "",
+          department: "",
+          _id: "",
+          
+        });
+        if(Users._id != id){
+          dispatch(IdUserThunk(id ?? ""))
         }
       }
     } else if (UserStatus === "rejected") {
       alert("Error al cargar los datos de la habitación");
     }
-  }, [dispatch, id, UserStatus,]);
+  }, [dispatch, id, UserStatus, Users]);
 
   return (
     <>
@@ -118,8 +126,8 @@ export const UserEdit = () => {
               <InputName
                 type="text"
                 placeholder="Name"
-                name="full_name"
-                value={newUser.full_name}
+                name="name"
+                value={newUser.name}
                 onChange={handleInputChange}
               />
             </div>
@@ -137,8 +145,8 @@ export const UserEdit = () => {
               <TypeInput>Phone</TypeInput>
               <InputName
                 type="text"
-                name="phone_number"
-                value={newUser.phone_number}
+                name="phone"
+                value={newUser.phone}
                 onChange={handleInputChange}
               />
             </div>
@@ -150,24 +158,15 @@ export const UserEdit = () => {
               <TypeInput>Job</TypeInput>
               <SelectCreate
                 typeof="text"
-                name="job_description"
-                value={newUser.job_description}
+                name="description"
+                value={newUser.description}
                 onChange={handleInputChange}
               >
                 <option value="MANAGER">MANAGER</option>
                 <option value="RECEPTIONIST">RECEPTIONIST</option>
                 <option value="ROOM SERVICE">ROOM SERVICE</option>
               </SelectCreate>
-              <TypeInput>Status</TypeInput>
-              <SelectCreate
-                typeof  ="text"
-                name="status"
-                value={newUser.status}
-                onChange={handleInputChange}
-              >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </SelectCreate>
+              
             </div>
             <div>
               <TypeInput>Job Desk</TypeInput>
@@ -179,14 +178,16 @@ export const UserEdit = () => {
             </div>
           </BoxArticle>
           <BoxArticle>
-            <div>
-              <TypeInput>Create Password</TypeInput>
-              <InputName
-                type="password"
-                name="password"
+          <TypeInput>Status</TypeInput>
+              <SelectCreate
+                typeof="text"
+                name="status"
+                value={newUser.status}
                 onChange={handleInputChange}
-              />
-            </div>{" "}
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </SelectCreate>
             <div>
               <TypeInput>Star Date</TypeInput>
               <InputName
@@ -199,7 +200,9 @@ export const UserEdit = () => {
           </BoxArticle>
         </ContainerInput>
         <ContainerButton>
-          <ButtonGreen onClick={handleSave} type="">Edit User</ButtonGreen>
+          <ButtonGreen  onClick={handleSave} >
+            Edit User
+          </ButtonGreen>
         </ContainerButton>
       </ContainerNewUsers>
     </>

@@ -1,10 +1,10 @@
 export interface Users {
-    full_name: string,
-    id: number,
+    name: string,
+    _id: string,
     email: string,
     start_date: string,
-    job_description: string,
-    phone_number: string,
+    description: string,
+    phone: string,
     status: string,
     department: string, 
 }
@@ -23,22 +23,22 @@ export interface UserState {
 }
 
 export interface UsersEdit{
-    full_name: string,
+    name: string,
     start_date: string,
-    job_description: string,
-    phone_number: string,
+    description: string,
+    phone: string,
     email: string,
-    job_desk: string,
     password: string,
+    department: string,
     status: string,
-    
+    _id: string,
 }
 export interface UsersCreate {
-    id: number,
-    full_name: string,
+    _id: string,
+    name: string,
     start_date: string,
-    job_description: string,
-    phone_number: string,
+    description: string,
+    phone: string,
     email: string,
     job_desk: string,
     password: string,

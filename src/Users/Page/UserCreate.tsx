@@ -14,15 +14,15 @@ export const UserCreate = () => {
     const navigate = useNavigate();
 
     const[ newUser, setNewUser] = useState<UsersCreate>({
-        full_name: "",
+       name: "",
         start_date:"",
-        job_description: "",
-        phone_number: "",
+        description: "",
+        phone: "",
         email:"",
         job_desk:"",
         password:"",
         status: "Active",
-        id:0,
+        _id:"",
         department:"",
 
     })
@@ -55,8 +55,8 @@ export const UserCreate = () => {
                         <InputName
                             type="text"
                             placeholder="Name"
-                            name="full_name"
-                            value={newUser.full_name}
+                            name="name"
+                            value={newUser.name}
                             onChange={handleInputChange} /> 
                     </div>
                     <div>
@@ -73,8 +73,8 @@ export const UserCreate = () => {
                         <TypeInput>Phone</TypeInput>
                         <InputName 
                             type="text" 
-                            name="phone_number"
-                            value={newUser.phone_number}
+                            name="phone"
+                            value={newUser.phone}
                             onChange={handleInputChange}
                         /> 
                     </div> 
@@ -85,7 +85,7 @@ export const UserCreate = () => {
                 <BoxArticle>
                     <div>
                         <TypeInput>Job</TypeInput>
-                        <SelectCreate typeof="text" name="job_description" value={newUser.job_description} onChange={handleInputChange}>
+                        <SelectCreate typeof="text" name="description" value={newUser.description} onChange={handleInputChange}>
                         <option value="MANAGER">MANAGER</option>
                         <option value="RECEPTIONIST">RECEPTIONIST</option>
                         <option value="ROOM SERVICE">ROOM SERVICE</option>

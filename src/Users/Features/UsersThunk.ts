@@ -1,159 +1,139 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Users, UsersEdit } from "../Interfaces/UsersInterfaces"
+import { Users, UsersEdit } from "../Interfaces/UsersInterfaces";
 
-export const UsersAllThunk = createAsyncThunk<Users [], string | undefined>("users/getUsers" , async () => {
-    try{
-        const users = await new Promise<Users []> ((resolve, reject) => {
-            setTimeout(async () => {
-                try {
-                    const response = await fetch ("/Data/users.json");
-                    if(!response.ok){
-                        reject("Error al cargar los datos");
-                    }
-                    const json: Users [] = await response.json();
-                    resolve(json);
-                } catch(error) {
-                    reject(error);
-                }
-            }, 200)
-        });
-        return users;
-    }   catch (error) {
-        throw new Error("Error al obetener los datos de los usuarios");
-    }
-});
+export const UsersAllThunk = createAsyncThunk<Users[], string | undefined>(
+  "users/getUsers",
+  async (_, {rejectWithValue}) => {
+    
+          try {
+            const response = await fetch("http://localhost:3001/api/v1/users", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+              },
+            });
+            if (!response.ok) {
+              return rejectWithValue("Error al cargar los datos");
+            }
+            const users: Users[] = await response.json();
+            return users;
+          } catch (error) {
+            return rejectWithValue(error.message || "Error al obtener los datos de los usuarios");
+          }
+        }
+      );
+      
 
 //FETCH ID
-export const IdUserThunk = createAsyncThunk<Users , number>(
+export const IdUserThunk = createAsyncThunk<Users, string>(
   "userId/getIdUser",
-  async (id: number, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
-      const userId = await new Promise<Users>((resolve, reject) => {
-        setTimeout(async () => {
-          try {
-            
-            const response = await fetch("/Data/users.json");
-            if (!response.ok) {
-              reject("Error al cargar los datos");
-            }
-            const jsonData: Users[] = await response.json();
-
-            const users = jsonData.find((users) => users.id === Number(id));
-           
-            if (users) {
-              resolve(users);
-            } else {
-              reject("Usuario no encontrado");
-            }
-          } catch (error) {
-            reject(error);
-          }
-        }, 200);
+      const response = await fetch(`http://localhost:3001/api/v1/users/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+        },
       });
-      return userId;
+      if (!response.ok) {
+        return rejectWithValue("Error al cargar los datos");
+      }
+      const userData: Users = await response.json();
+
+      if (userData) {
+        return userData; 
+      } else {
+        return rejectWithValue("Usuario no encontrado");
+      }
     } catch (error) {
       console.error("Error en el thunk:", error);
       return rejectWithValue(
-        error.message || "Error al obtener los datos de la ID"
+        error.message || "Error al obtener los datos del usuario"
       );
     }
   }
 );
 
-
-
-
 //FETCH DELETE
 
-export const DeleteUserThunk = createAsyncThunk<{id:number}, number>(
+export const DeleteUserThunk = createAsyncThunk<{ id: string }, string>(
   "user/deleteUser",
-  async (id: number) => {
+  async (id: string, { rejectWithValue }) => {
     try {
-      const userId = await new Promise<{ id: number}> ((resolve, reject) => {
-        setTimeout(async () => {
-          try {
-            const response = await fetch(`/Data/users.json?id=${id}`, {method: 'DELETE'});
-              
-            if (!response.ok) {
-              reject("Error al eliminar la habitación");
-            }
+      const response = await fetch(
+        `http://localhost:3001/api/v1/users/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`, 
+          },
+        }
+      );
 
-            resolve({id});
-          } catch (error) {
-            reject(error);
-          }
-        }, 200);
-      });
-      return userId;
+      if (!response.ok) {
+        return rejectWithValue("Error al eliminar el usuario");
+      }
+
+      return { id };
     } catch (error) {
-      throw new Error("Error al eliminar la habitación");
+      return rejectWithValue(error.message || "Error desconocido al eliminar el usuario");
     }
   }
 );
 
+      
 //FETCH CREATE
 export const CreateUserThunk = createAsyncThunk<Users, Users>(
   "user/createUser",
   async (newUser, { rejectWithValue }) => {
     try {
-      const userId = await new Promise<Users>((resolve, reject) => {
-        setTimeout(() => {
-          try {
-            const newUserWithId = {
-              ...newUser,
-              id: Date.now(),
-            };
-            resolve(newUserWithId);
-          } catch (error) {
-            reject("Error al crear la habitación");
-          }
-        }, 200);
+      const response = await fetch("http://localhost:3001/api/v1/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+        },
+        body: JSON.stringify(newUser),
       });
 
-      return userId; 
+      if (!response.ok) {
+        throw new Error("Error al crear el usuario");
+      }
+
+      const createdUser = await response.json();
+      return createdUser;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.message || "Error al crear el usuario");
     }
   }
 );
 
 //FETCH EDIT
-export const EditUserThunk  = createAsyncThunk<Users, {id: number , updatedUser: UsersEdit}>(
-  "user/editUser",
-  async ({ id, updatedUser}, { rejectWithValue }) => {
-    try {
-      const userId = await new Promise<Users>((resolve, reject) => {
-        setTimeout(async () => {
-          try {
-           
-            const response = await fetch("/Data/users.json");
-            if (!response.ok) {
-              reject("Error al cargar los datos");
-            }
-            const jsonData: Users[] = await response.json();
-            const updatedData = jsonData.map((user) =>
-              user.id === Number(id) ? { ...user, ...updatedUser } : user
-            );
-            const updatedUserData = updatedData.find(
-              (user) => user.id === Number(id)
-            );
-            if (updatedUserData) {
-              
-              resolve(updatedUserData);
-            } else {
-    
-              reject("Usuario no encontrada");
-            }
-          } catch (error) {
-            
-            reject(error);
-          }
-        }, 200);
-      });
-      return userId;
-    } catch (error) {
-      
-      return rejectWithValue(error.message || "Error al editar el usuario");
+export const EditUserThunk = createAsyncThunk<
+  Users,
+  { id: string; updatedUser: UsersEdit }
+>("user/editUser", async ({ id, updatedUser }, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`http://localhost:3001/api/v1/users/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+      },
+      body: JSON.stringify(updatedUser),
+    });
+
+    if (!response.ok) {
+      return rejectWithValue("Error al editar el usuario");
     }
+
+    const updatedUserData = await response.json();
+
+    return updatedUserData;
+  } catch (error) {
+    return rejectWithValue(error.message || "Error al editar el usuario");
   }
-);
+});

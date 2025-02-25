@@ -66,10 +66,10 @@ export const UsersSlice = createSlice({
         state.statusDelete = "fulfilled";
 
         state.data = state.data.filter(
-          (users) => users.id !== action.payload.id 
+          (users) => users._id !== action.payload.id 
         );
 
-        if (state.userId.data && state.userId.data.id === action.payload.id) {
+        if (state.userId.data && state.userId.data._id === action.payload.id) {
           state.userId.data = null;
         }
 
@@ -103,7 +103,7 @@ export const UsersSlice = createSlice({
         state.userId.status = "fulfilled";
         state.userId.data = action.payload ;
 
-        const index = state.data.findIndex((user) => user.id === action.payload.id);
+        const index = state.data.findIndex((user) => user._id === action.payload._id);
         if (index !== -1) {
           state.data[index] = action.payload ;
         }

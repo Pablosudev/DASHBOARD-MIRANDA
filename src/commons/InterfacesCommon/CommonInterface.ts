@@ -2,7 +2,7 @@ export interface ButtonFakeProps {
     active: boolean,
 }
 export interface ButtonGreenProps {
-    type: string,
+    type?: string,
 }
 export interface ButtonTableProps {
     status: string;
