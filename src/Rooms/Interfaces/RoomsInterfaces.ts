@@ -1,14 +1,12 @@
 export interface RoomsInter {
-  image_url: string;
-  room_number: number;
-  id: number;
-  room_price: number;
-  room_offer: number;
-  status: string;
-  room_type: string;
+  image_url?: string;
+  number: number;
+  _id?: string;
+  price: number;
+  offer: number;
+  roomStatus: string;
+  type: string;
   amenities: string[];
-  room_discount: number;
-  room_description: string;
 }
 export interface RoomsState {
   status: "idle" | "fulfilled" | "rejected" | "pending";
@@ -27,22 +25,22 @@ export interface RoomsState {
   };
 }
 export interface RoomsEdits {
-  room_type: string;
-  room_number: number;
-  room_price: number;
-  room_offer: number;
-  room_discount: number;
-  room_description: string;
+  type: string;
+  number: number;
+  price: number;
+  offer: number;
+  discount: number;
+  description: string;
 }
 export interface RoomCreate {
-  room_type: string;
-  room_number: number;
-  room_price: number;
-  room_offer: number;
-  room_discount: number;
-  room_description: string;
-  status: string;
+  type: string;
+  number: number;
+  price: number;
+  offer: number;
+  discount: number;
+  description: string;
+  roomStatus: string;
   amenities: string[];
-  id: number,
+  _id: string,
   image_url: string,
 }

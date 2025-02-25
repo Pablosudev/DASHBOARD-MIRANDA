@@ -16,6 +16,9 @@ import {
   TableRow,
   TableStatusRooms,
   TableIcons,
+  HeadType,
+  HeadAmenities,
+  HeadStatus,
 } from "../../commons/Table";
 import {
   ContainerSelect,
@@ -65,21 +68,21 @@ export const RoomsList = () => {
  
 
   let filteredRooms = DataAllRooms.filter((room) => 
-    room.room_number.toString().includes(searchTerm) ||
-    room.room_type.toLowerCase().includes(searchTerm.toLowerCase())
+    room.number.toString().includes(searchTerm) ||
+    room.type.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const sortRooms = (rooms: RoomsInter[]) => {
     let sortedRooms = rooms;
 
     if (selectedFilter === "Status") {
-      sortedRooms = sortedRooms.filter((room) => room.status === statusFilter);
+      sortedRooms = sortedRooms.filter((room) => room.roomStatus === statusFilter);
     }
 
 
     if (selectedFilter === "Price") {
       sortedRooms.sort((a, b) => 
-        sortOrder === "asc" ? a.room_price - b.room_price : b.room_price - a.room_price
+        sortOrder === "asc" ? a.price - b.price : b.price - a.price
       );
     }
 
@@ -120,7 +123,7 @@ export const RoomsList = () => {
     navigate("/rooms/create");
   };
 
-  const handleDeleteRoom = (id: number) => {
+  const handleDeleteRoom = (id) => {
     dispatch(DeleteRoomThunk(id));
   };
 
@@ -186,52 +189,52 @@ export const RoomsList = () => {
           <TableR>
             <TableName>Room Name</TableName>
             <th></th>
-            <th>Room Type</th>
-            <th>Amenities</th>
+            <HeadType>Room Type</HeadType>
+            <HeadAmenities>Amenities</HeadAmenities>
             <th>Price</th>
             <th>Offer</th>
-            <th>Status</th>
+            <HeadStatus>Status</HeadStatus>
           </TableR>
         </TableHead>
         <TableBody>
           {currentRooms.map((room) => (
-            <TableRow key={room.id} index={room.id}>
+            <TableRow key={Number(room._id)} index={Number(room._id)}>
               <TableTd>
                 <TableImg
                   src={room.image_url || "/src/assets/Imagenes/room10.jpg"}
-                  alt={`Room ${room.room_number} photo`}
+                  alt={`Room ${room.number} photo`}
                 />
               </TableTd>
               <ContainerId>
-                <Night>{room.room_number}</Night> <p>#{room.id}</p>
+                <Night>{room.number}</Night> <p>#{room._id}</p>
               </ContainerId>
-              <TableAmenities>{room.room_type}</TableAmenities>
+              <TableAmenities>{room.type}</TableAmenities>
               <TableAmenities>
                 {Array.isArray(room.amenities)
                   ? room.amenities.join(", ")
                   : room.amenities || "No amenities"}
               </TableAmenities>
               <TablePrice>
-                ${room.room_price}
+                ${room.price}
                 <Night>/night</Night>
               </TablePrice>
               <OfferPrice>
                 {" "}
                 ${" "}
                 {(
-                  room.room_price -
-                  room.room_price * (room.room_offer / 100)
+                  room.price -
+                  room.price * (room.offer / 100)
                 ).toFixed(2)}
               </OfferPrice>
               <TableStatusRooms>
-                <ButtonTable status={room.status}>{room.status}</ButtonTable>
+                <ButtonTable status={room.roomStatus}>{room.roomStatus}</ButtonTable>
               </TableStatusRooms>
               <TableIcons>
-                <Link to={`/rooms/edit/${room.id}`} aria-label="Edit room">
+                <Link to={`/rooms/edit/${room._id}`} aria-label="Edit room">
                   <EditIcon />
                 </Link>
                 <DeleteIcon
-                  onClick={() => handleDeleteRoom(room.id)}
+                  onClick={() => handleDeleteRoom(room._id)}
                   aria-label="Delete room"
                 />
               </TableIcons>

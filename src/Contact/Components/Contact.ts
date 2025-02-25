@@ -7,13 +7,11 @@ import { Swiper } from "swiper/react";
 
 
 
-export const SectionContact = styled.section`
-margin-left: 3%;
-margin-right: 6%;
-margin-top: 12%;
-`
+
 export const SliderReviews = styled.div`
-  max-width: 1300px; 
+  width:80rem; 
+  margin-top: 10%;
+  margin-left:15%;
 `
 export const BoxReviews = styled.div`
 background-color: #ffffff;
@@ -102,6 +100,8 @@ export const ButtonDelete = styled.button`
 export const SelectTitle = styled.h3<{ $isActive: boolean }>`
   margin-left: 2rem;
   margin-right: 2rem;
+  margin-bottom: 4%;
+  margin-top:4%;
   font-family: "Poppins";
   color: ${(props) => (props.$isActive ? "#135846" : "#6E6E6E")}; 
   cursor: pointer; 
@@ -119,15 +119,14 @@ export const SelectTitle = styled.h3<{ $isActive: boolean }>`
   }
 `;
 
-
-
 export const ContactInput = styled.input`
-border:transparent;
+border-radius:12px;
 background-color:#ffffff;
 padding-left:2rem;
 padding-right:2rem;
 padding-top:0.7rem;
 padding-bottom:0.7rem; 
+border: 1px solid rgba(19, 88, 70, 1);
 
 `
 export const  StyledSwiper = styled(Swiper)`

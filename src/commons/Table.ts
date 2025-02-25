@@ -9,8 +9,7 @@ import {
 export const SectionTable = styled.section`
   margin-top: 8rem;
   margin-left: 2rem;
-  background-color: rgba(255, 255, 255, 1);
- 
+  
 `;
 export const TableR = styled.tr`
   border-left: transparent;
@@ -19,7 +18,7 @@ export const TableR = styled.tr`
   border-bottom: 1px solid rgba(248, 248, 248, 1);
 `;
 export const TableHeadName = styled.th`
-  padding-left: 1rem;
+  padding-left: 1.5%;
 `;
 export const TableRow = styled.tr<TableRowProps>`
   border-left: transparent;
@@ -50,7 +49,6 @@ export const TableContacts = styled.table`
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
   border-collapse: collapse;
-  
 `;
 export const TableUsers = styled.table`
   border-radius: 20px;
@@ -59,15 +57,21 @@ export const TableUsers = styled.table`
 `;
 export const TableBody = styled.tbody`
   height: 7.5rem;
- 
 `;
 export const TableImg = styled.img`
   width: 9.3rem;
   height: 4.8rem;
-  border-radius: 8px;
-  margin-left: 1rem;
-  margin-right: 3rem;
+  margin-left: 2%;
+  margin-right: 2%;
+  border-radius: 8%
 `;
+export const TableImgUsers = styled.img`
+  width: 6.3rem;
+  height: 4.8rem;
+  margin-left: 2%;
+  margin-right: 2%;
+`;
+
 export const TableTd = styled.td`
   height: 7.5rem;
 `;
@@ -84,22 +88,29 @@ export const ButtonTable = styled.button<ButtonTableProps>`
 export const TableAmenities = styled.td`
   font-family: "Poppins";
   font-size: 1rem;
-  padding-right: 5rem;
+  padding-right: 2%;
   padding-left: 3rem;
+`;
+export const TableEmail = styled.td`
+  font-family: "Poppins";
+  font-size: 1rem;
+  padding-left: 1%
 `;
 export const TablePrice = styled.td`
   display: flex;
+  align-items: center;
   font-family: "Poppins";
   align-items: center;
-  margin-top: 2rem;
- 
+  margin-top: 32%;
+  padding-right: 2rem;
+  
 `;
 export const Night = styled.p`
   color: #799283;
-  margin-right: 4rem;
 `;
 export const ContainerId = styled.td`
   font-family: "Poppins";
+  padding-left: 1%;
 `;
 export const LogoUsers = styled.td`
   width: 5.5rem;
@@ -118,8 +129,7 @@ export const TableContact = styled.td`
 `;
 export const TableDate = styled.td`
   font-family: "Poppins";
-  padding-left: 0.8rem;
-  padding-right: 1rem;
+  padding-left: 1.8%;
 `;
 export const TableButton = styled.td`
   padding-right: 2rem;
@@ -157,14 +167,14 @@ export const TableName = styled.th`
   padding-left: 1rem;
 `;
 export const TableStatusRooms = styled.td`
-padding-left:1rem;
-padding-right:3rem;
-`
+  padding-left: 1rem;
+  padding-right: 3rem;
+`;
 export const TableIcons = styled.td`
-display: flex;
-flex-direction: column;
-padding-right: 2rem;
-`
+  display: flex;
+  flex-direction: column;
+  padding-right: 2rem;
+`;
 export const PopUpContacts = styled.div`
   padding-top: 4rem;
   padding-bottom: 4rem;
@@ -172,3 +182,27 @@ export const PopUpContacts = styled.div`
   padding-right: 8rem;
   display: none;
 `;
+export const HeadType = styled.th`
+  padding-left: 2%;
+`;
+export const HeadAmenities = styled.th`
+  padding-left: 3%;
+`;
+export const HeadStatus = styled.th`
+  padding-left: 1%;
+`;
+export const TabledIcons = styled.td`
+display: flex;
+flex-direction:column;
+align-items: center;
+padding: 1rem;
+margin-top: 20%;
+`
+export const TabledStatus = styled.td`
+padding-right: 2rem;
+`
+export const TableDepartment = styled.td`
+padding-left: 1%;
+font-family: "Poppins";
+`
+

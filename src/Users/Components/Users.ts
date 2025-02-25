@@ -12,7 +12,8 @@ padding-left:2rem;
 padding-right:2rem;
 padding-top:0.7rem;
 padding-bottom:0.7rem; 
-border-radius: 12px
+border-radius: 12px;
+border: 1px solid rgba(19, 88, 70, 1);
 `
 export const IconSearch = styled(CiSearch)`
 color:rgba(19, 88, 70, 1);
@@ -23,7 +24,8 @@ font-size: 1.5rem;
 `
 export const SelectTitle = styled.h3<{ isActive: boolean }>`
   margin-left: 2rem;
-  margin-right: 2rem;
+  margin-bottom: 2%;
+  margin-top: 4%;
   font-family: "Poppins";
   color: ${(props) => (props.isActive ? "#135846" : "#6E6E6E")}; 
   cursor: pointer; 

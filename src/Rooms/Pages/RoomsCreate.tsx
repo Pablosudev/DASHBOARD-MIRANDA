@@ -23,7 +23,7 @@ import {
   ContainerSections,
   CardCreate
 } from "../Components/RoomsCreate";
-import { RoomCreate } from "../Interfaces/RoomsInterfaces";
+import { RoomCreate, RoomsInter } from "../Interfaces/RoomsInterfaces";
 import { AppDispatch } from "../../App/Store";
 
 
@@ -32,17 +32,13 @@ export const RoomsCreate = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   
-  const [newRoom, setNewRoom] = useState<RoomCreate>({
-    room_type: "",
-    room_number: 0,
-    room_price: 0,
-    room_offer: 0,
-    room_discount: 0,
-    room_description: "",
-    status: "Available",
-    amenities: [""],
-    image_url: "",
-    id: 0,
+  const [newRoom, setNewRoom] = useState<RoomsInter>({
+    type: "",
+    number: 0,
+    price: 0,
+    offer: 0,
+    roomStatus: "",
+    amenities: [],
   });
 
   
@@ -82,8 +78,8 @@ export const RoomsCreate = () => {
             <TitleSection>Room Type</TitleSection>
             <InputCreate
               type="text"
-              name="room_type"
-              value={newRoom.room_type}
+              name="type"
+              value={newRoom.type}
               onChange={handleInputChange}
             />
           </div>
@@ -91,8 +87,8 @@ export const RoomsCreate = () => {
             <TitleSection>Room Number</TitleSection>
             <InputCreate
               type="text"
-              name="room_number"
-              value={newRoom.room_number}
+              name="number"
+              value={newRoom.number}
               onChange={handleInputChange}
             />
           </div>
@@ -102,8 +98,8 @@ export const RoomsCreate = () => {
             <TitlePrice>Price/Night</TitlePrice>
             <Price
               type="text"
-              name="room_price"
-              value={newRoom.room_price}
+              name="price"
+              value={newRoom.price}
               onChange={handleInputChange}
             />
           </PriceBox>
@@ -136,23 +132,23 @@ export const RoomsCreate = () => {
             <TitlePrice>Discount</TitlePrice>
             <InputDiscount
               type="text"
-              name="room_discount"
-              value={newRoom.room_discount}
+              name="offer"
+              value={newRoom.offer}
               onChange={handleInputChange}
             />
           </PriceBox>
         </BoxInfo>
 
         <BoxDescription>
-          <div>
+          {/* <div>
             <TitleDescripition>Description</TitleDescripition>
             <InputDescription
               type="text"
               name="room_description"
-              value={newRoom.room_description}
+              value={newRoom.description}
               onChange={handleInputChange}
             />
-          </div>
+          </div> */}
           <div>
             <TitleDescripition>Amenities</TitleDescripition>
             <div>

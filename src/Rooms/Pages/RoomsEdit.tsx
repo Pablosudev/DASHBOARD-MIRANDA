@@ -25,7 +25,7 @@ import { IdRoomThunk, EditRoomThunk } from "../Features/RoomsThunk";
 import { useEffect, useState } from "react";
 import { getIdRoomsData, getIdRoomsStatus } from "../Features/RoomsSlice";
 import { AppDispatch } from "../../App/Store";
-import { RoomsEdits, RoomsInter } from "../Interfaces/RoomsInterfaces";
+import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import React from "react";
 
 export const RoomsEdit = () => {
@@ -34,13 +34,14 @@ export const RoomsEdit = () => {
   const navigate = useNavigate();
   const RoomID: RoomsInter | undefined = useSelector(getIdRoomsData);
   const StatusRoom = useSelector(getIdRoomsStatus);
-  const [roomId, setRoomId] = useState<RoomsEdits>({
-    room_type:"",
-    room_number: 0,
-    room_price: 0,
-    room_offer: 0,
-    room_discount: 0,
-    room_description: "",
+  const [roomId, setRoomId] = useState<RoomsInter>({
+    type:"",
+    number: 0,
+    price: 0,
+    offer: 0,
+    roomStatus: "",
+    _id:"",
+    amenities:[]
   });
   
   const handleChange = (e:any) => {
@@ -52,7 +53,11 @@ export const RoomsEdit = () => {
   };
 
   const handleSave = () => {
-    dispatch(EditRoomThunk({ id: Number(id), updatedRoom: roomId }))
+    if (!id) {
+      alert("ID no válido");
+      return; 
+    }
+    dispatch(EditRoomThunk({ id, updatedRoom: roomId }))
       .unwrap()
       .then(() => {
         alert("Habitación actualizada correctamente");
@@ -67,21 +72,19 @@ export const RoomsEdit = () => {
   useEffect(() => {
     
     if (StatusRoom === "idle") {
-
-      dispatch(IdRoomThunk(parseInt(id!)));
-      
-    } else if (StatusRoom === "fulfilled") {
-      if(RoomID?.id != id){
-        dispatch(IdRoomThunk(parseInt(id!)))
+      if(id){
+      dispatch(IdRoomThunk(id));
       }
+    } else if (StatusRoom === "fulfilled") {
       if(RoomID){
       setRoomId({
-        room_type: RoomID.room_type,
-        room_number: RoomID.room_number,
-        room_price: RoomID.room_price,
-        room_offer: RoomID.room_offer,
-        room_discount: RoomID.room_discount ,
-        room_description: RoomID.room_description,
+        type: RoomID.type,
+        number: RoomID.number,
+       price: RoomID.price,
+        offer: RoomID.offer,
+        roomStatus: RoomID.roomStatus,
+        _id: RoomID._id,
+        amenities: RoomID.amenities
       })
     }
     } else if (StatusRoom === "rejected") {
@@ -102,7 +105,7 @@ export const RoomsEdit = () => {
             <InputCreate
               type="text"
               name="room_type"
-              value={roomId?.room_type || ""}
+              value={roomId?.type || ""}
               onChange={handleChange}
             />
           </div>
@@ -111,7 +114,7 @@ export const RoomsEdit = () => {
             <InputCreate
               type="text"
               name="room_number"
-              value={roomId?.room_number || ""}
+              value={roomId?.number || ""}
               onChange={handleChange}
             />
           </div>
@@ -122,7 +125,7 @@ export const RoomsEdit = () => {
             <Price
               type="text"
               name="room_price"
-              value={roomId?.room_price || ""}
+              value={roomId?.price || ""}
               onChange={handleChange}
             />
           </PriceBox>
@@ -156,13 +159,13 @@ export const RoomsEdit = () => {
             <InputDiscount
               type="text"
               name="room_discount"
-              value={roomId?.room_offer || ""}
+              value={roomId?.offer || ""}
               onChange={handleChange}
             />
           </PriceBox>
         </BoxInfo>
         <BoxDescription>
-          <div>
+          {/* <div>
             <TitleDescripition>Description</TitleDescripition>
             <InputDescription
               type="text"
@@ -170,7 +173,7 @@ export const RoomsEdit = () => {
               value={roomId?.room_description || ""}
               onChange={handleChange}
             />
-          </div>
+          </div> */}
           <div>
             <TitleDescripition>Amenities</TitleDescripition>
             <div>

@@ -4,12 +4,14 @@ import { CiSearch } from "react-icons/ci";
 
 export const ContainerSelect = styled.div`
 display: flex;
-margin-bottom: 2rem;
+margin-bottom: 2%;
 border-bottom: 2px solid #6E6E6E;
 `
 export const SelectTitleRooms = styled.h2<{ isActive: boolean }>`
   margin-left: 2rem;
   margin-right: 2rem;
+  margin-bottom: 2%;
+  margin-top: 4%;
   font-family: "Poppins";
   font-size: 1.3rem;
   color: ${(props) => (props.isActive ? "#135846" : "#6E6E6E")}; 
@@ -43,9 +45,10 @@ border-radius: 12px;
 `
 export const BoxSelect = styled.div`
 display:flex;
-justify-content: space-between;
+justify-content:space-between;
 padding-right: 2rem;
 align-items: center;
+max-width:70%;
 `
 export const SelectRooms = styled.select`
 padding-left:1.5rem;
@@ -59,6 +62,8 @@ color: #135846;
 `
 export const ContainerInput = styled.div`
 position: relative;
+margin-left: 10%;
+margin-right: 10%
 `
 export const UsersInput = styled.input`
 border:transparent;
@@ -68,6 +73,7 @@ padding-right:2rem;
 padding-top:0.7rem;
 padding-bottom:0.7rem; 
 border-radius: 12px;
+border: 1px solid rgba(19, 88, 70, 1);
 `
 export const IconSearch = styled(CiSearch)`
 color:rgba(19, 88, 70, 1);

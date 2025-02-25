@@ -2,13 +2,18 @@ import {
   SectionTable,
   TableBody,
   TableHead,
-  TableImg,
+  HeadType,
   TableR,
   TableTd,
-  TableAmenities,
   ContainerId,
   TableHeadName,
   TableUsers,
+  TableEmail,
+  TableDate,
+  TableImgUsers,
+  TabledIcons,
+  TabledStatus,
+  TableDepartment
 } from "../../commons/Table";
 import {
   ContainerSelect,
@@ -118,10 +123,10 @@ export const UserList = () => {
             <TableR>
               <TableHeadName>Name</TableHeadName>
               <th></th>
-              <th>Start Date</th>
+              <HeadType>Start Date</HeadType>
               <th>Department</th>
-              <th>Contact</th>
-              <th>Email</th>
+              <HeadType>Contact</HeadType>
+              <HeadType>Email</HeadType>
               <th>Status</th>
             </TableR>
           </TableHead>
@@ -129,7 +134,7 @@ export const UserList = () => {
             {currentUsers.map((user) => (
               <TableR key={user._id}>
                 <TableTd>
-                  <TableImg
+                  <TableImgUsers
                     src="/src/assets/Imagenes/users logo.jpg"
                     alt="User photo"
                   />
@@ -138,21 +143,21 @@ export const UserList = () => {
                   {user.name} <br />
                   {user._id}
                 </ContainerId>
-                <TableAmenities>{user.start_date}</TableAmenities>
-                <TableAmenities>{user.department}</TableAmenities>
-                <TableAmenities>{user.phone}</TableAmenities>
-                <TableAmenities>{user.email}</TableAmenities>
-                <td>
+                <TableDate>{user.start_date}</TableDate>
+                <TableDepartment>{user.department}</TableDepartment>
+                <TableDate>{user.phone}</TableDate>
+                <TableEmail>{user.email}</TableEmail>
+                <TabledStatus>
                   <StatusUsers status ={user.status}>{user.status}</StatusUsers>
-                </td>
-                <td>
+                </TabledStatus>
+                <TabledIcons>
                   <Link to= {`/users/edit/${user._id}`}> <EditIcon /></Link>
                   
                   <DeleteIcon
                     onClick={() => handleDeleteUser(user._id)}
                     aria-label="Delete user"
                   />
-                </td>
+                </TabledIcons>
               </TableR>
             ))}
           </TableBody>

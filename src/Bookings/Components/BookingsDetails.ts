@@ -207,7 +207,6 @@ padding-right: 2rem;
 `
 export const EditIcon = styled(GrView)`
 font-size: 1.5rem;
-margin-right: 1rem;
 color: green;
 `
 export const DeleteIcon = styled(RiDeleteBin6Line)`

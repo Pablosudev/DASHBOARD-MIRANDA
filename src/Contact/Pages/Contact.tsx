@@ -11,7 +11,6 @@ import {
   TableBody,
   TableHead,
   TableR,
-  TableRooms,
   TableDate,
   TableAmenities,
   TableContact,
@@ -41,7 +40,6 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { AllDataContact, AllStatusContact } from "../Features/ContacSlice.js";
 import { useParams } from "react-router-dom";
-import { SectionContact } from "../Components/Contact.js";
 import { SliderReviews } from "../Components/Contact.js";
 import {
   BoxReviews,
@@ -60,8 +58,8 @@ import React from "react";
 import { AppDispatch } from "../../App/Store.js";
 import { Contacts } from "../Interfaces/ContactInterfaces.js";
 import { IconSearch } from "../../Users/Components/Users.ts";
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/pagination";
 export const Contact = () => {
   const StatusContact = useSelector(AllStatusContact);
   const DataContact: Contacts[] = useSelector(AllDataContact);
@@ -140,40 +138,39 @@ export const Contact = () => {
   return (
     <>
       <section>
-        <SectionContact>
-          <SliderReviews>
-            <StyledSwiper
-              direction="horizontal"
-              slidesPerView={3} 
-              spaceBetween={20}
-              loop={true}
-            >
-              {DataContact.map((contact) => (
-                <StyledSwiperSlide key={contact.id}>
-                  <BoxReviews>
-                    <Review>{contact.comment}</Review>
-                    <BoxCard>
-                      <ImgUser
-                        src="/src/assets/Imagenes/user phot.jpg"
-                        alt="photoUser"
-                      />
-                      <BoxName>
-                        <NameReview>{contact.full_name}</NameReview>
-                        <BoxTime>
-                          <TimeReview>{contact.date}</TimeReview>
-                          <BoxIcon>
-                            <CancelIcon />
-                            <CheckIcon />
-                          </BoxIcon>
-                        </BoxTime>
-                      </BoxName>
-                    </BoxCard>
-                  </BoxReviews>
-                </StyledSwiperSlide>
-              ))}
-            </StyledSwiper>
-          </SliderReviews>
-        </SectionContact>
+        <SliderReviews>
+          <StyledSwiper
+            direction="horizontal"
+            slidesPerView={3}
+            spaceBetween={20}
+            loop={true}
+          >
+            {DataContact.map((contact) => (
+              <StyledSwiperSlide key={contact.id}>
+                <BoxReviews>
+                  <Review>{contact.comment}</Review>
+                  <BoxCard>
+                    <ImgUser
+                      src="/src/assets/Imagenes/user phot.jpg"
+                      alt="photoUser"
+                    />
+                    <BoxName>
+                      <NameReview>{contact.full_name}</NameReview>
+                      <BoxTime>
+                        <TimeReview>{contact.date}</TimeReview>
+                        <BoxIcon>
+                          <CancelIcon />
+                          <CheckIcon />
+                        </BoxIcon>
+                      </BoxTime>
+                    </BoxName>
+                  </BoxCard>
+                </BoxReviews>
+              </StyledSwiperSlide>
+            ))}
+          </StyledSwiper>
+        </SliderReviews>
+
         <SectionTable>
           <BoxSelect>
             <ContainerSelect>

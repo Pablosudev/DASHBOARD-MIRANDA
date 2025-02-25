@@ -1,157 +1,132 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RoomsInter, RoomsEdit } from "../Interfaces/RoomsInterfaces";
+import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
+import { RoomsInter, RoomsEdits } from "../Interfaces/RoomsInterfaces";
 //FETCH TODOS
-export const RoomsThunk = createAsyncThunk<RoomsInter []>("rooms/getRooms", async () => {
-  try{
-    const rooms = await new Promise<RoomsInter []>((resolve,reject) => {
-      setTimeout(async () => {
-        try {
-          const response = await fetch("/Data/rooms.json");
-          if(!response.ok){
-            reject("Error al cargar los datos");
-          }
-          const json: RoomsInter []= await response.json();
-          resolve(json);
-        } catch(error) {
-          reject(error)
-        }
-      }, 200);
-    });
-    return rooms;
-  } catch(error) {
-    throw new Error("Error al obtener los datos de la habitación");
+export const RoomsThunk = createAsyncThunk<RoomsInter[]>(
+  "rooms/getRooms",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/rooms", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+        },
+      });
+
+      if (!response.ok) {
+        return rejectWithValue("Error al cargar los datos");
+      }
+      const rooms: RoomsInter[] = await response.json();
+      return rooms;
+    } catch (error) {
+      return rejectWithValue(
+        error.message || "Error al obtener los datos de las habitaciones"
+      );
+    }
   }
-});
+);
 
 //FETCH UNO
-export const IdRoomThunk = createAsyncThunk<RoomsInter, number>(
+export const IdRoomThunk = createAsyncThunk<RoomsInter, string>(
   "roomId/getIdRoom",
-  async (id: number, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
-      const roomId = await new Promise<RoomsInter>((resolve, reject) => {
-        setTimeout(async () => {
-          try {
-            
-            const response = await fetch("/Data/rooms.json");
-            if (!response.ok) {
-              reject("Error al cargar los datos");
-            }
-            const jsonData: RoomsInter [] = await response.json();
-
-            const room = jsonData.find((room) => room.id === Number(id));
-
-            if (room) {
-              resolve(room);
-            } else {
-              reject("Habitación no encontrada");
-            }
-          } catch (error) {
-            reject(error);
-          }
-        }, 200);
+      const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+        },
       });
-      return roomId;
+      if (!response.ok) {
+        return rejectWithValue("Error al cargar los datos");
+      }
+      const roomId: RoomsInter = await response.json();
+
+      if (roomId) {
+        return roomId;
+      } else {
+        return rejectWithValue("Habitación no encontrada");
+      }
     } catch (error) {
-      console.error("Error en el thunk:", error);
       return rejectWithValue(
-        error.message || "Error al obtener los datos de la ID"
+        error.message || "Error al obtener los datos de la habitación"
       );
     }
   }
 );
 
 //FETCH EDIT
-export const EditRoomThunk = createAsyncThunk<RoomsInter , {id:number , updatedRoom: RoomsEdit}>(
-  "room/editRoom",
-  async ({ id, updatedRoom }, { rejectWithValue }) => {
-    try {
-      const roomId = await new Promise<RoomsInter>((resolve, reject) => {
-        setTimeout(async () => {
-          try {
-           
-            const response = await fetch("/Data/rooms.json");
-            if (!response.ok) {
-              reject("Error al cargar los datos");
-            }
-            const jsonData: RoomsInter [] = await response.json();
-            const updatedData = jsonData.map((room) =>
-              room.id === Number(id) ? { ...room, ...updatedRoom } : room
-            );
-            const updatedRoomData = updatedData.find(
-              (room) => room.id === Number(id)
-            );
-            if (updatedRoomData) {
-              
-              resolve(updatedRoomData);
-            } else {
-    
-              reject("Habitación no encontrada");
-            }
-          } catch (error) {
-            
-            reject(error);
+export const EditRoomThunk = createAsyncThunk<
+  RoomsInter,
+  { id: string; updatedRoom: RoomsInter }
+>("room/editRoom", async ({ id, updatedRoom }, { rejectWithValue }) => {
+        try {
+          const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`,{
+            method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+      },
+      body: JSON.stringify(updatedRoom),
+          });
+          if (!response.ok) {
+            return rejectWithValue("Error al cargar los datos de la habitación");
           }
-        }, 200);
+          const updatedRoomData = await response.json();
+          
+          return updatedRoomData;
+        } catch (error){
+          return rejectWithValue(error.message || "Error al editar la habitación")
+        }
       });
-      return roomId;
-    } catch (error) {
-      
-      return rejectWithValue(error.message || "Error al editar la habitación");
-    }
-  }
-);
-
 //FETCH DELETE
-export const DeleteRoomThunk = createAsyncThunk<{id: number}, number>(
+export const DeleteRoomThunk = createAsyncThunk<{ id: string }, string>(
   "room/deleteRoom",
-  async (id: number) => {
-    try {
-      const roomId = await new Promise<{id: number}>((resolve, reject) => {
-        setTimeout(async () => {
+  async (id: string, {rejectWithValue}) => {
+
           try {
-            const response = await fetch(`/Data/rooms.json?id=${id}`, {method: 'DELETE'});
-              
+            const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`, 
+              },
+            });
+
             if (!response.ok) {
-              reject("Error al eliminar la habitación");
+              return rejectWithValue("Error al eliminar la habitación");
             }
 
-            resolve({id});
+            return ({ id });
           } catch (error) {
-            reject(error);
+            return rejectWithValue(error.message ||error.message || "Error desconocido al eliminar la habitación");
           }
-        }, 200);
-      });
-      return roomId;
-    } catch (error) {
-      throw new Error("Error al eliminar la habitación");
-    }
-  }
-);
-
+        }
+      );
+      
 //FETCH CREATE
-export const CreateRoomThunk = createAsyncThunk<RoomsInter,  RoomsInter>(
+export const CreateRoomThunk = createAsyncThunk<RoomsInter, RoomsInter>(
   "room/createRoom",
   async (newRoom, { rejectWithValue }) => {
-    try {
-      const roomId = await new Promise<RoomsInter>((resolve, reject) => {
-        setTimeout(() => {
           try {
-            const newRoomWithId = {
-              ...newRoom,
-              id: Date.now(),
-            };
-
-            
-            resolve(newRoomWithId);
-          } catch (error) {
-            reject("Error al crear la habitación");
-          }
-        }, 200);
+            const response = await fetch("http://localhost:3001/api/v1/rooms" , {
+              method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+        },
+        body: JSON.stringify(newRoom),
       });
+      if (!response.ok) {
+        throw new Error("Error al crear la habitación");
+      }
+      const createdRoom = await response.json();
+      return createdRoom;
+          } catch (error) {
+            return rejectWithValue("Error al crear la habitación");
+          }
+        }
+      );
 
-      return roomId; 
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
+  
