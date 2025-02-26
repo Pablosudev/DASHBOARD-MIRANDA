@@ -66,12 +66,12 @@ export const ContactSlice = createSlice({
         state.statusDelete = "fulfilled";
 
         state.data = state.data.filter(
-          (contacts) => contacts.id !== action.payload.id
+          (contacts) => contacts._id !== action.payload.id
         );
 
         if (
           state.contactId.data &&
-          state.contactId.data.id === action.payload.id
+          state.contactId.data._id === action.payload.id
         ) {
           state.contactId.data = null;
         }
@@ -86,10 +86,10 @@ export const ContactSlice = createSlice({
       })
       .addCase(ContactSaveThunk.fulfilled, (state, action) => {
         state.status = "fulfilled";
-        // Aquí actualizamos el contacto archivado en el estado
+       
         const updatedContact = action.payload;
         const contactIndex = state.data.findIndex(
-          (contact) => contact.id === updatedContact.id
+          (contact) => contact._id === updatedContact._id
         );
         if (contactIndex !== -1) {
           state.data[contactIndex] = updatedContact;

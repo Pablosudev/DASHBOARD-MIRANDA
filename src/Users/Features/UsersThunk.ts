@@ -98,7 +98,7 @@ export const CreateUserThunk = createAsyncThunk<Users, Users>(
         },
         body: JSON.stringify(newUser),
       });
-
+      console.log(response)
       if (!response.ok) {
         throw new Error("Error al crear el usuario");
       }

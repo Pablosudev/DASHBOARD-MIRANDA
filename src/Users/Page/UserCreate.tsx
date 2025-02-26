@@ -109,7 +109,7 @@ export const UserCreate = () => {
                         <InputName type="password" name="password" onChange={handleInputChange}/> 
                     </div> <div>
                         <TypeInput>Star Date</TypeInput>
-                        <InputName type="date" name="start_date"  value={newUser.start_date} onChange={handleInputChange}/> 
+                        <InputName type="string" name="start_date"  value={newUser.start_date} onChange={handleInputChange}/> 
                     </div> 
                 </BoxArticle>
             </ContainerInput>

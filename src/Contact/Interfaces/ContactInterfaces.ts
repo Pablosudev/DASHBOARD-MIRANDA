@@ -5,7 +5,7 @@ export interface Contacts{
     status: string;
     archived: any;
     date: string,
-    id: number,
+    _id:string,
     full_name:string,
     email:string,
     phone: string,

@@ -127,7 +127,7 @@ export const Contact = () => {
   useEffect(() => {
     if (StatusContact === "idle") {
       dispatch(ContactAllThunks(id));
-      dispatch(ContactIdThunks(Number(id)));
+      dispatch(ContactIdThunks(_id));
     } else if (StatusContact === "fulfilled") {
       setContact(DataContact);
     } else if (StatusContact === "rejected") {
@@ -146,7 +146,7 @@ export const Contact = () => {
             loop={true}
           >
             {DataContact.map((contact) => (
-              <StyledSwiperSlide key={contact.id}>
+              <StyledSwiperSlide key={contact._id}>
                 <BoxReviews>
                   <Review>{contact.comment}</Review>
                   <BoxCard>
@@ -208,9 +208,9 @@ export const Contact = () => {
             </TableHead>
             <TableBody>
               {currentContact.map((contact) => (
-                <TableR key={contact.id}>
+                <TableR key={contact._id}>
                   <TableDate>
-                    {contact.date} <br /> #{contact.id}
+                    {contact.date} <br /> #{contact._id}
                   </TableDate>
                   <TableAmenities>
                     {contact.full_name} <br /> {contact.email} <br />{" "}
@@ -228,7 +228,7 @@ export const Contact = () => {
                       </ButtonDefault>
                     )}
                     <ButtonDelete
-                      onClick={() => handleDeleteContact(contact.id)}
+                      onClick={() => handleDeleteContact(contact._id)}
                     >
                       DELETE
                     </ButtonDelete>
