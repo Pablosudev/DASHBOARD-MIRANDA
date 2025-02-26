@@ -14,17 +14,14 @@ export const UserCreate = () => {
     const navigate = useNavigate();
 
     const[ newUser, setNewUser] = useState<UsersCreate>({
-       name: "",
+        name: "",
+        email:"",
         start_date:"",
         description: "",
         phone: "",
-        email:"",
-        job_desk:"",
-        password:"",
-        status: "Active",
-        _id:"",
+        status: "",
         department:"",
-
+        password:"",
     })
 
     const handleInputChange = (e:any) => {
@@ -85,7 +82,7 @@ export const UserCreate = () => {
                 <BoxArticle>
                     <div>
                         <TypeInput>Job</TypeInput>
-                        <SelectCreate typeof="text" name="description" value={newUser.description} onChange={handleInputChange}>
+                        <SelectCreate typeof="text" name="department" value={newUser.department} onChange={handleInputChange}>
                         <option value="MANAGER">MANAGER</option>
                         <option value="RECEPTIONIST">RECEPTIONIST</option>
                         <option value="ROOM SERVICE">ROOM SERVICE</option>
@@ -100,7 +97,7 @@ export const UserCreate = () => {
                     </div> 
                     <div>
                         <TypeInput>Job Desk</TypeInput>
-                        <InputDesk type="text" name="job_desk" onChange={handleInputChange}/> 
+                        <InputDesk type="text" name="description" onChange={handleInputChange}/> 
                     </div> 
                 </BoxArticle>
                 <BoxArticle>
@@ -109,7 +106,7 @@ export const UserCreate = () => {
                         <InputName type="password" name="password" onChange={handleInputChange}/> 
                     </div> <div>
                         <TypeInput>Star Date</TypeInput>
-                        <InputName type="string" name="start_date"  value={newUser.start_date} onChange={handleInputChange}/> 
+                        <InputName type="date" name="start_date"  value={newUser.start_date} onChange={handleInputChange}/> 
                     </div> 
                 </BoxArticle>
             </ContainerInput>

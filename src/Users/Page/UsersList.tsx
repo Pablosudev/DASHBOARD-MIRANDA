@@ -13,7 +13,10 @@ import {
   TableImgUsers,
   TabledIcons,
   TabledStatus,
-  TableDepartment
+  TableDepartment,
+  HeadDepartment,
+  HeadContact,
+  HeadEmail
 } from "../../commons/Table";
 import {
   ContainerSelect,
@@ -122,11 +125,11 @@ export const UserList = () => {
           <TableHead>
             <TableR>
               <TableHeadName>Name</TableHeadName>
-              <th></th>
               <HeadType>Start Date</HeadType>
-              <th>Department</th>
-              <HeadType>Contact</HeadType>
-              <HeadType>Email</HeadType>
+              <HeadDepartment>Department</HeadDepartment>
+              <HeadContact>Contact</HeadContact>
+              <th></th>
+              <HeadEmail>Email</HeadEmail>
               <th>Status</th>
             </TableR>
           </TableHead>

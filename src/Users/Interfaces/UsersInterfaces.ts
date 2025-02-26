@@ -34,13 +34,13 @@ export interface UsersEdit{
     _id: string,
 }
 export interface UsersCreate {
-    _id: string,
+    _id?: string,
     name: string,
     start_date: string,
     description: string,
     phone: string,
     email: string,
-    job_desk: string,
+    job_desk?: string,
     password: string,
     status: string,
     department: string,

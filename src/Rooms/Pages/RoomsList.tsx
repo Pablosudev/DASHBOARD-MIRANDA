@@ -19,6 +19,11 @@ import {
   HeadType,
   HeadAmenities,
   HeadStatus,
+  HeadRoomType,
+  HeadRoomAmenities,
+  HeadPrice,
+  HeadOffer,
+  HeadRoomStatus,
 } from "../../commons/Table";
 import {
   ContainerSelect,
@@ -188,12 +193,11 @@ export const RoomsList = () => {
         <TableHead>
           <TableR>
             <TableName>Room Name</TableName>
-            <th></th>
-            <HeadType>Room Type</HeadType>
-            <HeadAmenities>Amenities</HeadAmenities>
-            <th>Price</th>
-            <th>Offer</th>
-            <HeadStatus>Status</HeadStatus>
+            <HeadRoomType>Room Type</HeadRoomType>
+            <HeadRoomAmenities>Amenities</HeadRoomAmenities>
+            <HeadPrice>Price</HeadPrice>
+            <HeadOffer>Offer</HeadOffer>
+            <HeadRoomStatus>Status</HeadRoomStatus>
           </TableR>
         </TableHead>
         <TableBody>

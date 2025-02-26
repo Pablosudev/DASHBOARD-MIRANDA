@@ -18,6 +18,7 @@ import {
   TableStatus,
   ContainerId,
   ButtonBookings,
+  TableIcons,
 } from "../../commons/Table";
 import {
   UsersInput,
@@ -113,7 +114,6 @@ export const BookingsList = () => {
 
   return (
     <>
-      <section>
         <SectionTable>
           <BoxSelect>
             <ContainerSelect>
@@ -178,22 +178,22 @@ export const BookingsList = () => {
                   <TableAmenities>{booking.check_in}</TableAmenities>
                   <TableAmenities>{booking.check_out}</TableAmenities>
                   <TableAmenities>{booking.special_request}</TableAmenities>
-                  <TablePrice>
+                  <TableAmenities>
                     {booking.room_type} <br /> Room {booking.number_room}
-                  </TablePrice>
+                  </TableAmenities>
                   <td>
                     <ButtonBookings status={booking.status}>
                       {booking.status}
                     </ButtonBookings>
                   </td>
-                  <td>
+                  <TableIcons>
                     <Link to={`/bookings/details/${booking.id}`}>
                       <EditIcon />
                     </Link>
                     <DeleteIcon
                       onClick={() => handleDeleteBookings(booking.id)}
                     />
-                  </td>
+                  </TableIcons>
                 </TableR>
               ))}
             </TableBody>
@@ -226,7 +226,6 @@ export const BookingsList = () => {
             </ButtonGreen>
           </ContainerButtons>
         </SectionTable>
-      </section>
     </>
   );
 };

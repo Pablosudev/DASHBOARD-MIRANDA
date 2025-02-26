@@ -48,7 +48,6 @@ display:flex;
 justify-content:space-between;
 padding-right: 2rem;
 align-items: center;
-max-width:70%;
 `
 export const SelectRooms = styled.select`
 padding-left:1.5rem;

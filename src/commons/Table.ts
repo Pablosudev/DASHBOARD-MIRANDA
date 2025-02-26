@@ -7,9 +7,10 @@ import {
 } from "./InterfacesCommon/CommonInterface";
 
 export const SectionTable = styled.section`
-  margin-top: 8rem;
-  margin-left: 2rem;
-  
+  margin-top: 6%;
+  margin-left: 1%;
+  margin-right: 1%;
+  width: 100%;
 `;
 export const TableR = styled.tr`
   border-left: transparent;
@@ -39,11 +40,13 @@ export const TableRooms = styled.table`
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
   border-collapse: collapse;
+  width: 100%;
 `;
 export const TableBookings = styled.table`
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
   border-collapse: collapse;
+  width: 100%;
 `;
 export const TableContacts = styled.table`
   border-radius: 20px;
@@ -54,6 +57,7 @@ export const TableUsers = styled.table`
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
   border-collapse: collapse;
+  width: 100%;
 `;
 export const TableBody = styled.tbody`
   height: 7.5rem;
@@ -94,7 +98,8 @@ export const TableAmenities = styled.td`
 export const TableEmail = styled.td`
   font-family: "Poppins";
   font-size: 1rem;
-  padding-left: 1%
+  padding-left: 1%;
+  text-align: center;
 `;
 export const TablePrice = styled.td`
   display: flex;
@@ -111,6 +116,7 @@ export const Night = styled.p`
 export const ContainerId = styled.td`
   font-family: "Poppins";
   padding-left: 1%;
+  margin-right: 105%;
 `;
 export const LogoUsers = styled.td`
   width: 5.5rem;
@@ -129,7 +135,7 @@ export const TableContact = styled.td`
 `;
 export const TableDate = styled.td`
   font-family: "Poppins";
-  padding-left: 1.8%;
+  text-align:center;
 `;
 export const TableButton = styled.td`
   padding-right: 2rem;
@@ -142,6 +148,8 @@ export const TableComment = styled.th`
 export const TableGuest = styled.td`
   padding-left: 1.5rem;
   font-family: "Poppins";
+  padding-top: 2%;
+  padding-bottom: 2%;
 `;
 export const TableStatus = styled.th`
   text-align: left;
@@ -183,8 +191,36 @@ export const PopUpContacts = styled.div`
   display: none;
 `;
 export const HeadType = styled.th`
-  padding-left: 2%;
+  padding-left: 26%;
 `;
+export const HeadPrice = styled.th`
+padding-left: 31%;
+`;
+export const HeadOffer = styled.th`
+padding-left: 9%;
+
+`;
+
+export const HeadRoomType = styled.th`
+  padding-left: 19%;
+  
+`;
+export const HeadRoomStatus = styled.th`
+  padding-left: 10%;
+`;
+export const HeadRoomAmenities= styled.th`
+padding-left: 20%;
+width:10rem;
+`
+export const HeadContact = styled.th`
+padding-left: 18%;
+`
+export const HeadEmail = styled.th`
+padding-left:  5%;
+`
+export const HeadDepartment = styled.th`
+padding-left:13%;
+`
 export const HeadAmenities = styled.th`
   padding-left: 3%;
 `;
@@ -202,7 +238,7 @@ export const TabledStatus = styled.td`
 padding-right: 2rem;
 `
 export const TableDepartment = styled.td`
-padding-left: 1%;
+text-align:center;
 font-family: "Poppins";
 `
 
