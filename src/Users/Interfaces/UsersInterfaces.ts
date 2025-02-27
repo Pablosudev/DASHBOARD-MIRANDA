@@ -1,12 +1,13 @@
 export interface Users {
     name: string,
-    _id: string,
+    _id?: string,
     email: string,
-    start_date: string,
+    start_date: Date,
     description: string,
     phone: string,
     status: string,
     department: string, 
+    password?:string
 }
 
 export interface UserState {

@@ -114,7 +114,7 @@ export const CreateUserThunk = createAsyncThunk<Users, Users>(
 //FETCH EDIT
 export const EditUserThunk = createAsyncThunk<
   Users,
-  { id: string; updatedUser: UsersEdit }
+  { id: string; updatedUser: Users }
 >("user/editUser", async ({ id, updatedUser }, { rejectWithValue }) => {
   try {
     const response = await fetch(`http://localhost:3001/api/v1/users/${id}`, {

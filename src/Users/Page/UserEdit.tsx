@@ -21,7 +21,7 @@ import { useSelector } from "react-redux";
 import { IdData, StatusId } from "../Features/UsersSlice";
 import { IdUserThunk, EditUserThunk } from "../Features/UsersThunk";
 import { AppDispatch } from "../../App/Store";
-import { UsersEdit } from "../Interfaces/UsersInterfaces";
+import { Users } from "../Interfaces/UsersInterfaces";
 import React from "react";
 
 export const UserEdit = () => {
@@ -39,17 +39,15 @@ export const UserEdit = () => {
     }));
   };
 
-  const [newUser, setNewUser] = useState<UsersEdit>({
+  const [newUser, setNewUser] = useState<Users>({
     name: "",
-    start_date: "",
+    email: "",
+    start_date: new Date,
     description: "",
     phone: "",
-    email: "",
-    password: "",
     status: "",
     department: "",
-    _id: "",
-    
+    password: "",
   });
 
   const handleSave = () => {
@@ -84,7 +82,7 @@ export const UserEdit = () => {
       if (Users) {
         setNewUser({
           name: Users.name,
-          start_date: formatDate(Users.start_date),
+          start_date: Users.start_date,
           description: Users.description,
           phone: Users.phone,
           email: Users.email,
