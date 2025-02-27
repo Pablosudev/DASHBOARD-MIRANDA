@@ -66,7 +66,7 @@ export const BookingsList = () => {
 
   //FILTRADO DE BOOKINGS
   const filteredBookings = DataBookings.filter((booking) => {
-    const stateSearchTerm = booking.full_name
+    const stateSearchTerm = booking.name
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const stateStatus =
@@ -124,14 +124,14 @@ export const BookingsList = () => {
                 All Bookings
               </SelectTitle>
               <SelectTitle
-                onClick={() => handleStatusChange("Check In")}
-                isActive={selectedStatus === "Check In"}
+                onClick={() => handleStatusChange("Check-In")}
+                isActive={selectedStatus === "Check-In"}
               >
                 Check In
               </SelectTitle>
               <SelectTitle
-                onClick={() => handleStatusChange("Check Out")}
-                isActive={selectedStatus === "Check Out"}
+                onClick={() => handleStatusChange("Check-Out")}
+                isActive={selectedStatus === "Check-Out"}
               >
                 Check Out
               </SelectTitle>
@@ -172,14 +172,14 @@ export const BookingsList = () => {
               {currentBookings.map((booking) => (
                 <TableR key={booking.id}>
                   <TableGuest>
-                    {booking.full_name} <br /> #{booking.id}
+                    {booking.name} <br /> #{booking.id}
                   </TableGuest>
-                  <ContainerId>{booking.date_booking}</ContainerId>
+                  <ContainerId>{booking.date}</ContainerId>
                   <TableAmenities>{booking.check_in}</TableAmenities>
                   <TableAmenities>{booking.check_out}</TableAmenities>
-                  <TableAmenities>{booking.special_request}</TableAmenities>
+                  <TableAmenities>{booking.request}</TableAmenities>
                   <TableAmenities>
-                    {booking.room_type} <br /> Room {booking.number_room}
+                    {booking.type} <br /> Room {booking.number}
                   </TableAmenities>
                   <td>
                     <ButtonBookings status={booking.status}>

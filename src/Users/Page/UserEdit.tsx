@@ -58,9 +58,6 @@ export const UserEdit = () => {
       return;
     }
   
-    console.log("ID del usuario:", id);
-    console.log("Datos a enviar:", newUser);
-  
     dispatch(EditUserThunk({ id, updatedUser: newUser }))
       .unwrap()
       .then(() => {

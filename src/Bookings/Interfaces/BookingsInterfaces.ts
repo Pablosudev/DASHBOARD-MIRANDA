@@ -1,12 +1,16 @@
+import { RoomsInter } from "../../Rooms/Interfaces/RoomsInterfaces";
+
 export interface BookingsInter {
-  full_name: string;
+  name: string;
   id: number;
-  date_booking: string;
+  date: string;
   check_in: string;
   check_out: string;
-  special_request: string;
+  request: string;
   room_type: string;
-  number_room: number;
+  room: Partial<RoomsInter>;
+  type:string;
+  number:number
   status: string;
   price: number;
 }

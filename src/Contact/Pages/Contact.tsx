@@ -75,7 +75,7 @@ export const Contact = () => {
 
   const filteredContact = Array.isArray(DataContact)
     ? DataContact.filter((contact) =>
-        contact.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : [];
 
@@ -106,7 +106,7 @@ export const Contact = () => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
-  const handleArchive = (id: number) => {
+  const handleArchive = (id: string) => {
     dispatch(ContactSaveThunk(id));
   };
   const archivedContact = () => {
@@ -126,8 +126,10 @@ export const Contact = () => {
 
   useEffect(() => {
     if (StatusContact === "idle") {
+      if(id){
       dispatch(ContactAllThunks(id));
-      dispatch(ContactIdThunks(_id));
+      dispatch(ContactIdThunks(id));
+      }
     } else if (StatusContact === "fulfilled") {
       setContact(DataContact);
     } else if (StatusContact === "rejected") {
@@ -155,7 +157,7 @@ export const Contact = () => {
                       alt="photoUser"
                     />
                     <BoxName>
-                      <NameReview>{contact.full_name}</NameReview>
+                      <NameReview>{contact.name}</NameReview>
                       <BoxTime>
                         <TimeReview>{contact.date}</TimeReview>
                         <BoxIcon>
@@ -213,17 +215,17 @@ export const Contact = () => {
                     {contact.date} <br /> #{contact._id}
                   </TableDate>
                   <TableAmenities>
-                    {contact.full_name} <br /> {contact.email} <br />{" "}
+                    {contact.name} <br /> {contact.email} <br />{" "}
                     {contact.phone}
                   </TableAmenities>
                   <TableContact>{contact.comment}</TableContact>
                   <TableButton>
                     {contact.archived ? (
                       <CancelArchive
-                        onClick={() => handleArchive(contact.id)}
+                        onClick={() => handleArchive(contact._id)}
                       />
                     ) : (
-                      <ButtonDefault onClick={() => handleArchive(contact.id)}>
+                      <ButtonDefault onClick={() => handleArchive(contact._id)}>
                         ARCHIVE
                       </ButtonDefault>
                     )}
