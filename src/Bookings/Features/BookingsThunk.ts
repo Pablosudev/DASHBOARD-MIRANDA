@@ -7,7 +7,7 @@ import {
 //THUNKS TODOS
 export const AllBookingsThunk = createAsyncThunk<BookingsInter[], string>(
   "bookings/getBookings",
-  async (_, {rejectWithValue}) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await fetch("http://localhost:3001/api/v1/bookings", {
         method: "GET",
@@ -20,9 +20,11 @@ export const AllBookingsThunk = createAsyncThunk<BookingsInter[], string>(
         return rejectWithValue("Error al cargar los datos");
       }
       const bookings: BookingsInter[] = await response.json();
-      return (bookings);
+      return bookings;
     } catch (error) {
-      return rejectWithValue(error.message || "Error al obetener los datos de bookings");
+      return rejectWithValue(
+        error.message || "Error al obetener los datos de bookings"
+      );
     }
   }
 );
@@ -31,93 +33,90 @@ export const AllBookingsThunk = createAsyncThunk<BookingsInter[], string>(
 export const BookingsIdThunk = createAsyncThunk<BookingsInter, string>(
   "bookingsId/getIdBookings",
   async (id, { rejectWithValue }) => {
-          try {
-            const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`, {
-              method: "GET",
-              headers:{
-                "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`
-              }
-            });
-
-            if (!response.ok) {
-              return rejectWithValue("Error al cargar los datos");
-            }
-
-            const bookingId: BookingsInter = await response.json();
-            
-
-            if (bookingId) {
-              return (bookingId);
-            } else {
-              return rejectWithValue ("Bookings no encontrada");
-            }
-          } catch (error) {
-            return rejectWithValue(error.message || "Error al obtener los datos de la reserva");
-          }
-        }
-      );
-      
-
-//THUNK DELETE
-export const DeleteBookingsThunk = createAsyncThunk<{ id: number }, number>(
-  "bookings/deleteBookings",
-  async (id) => {
     try {
-      const BookingsId = await new Promise<{ id: number }>(
-        (resolve, reject) => {
-          setTimeout(async () => {
-            try {
-              const response = await fetch(`/Data/bookings.json?id=${id}`, {
-                method: "DELETE",
-              });
-              if (!response.ok) {
-                reject("Error al eliminar la reserva");
-              }
-
-              resolve({ id });
-            } catch (error) {
-              reject(error);
-            }
-          }, 200);
+      const response = await fetch(
+        `http://localhost:3001/api/v1/bookings/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+          },
         }
       );
-      return BookingsId;
+
+      if (!response.ok) {
+        return rejectWithValue("Error al cargar los datos");
+      }
+
+      const bookingId: BookingsInter = await response.json();
+
+      if (bookingId) {
+        return bookingId;
+      } else {
+        return rejectWithValue("Bookings no encontrada");
+      }
     } catch (error) {
-      throw new Error("Error al eliminar la reserva");
+      return rejectWithValue(
+        error.message || "Error al obtener los datos de la reserva"
+      );
     }
   }
 );
+
+//THUNK DELETE
+export const DeleteBookingsThunk = createAsyncThunk<{ id: string }, string>(
+  "bookings/deleteBookings",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/v1/bookings/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+          },
+        }
+      );
+      if (!response.ok) {
+        return rejectWithValue("Error al eliminar la reserva");
+      }
+
+      return { id };
+    } catch (error) {
+      return rejectWithValue(error.message || "Error al eliminar la reserva");
+    }
+  }
+);
+
 //THUNK CREATE
 export const CreateBookingThunk = createAsyncThunk<
   BookingsInter,
   BookingsInter
 >("bookings/createBookings", async (newBooking, { rejectWithValue }) => {
   try {
-    const bookingId = await new Promise<BookingsInter>((resolve, reject) => {
-      setTimeout(() => {
-        try {
-          const newBookingWithId = {
-            ...newBooking,
-            id: Date.now(),
-          };
-
-          resolve(newBookingWithId);
-        } catch (error) {
-          reject("Error al crear la reserva");
-        }
-      }, 200);
+    const response = await fetch("http://localhost:3001/api/v1/bookings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
+      },
+      body: JSON.stringify(newBooking),
     });
-
-    return bookingId;
+    if (!response.ok) {
+      throw new Error("Error al crear la reserva");
+    }
+    const createdBooking = await response.json();
+    return createdBooking;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue("Error al crear la reserva");
   }
 });
 //THUNK EDIT
 export const EditBookingThunk = createAsyncThunk<
   BookingsInter,
-  { id: number; updatedBooking: BookingsEditInter }
+  { id: string; updatedBooking: BookingsEditInter }
 >(
   "booking/editBooking",
   async ({ id, updatedBooking }, { rejectWithValue }) => {
@@ -131,12 +130,10 @@ export const EditBookingThunk = createAsyncThunk<
             }
             const jsonData: BookingsInter[] = await response.json();
             const updatedData = jsonData.map((booking) =>
-              booking.id === Number(id)
-                ? { ...booking, ...updatedBooking }
-                : booking
+              booking._id === id ? { ...booking, ...updatedBooking } : booking
             );
             const updatedBookingData = updatedData.find(
-              (booking) => booking.id === Number(id)
+              (booking) => booking._id === id
             );
             if (updatedBookingData) {
               resolve(updatedBookingData);

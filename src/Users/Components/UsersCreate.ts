@@ -88,3 +88,16 @@ padding-bottom:0.5rem;
 padding-left:0.5rem;
 padding-right:0.5rem;
 `
+export const SelectCreateBookings = styled.select`
+background-color: #c5c5c5;
+  border: transparent;
+  border-radius: 0.8rem;
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+  padding-right: 0%.8;
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+  font-family: 'Poppins';
+  text-align: center;
+`

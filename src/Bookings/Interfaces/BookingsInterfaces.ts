@@ -2,17 +2,16 @@ import { RoomsInter } from "../../Rooms/Interfaces/RoomsInterfaces";
 
 export interface BookingsInter {
   name: string;
-  id: number;
+  _id?: string;
   date: string;
   check_in: string;
   check_out: string;
   request: string;
-  room_type: string;
+  numberBooking: number;
+  status: string;
   room: Partial<RoomsInter>;
   type:string;
   number:number
-  status: string;
-  price: number;
 }
 
 export interface BookingsState {
@@ -39,29 +38,27 @@ export interface BookingsEditInter {
   amenities: string[];
 }
 export interface BookingsDetailsInter {
-  full_name: string;
+  name: string;
   check_in: string;
   check_out: string;
-  room_type: string;
+  type: string;
   price: number;
-  special_request: string;
+  request: string;
   status: string;
-  number_room: number;
-  id: number;
+  number: number;
+  _id: string;
 }
 export interface ButtonBookingsProps {
   status: string;
 }
 export interface BookingsCreateInter{
-    full_name:string,
+    name:string,
+    date: string,
     check_in: string,
     check_out: string,
-    room_type: string,
-    price: number,
-    special_request: string,
+    request: string,
+    type: string,
+    number:number,
     status: string,
-    amenities: string [],
-    id: number,
-    date_booking: string,
-    number_room: number,
+    room: {},
 }

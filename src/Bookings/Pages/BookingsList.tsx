@@ -170,9 +170,9 @@ export const BookingsList = () => {
             </TableHead>
             <TableBody>
               {currentBookings.map((booking) => (
-                <TableR key={booking.id}>
+                <TableR key={booking._id}>
                   <TableGuest>
-                    {booking.name} <br /> #{booking.id}
+                    {booking.name} <br /> #{booking._id}
                   </TableGuest>
                   <ContainerId>{booking.date}</ContainerId>
                   <TableAmenities>{booking.check_in}</TableAmenities>
@@ -187,11 +187,11 @@ export const BookingsList = () => {
                     </ButtonBookings>
                   </td>
                   <TableIcons>
-                    <Link to={`/bookings/details/${booking.id}`}>
+                    <Link to={`/bookings/details/${booking._id}`}>
                       <EditIcon />
                     </Link>
                     <DeleteIcon
-                      onClick={() => handleDeleteBookings(booking.id)}
+                      onClick={() => handleDeleteBookings(booking._id)}
                     />
                   </TableIcons>
                 </TableR>

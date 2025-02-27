@@ -10,7 +10,6 @@ import {
   BoxDescription,
   TitlePrice,
   InputDiscount,
-  InputDescription,
   TitleDescripition,
   ButtonOffer,
   Price,
@@ -23,7 +22,7 @@ import {
   ContainerSections,
   CardCreate
 } from "../Components/RoomsCreate";
-import { RoomCreate, RoomsInter } from "../Interfaces/RoomsInterfaces";
+import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import { AppDispatch } from "../../App/Store";
 
 

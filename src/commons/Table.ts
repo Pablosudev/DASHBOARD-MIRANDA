@@ -165,9 +165,9 @@ export const ButtonBookings = styled.button<ButtonBookingsProps>`
   background-color: ${(props) =>
     props.status === "In Progress"
       ? "yellow"
-      : props.status === "Check In"
+      : props.status === "Check-In"
       ? "#5AD07A"
-      : props.status === "Check Out"
+      : props.status === "Check-Out"
       ? "#E23428"
       : "yellow"};
 `;

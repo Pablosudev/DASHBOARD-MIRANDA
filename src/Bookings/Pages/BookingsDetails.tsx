@@ -40,8 +40,11 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BookingsIdThunk } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
-import { BookingsDetailsInter, BookingsEditInter, BookingsInter, BookingsState } from "../Interfaces/BookingsInterfaces";
+import {
+  BookingsDetailsInter,
+  BookingsInter,
 
+} from "../Interfaces/BookingsInterfaces";
 
 export const BookingsDetails = () => {
   const [currentImage, setCurrentImage] = useState<number>(0);
@@ -52,16 +55,15 @@ export const BookingsDetails = () => {
     "/src/assets/Imagenes/room4.jpg",
   ];
   const [bookingsDetails, setBookingDetails] = useState<BookingsDetailsInter>({
-    full_name: "",
+    name: "",
+    date: "",
     check_in: "",
     check_out: "",
-    room_type: "",
+    type: "",
     price: 0,
-    special_request: "",
+    request: "",
     status: "",
-    number_room: 0,
-    id:0,
-    
+    number: 0,
   });
   const StatusBookingsId = useSelector(getStatusId);
   const BookingsId: BookingsInter | null = useSelector(getBookingsId);
@@ -79,32 +81,31 @@ export const BookingsDetails = () => {
       (prevIndex) => (prevIndex - 1 + images.length) % images.length
     );
   };
-  const handleChangeEdit = (id: string | undefined) => {
-    navigate(`/bookings/edit/${bookingsDetails.id}`)
-  }
-  
+  const handleChangeEdit = (_id: string ) => {
+    navigate(`/bookings/edit/${bookingsDetails._id}`);
+  };
+
   useEffect(() => {
     if (StatusBookingsId === "idle") {
-      dispatch(BookingsIdThunk(parseInt(id!)));
+      dispatch(BookingsIdThunk(id));
     } else if (StatusBookingsId === "fulfilled") {
-      if (BookingsId !== null){
-      const parsedId = parseInt(id!)
-      
-      if (BookingsId.id !== parsedId) {
-        dispatch(BookingsIdThunk(parsedId));
+      if (BookingsId !== null) {
+        const parsedId = parseInt(id!);
+
+        if (BookingsId.id !== parsedId) {
+          dispatch(BookingsIdThunk(id));
+        }
+        setBookingDetails({
+          name: BookingsId.name,
+          check_in: BookingsId.check_in,
+          check_out: BookingsId.check_out,
+          type: BookingsId.type,
+          price: BookingsId.price,
+          request: BookingsId.request,
+          status: BookingsId.status,
+          number: BookingsId.number,
+        });
       }
-      setBookingDetails({
-        full_name: BookingsId.full_name,
-        check_in: BookingsId.check_in,
-        check_out: BookingsId.check_out,
-        room_type: BookingsId.room_type,
-        price: BookingsId.price,
-        special_request: BookingsId.special_request,
-        status: BookingsId.status,
-        id: BookingsId.id,
-        number_room: BookingsId.number_room,
-      });
-    }
     } else if (StatusBookingsId === "rejected") {
       alert("Error al cargar los datos de la reserva");
     }
@@ -112,13 +113,13 @@ export const BookingsDetails = () => {
 
   return (
     <>
-      <CardBookings key={bookingsDetails.id}>
+      <CardBookings key={bookingsDetails._id}>
         <CardInfo>
           <Link to={"/bookings"}>
             <CloseIcon />
           </Link>
-          <NameBooking>{bookingsDetails.full_name}</NameBooking>
-          <IdBookings>{bookingsDetails.id}</IdBookings>
+          <NameBooking>{bookingsDetails.name}</NameBooking>
+          <IdBookings>{bookingsDetails._id}</IdBookings>
           <BoxMessage>
             <PhoneIcon />
             <ButtonMessage>
@@ -143,7 +144,7 @@ export const BookingsDetails = () => {
             <BoxRoom>
               <TitleData>Room Info</TitleData>
               <TypeRoom>
-                {bookingsDetails.room_type} {bookingsDetails.number_room}
+                {bookingsDetails.type} {bookingsDetails.number}
               </TypeRoom>
             </BoxRoom>
             <BoxRoom>
@@ -168,11 +169,10 @@ export const BookingsDetails = () => {
             <ButtonDetails>TOWEL</ButtonDetails>
             <ButtonDetails>SHOWER</ButtonDetails>
           </div>
-          
         </CardInfo>
 
         <CardSlide>
-          <ButtonBookingsDetails status = {bookingsDetails.status}>
+          <ButtonBookingsDetails status={bookingsDetails.status}>
             {bookingsDetails.status}
           </ButtonBookingsDetails>
           <ImgSlide src={images[currentImage]} alt="photo room" />

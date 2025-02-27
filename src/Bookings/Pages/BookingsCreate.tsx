@@ -21,52 +21,50 @@ import {
   TitleSection,
   ContainerSections,
 } from "../../Rooms/Components/RoomsCreate";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { CreateBookingThunk } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
-import { BookingsCreateInter} from "../Interfaces/BookingsInterfaces";
-
+import { BookingsCreateInter } from "../Interfaces/BookingsInterfaces";
+import { SelectCreate, SelectCreateBookings, TypeInput } from "../../Users/Components/UsersCreate";
 
 export const BookingsCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [newBooking, setNewBooking] = useState<BookingsCreateInter>({
-    full_name: "",
+    name: "",
+    date: "",
     check_in: "",
     check_out: "",
-    room_type: "",
-    price: 0,
-    special_request: "",
+    request: "",
+    type: "",
+    number: 0,
     status: "",
-    amenities: [],
-    id: 0,
-    date_booking: "",
-    number_room: 0,
+    room: {},
   });
-  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setNewBooking((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
-  
-    const handleAmenities = (amenity: string) => {
-      setNewBooking ((prevState) => {
-        const changeAmenities = prevState.amenities.includes(amenity)
-        ?prevState.amenities.filter((item) => item !== amenity) : [...prevState.amenities,amenity];
-        return {
-          ...prevState,
-          amenities: changeAmenities,
-        }
-      })
-    }
-    //BUTTON_CREATE
-    const handleCreateBooking = () => {
-        dispatch(CreateBookingThunk(newBooking)); 
-        navigate("/bookings"); 
-      };
+
+  // const handleAmenities = (amenity: string) => {
+  //   setNewBooking ((prevState) => {
+  //     const changeAmenities = prevState.amenities.includes(amenity)
+  //     ?prevState.amenities.filter((item) => item !== amenity) : [...prevState.amenities,amenity];
+  //     return {
+  //       ...prevState,
+  //       amenities: changeAmenities,
+  //     }
+  //   })
+  // }
+  //BUTTON_CREATE
+  const handleCreateBooking = () => {
+    dispatch(CreateBookingThunk(newBooking));
+    navigate("/bookings");
+  };
 
   return (
     <CardCreate>
@@ -82,58 +80,76 @@ export const BookingsCreate = () => {
             <TitleSection>Name</TitleSection>
             <InputCreate
               type="text"
-              name="full_name"
-              value={newBooking.full_name}
+              name="name"
+              value={newBooking.name}
               onChange={handleInputChange}
             />
           </div>
-          <div>
-            <TitleSection>Room Type</TitleSection>
-            <InputCreate
-              type="text"
-              name="room_type"
-              value={newBooking.room_type}
-              onChange={handleInputChange}
-            />
-          </div>
-        </BoxTitle>
-        <BoxInfo>
           <PriceBox>
-            <TitlePrice>Price/Night</TitlePrice>
-            <Price
-              type="text"
-              name="price"
-              value={newBooking.price}
-              onChange={handleInputChange}
-            />
-          </PriceBox>
-          <PriceBox>
-          <TitlePrice>Check-In</TitlePrice>
+            <TitlePrice>Date</TitlePrice>
             <Price
               type="date"
-              name="check_in"
-              value={newBooking.check_in ? new Date(newBooking.check_in).toISOString().split('T')[0] : ''}
-              onChange={handleInputChange}
-            />
-          </PriceBox>
-          <PriceBox>
-          <TitlePrice>Check-Out</TitlePrice>
-            <Price
-              type="date"
-              name="check_out"
-              value={newBooking.check_out ? new Date(newBooking.check_out).toISOString().split('T')[0] : ''}
+              name="date"
+              value={newBooking.date}
               onChange={handleInputChange}
             />
           </PriceBox>
           <PriceBox>
             <TitlePrice>Status</TitlePrice>
-            <InputDiscount
-              type="text"
+            <SelectCreateBookings
+              typeof="text"
               name="status"
               value={newBooking.status}
               onChange={handleInputChange}
+            >
+              <option value="Active">In progress</option>
+              <option value="Check-In">Check-In</option>
+              <option value="Check-Out">Check-Out</option>
+            </SelectCreateBookings>
+          </PriceBox>
+        </BoxTitle>
+        <BoxInfo>
+          <PriceBox>
+            <TitlePrice>Check-In</TitlePrice>
+            <Price
+              type="date"
+              name="check_in"
+              value={
+                newBooking.check_in
+                  ? new Date(newBooking.check_in).toISOString().split("T")[0]
+                  : ""
+              }
+              onChange={handleInputChange}
             />
           </PriceBox>
+          <PriceBox>
+            <TitlePrice>Check-Out</TitlePrice>
+            <Price
+              type="date"
+              name="check_out"
+              value={
+                newBooking.check_out
+                  ? new Date(newBooking.check_out).toISOString().split("T")[0]
+                  : ""
+              }
+              onChange={handleInputChange}
+            />
+          </PriceBox>
+
+          <div>
+            <TitleSection>Room Type</TitleSection>
+            <SelectCreateBookings
+              typeof="text"
+              name="type"
+              value={newBooking.type}
+              onChange={handleInputChange}
+            >
+              <option value="Suite">Suite</option>
+              <option value="Double Bed">Double Bed</option>
+              <option value="Single Bed">Single Bed</option>
+              <option value="Double Superior">Double Superior</option>
+            </SelectCreateBookings>
+          </div>
         </BoxInfo>
 
         <BoxDescription>
@@ -142,12 +158,12 @@ export const BookingsCreate = () => {
             <InputDescription
               type="text"
               name="special_request"
-              value={newBooking.special_request}
+              value={newBooking.request}
               onChange={handleInputChange}
             />
           </div>
           <div>
-            <TitleDescripition>Amenities</TitleDescripition>
+            {/* <TitleDescripition>Amenities</TitleDescripition>
             <div>
               <ButtonAmenities onClick={() => handleAmenities("FREE WIFI")}>
                 FREE WIFI
@@ -176,7 +192,7 @@ export const BookingsCreate = () => {
               <ButtonAmenities onClick={() => handleAmenities("SHOWER")}>
                 SHOWER
               </ButtonAmenities>
-            </div>
+            </div> */}
           </div>
         </BoxDescription>
 
