@@ -91,7 +91,6 @@ export const UserCreate = () => {
                         <SelectCreate typeof="text" name="status" value={newUser.status} onChange={handleInputChange}>
                         <option value="Active">Active</option>
                         <option value="Inactive">Inactive</option>
-                        
                         </SelectCreate> 
 
                     </div> 

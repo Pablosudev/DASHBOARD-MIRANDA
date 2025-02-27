@@ -20,6 +20,8 @@ import {
   BoxTitle,
   TitleSection,
   ContainerSections,
+  DateBox,
+  ImageCreate,
 } from "../../Rooms/Components/RoomsCreate";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -74,7 +76,7 @@ export const BookingsCreate = () => {
             navigate("/bookings");
           }}
         />
-        <RoomInfo>Bookings Edit </RoomInfo>
+        <RoomInfo>Bookings Edit</RoomInfo>
         <BoxTitle>
           <div>
             <TitleSection>Name</TitleSection>
@@ -85,15 +87,16 @@ export const BookingsCreate = () => {
               onChange={handleInputChange}
             />
           </div>
-          <PriceBox>
-            <TitlePrice>Date</TitlePrice>
-            <Price
-              type="date"
-              name="date"
-              value={newBooking.date}
+          <div>
+            <TitleSection>Number Bookings</TitleSection>
+            <InputCreate
+              type="text"
+              name="number"
+              value={newBooking.number}
               onChange={handleInputChange}
             />
-          </PriceBox>
+          </div>
+          
           <PriceBox>
             <TitlePrice>Status</TitlePrice>
             <SelectCreateBookings
@@ -107,35 +110,6 @@ export const BookingsCreate = () => {
               <option value="Check-Out">Check-Out</option>
             </SelectCreateBookings>
           </PriceBox>
-        </BoxTitle>
-        <BoxInfo>
-          <PriceBox>
-            <TitlePrice>Check-In</TitlePrice>
-            <Price
-              type="date"
-              name="check_in"
-              value={
-                newBooking.check_in
-                  ? new Date(newBooking.check_in).toISOString().split("T")[0]
-                  : ""
-              }
-              onChange={handleInputChange}
-            />
-          </PriceBox>
-          <PriceBox>
-            <TitlePrice>Check-Out</TitlePrice>
-            <Price
-              type="date"
-              name="check_out"
-              value={
-                newBooking.check_out
-                  ? new Date(newBooking.check_out).toISOString().split("T")[0]
-                  : ""
-              }
-              onChange={handleInputChange}
-            />
-          </PriceBox>
-
           <div>
             <TitleSection>Room Type</TitleSection>
             <SelectCreateBookings
@@ -150,18 +124,55 @@ export const BookingsCreate = () => {
               <option value="Double Superior">Double Superior</option>
             </SelectCreateBookings>
           </div>
+        </BoxTitle>
+        <BoxInfo>
+          <DateBox>
+            <TitlePrice>Check-In</TitlePrice>
+            <Price
+              type="date"
+              name="check_in"
+              value={
+                newBooking.check_in
+                  ? new Date(newBooking.check_in).toISOString().split("T")[0]
+                  : ""
+              }
+              onChange={handleInputChange}
+            />
+          </DateBox>
+          <DateBox>
+            <TitlePrice>Check-Out</TitlePrice>
+            <Price
+              type="date"
+              name="check_out"
+              value={
+                newBooking.check_out
+                  ? new Date(newBooking.check_out).toISOString().split("T")[0]
+                  : ""
+              }
+              onChange={handleInputChange}
+            />
+          </DateBox>
+          <DateBox>
+            <TitlePrice>Date</TitlePrice>
+            <Price
+              type="date"
+              name="date"
+              value={newBooking.date}
+              onChange={handleInputChange}
+            />
+          </DateBox>
         </BoxInfo>
-
         <BoxDescription>
           <div>
             <TitleDescripition>Description</TitleDescripition>
             <InputDescription
               type="text"
-              name="special_request"
+              name="request"
               value={newBooking.request}
               onChange={handleInputChange}
             />
           </div>
+          <ImageCreate src="/src/assets/Imagenes/room10.jpg" alt="image room" />
           <div>
             {/* <TitleDescripition>Amenities</TitleDescripition>
             <div>

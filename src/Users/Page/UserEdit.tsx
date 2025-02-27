@@ -92,7 +92,6 @@ export const UserEdit = () => {
           status: "",
           department: "",
           _id: "",
-          
         });
         if(Users._id != id){
           dispatch(IdUserThunk(id ?? ""))

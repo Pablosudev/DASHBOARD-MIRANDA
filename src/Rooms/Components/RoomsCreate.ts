@@ -39,7 +39,7 @@ export const RoomInfo = styled.h4`
 `;
 export const BoxInfo = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: left;
 `;
 export const InputCreate = styled.input`
   background-color: #c5c5c5;
@@ -58,9 +58,14 @@ export const PriceBox = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+export const DateBox = styled.div`
+  margin-left:7%;
+  margin-right: 6%;
+`
 export const TitlePrice = styled.h3`
   font-family: "Poppins";
   font-size: 1rem;
+  margin-left: 30%;
 `;
 export const Price = styled.input`
   background-color: #c5c5c5;
@@ -98,11 +103,11 @@ export const ButtonOffer = styled.button`
 export const TitleDescripition = styled.h3`
   font-family: "Poppins";
   font-size: 1.5rem;
-  margin-left: 2rem;
+  margin-left: 18%;
 `;
 export const InputDescription = styled.input`
-  padding-left: 1rem;
-  padding-right: 8rem;
+  padding-left: 10%;
+  padding-right: 80%;
   padding-top: 1rem;
   padding-bottom: 4rem;
   background-color: #c5c5c5;
@@ -123,8 +128,16 @@ export const InputDiscount = styled.input`
 `;
 export const BoxDescription = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: left;
+  margin-left: 7%
 `;
+export const ImageCreate = styled.img`
+width:22rem;
+height:12rem;
+border-radius:8%;
+position: absolute;
+right: 25%;
+`
 export const ButtonAmenities = styled.button`
   border-radius: 0.8rem;
   border: 1px solid #135846;
