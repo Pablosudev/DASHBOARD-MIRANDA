@@ -28,6 +28,7 @@ import {
   BoxIcon,
   StyledSwiperSlide,
   StyledSwiper,
+  SliderDashboard,
 } from "../Contact/Components/Contact";
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -93,7 +94,7 @@ export const Dashboard = () => {
         <ContainerReviews>
           <Reviews>Latest Review By Customers</Reviews>
           <SectionDashboard>
-            <SliderReviews>
+            <SliderDashboard>
               <StyledSwiper
                 direction="horizontal"
                 slidesPerView={3}
@@ -101,7 +102,7 @@ export const Dashboard = () => {
                 loop={true}
               >
                 {DataContact.map((contact) => (
-                  <StyledSwiperSlide key={contact.id}>
+                  <StyledSwiperSlide key={contact._id}>
                     <BoxReviews>
                       <Review>{contact.comment}</Review>
                       <BoxCard>
@@ -110,7 +111,7 @@ export const Dashboard = () => {
                           alt="photoUser"
                         />
                         <BoxName>
-                          <NameReview>{contact.full_name}</NameReview>
+                          <NameReview>{contact.name}</NameReview>
                           <BoxTime>
                             <TimeReview>{contact.date}</TimeReview>
                             <BoxIcon>
@@ -124,7 +125,7 @@ export const Dashboard = () => {
                   </StyledSwiperSlide>
                 ))}
               </StyledSwiper>
-            </SliderReviews>
+            </SliderDashboard>
           </SectionDashboard>
         </ContainerReviews>
       </DashboardSection>

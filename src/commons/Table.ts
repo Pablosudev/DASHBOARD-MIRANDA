@@ -213,13 +213,13 @@ padding-left: 20%;
 width:10rem;
 `
 export const HeadContact = styled.th`
-padding-left: 18%;
+padding-left: 16%;
 `
 export const HeadEmail = styled.th`
 padding-left:  5%;
 `
 export const HeadDepartment = styled.th`
-padding-left:13%;
+padding-left: 20%;
 `
 export const HeadAmenities = styled.th`
   padding-left: 3%;

@@ -187,7 +187,7 @@ export const UserEdit = () => {
               <InputName
                 type="date"
                 name="start_date"
-                value={newUser.start_date}
+                value={newUser.start_date.toISOString().split('T')[0]}
                 onChange={handleInputChange}
               />
             </div>

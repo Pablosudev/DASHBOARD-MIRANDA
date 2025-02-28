@@ -7,7 +7,7 @@ export interface Users {
     phone: string,
     status: string,
     department: string, 
-    password?:string
+    password:string
 }
 
 export interface UserState {

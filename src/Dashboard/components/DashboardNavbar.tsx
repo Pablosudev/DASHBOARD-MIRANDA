@@ -9,13 +9,14 @@ import { AppDispatch } from "../../App/Store.ts";
 
 
 
+
 export const DashboardNavbar = () => {
 
     const [side, setSide] = useState(false);
     const [arrow,setArrow] = useState(true)
     const location = useLocation();
     const navigate = useNavigate();
-    const { dispatch } = useAuthContext() as { dispatch: AppDispatch };
+    const { dispatch } = useAuthContext() as unknown as { dispatch: AppDispatch };
 
     const handleSideMenu = () => {
         setSide(!side);
@@ -29,6 +30,10 @@ export const DashboardNavbar = () => {
                 return "Rooms";
             case "/users":
                 return "Users";
+            case "/bookings":
+                return "Bookings";
+            case "/contacts":
+                return "Contacts"    
             default:
                 return "Hotel Admin ";
         }
@@ -36,7 +41,7 @@ export const DashboardNavbar = () => {
 
     const handleLogOut = () => {
 
-        dispatch({ type: 'LOGOUT'});
+        dispatch({ type: 'login'});
         
         navigate("/");
     }

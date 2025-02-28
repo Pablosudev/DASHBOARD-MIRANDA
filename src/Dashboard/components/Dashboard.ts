@@ -8,10 +8,15 @@ import { FaArrowRight } from "react-icons/fa6";
 export const DashboardSection = styled.section`
     margin-top: 10%;
     margin-left: 2%;
-    max-width: 78%;
+    margin-right: 2%;
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center
 `
 export const ContainerKpis = styled.div`
    display: flex;
+   
 `
 export const Kpis = styled.div`
     display: flex;
@@ -102,11 +107,10 @@ export const ContainerReviews = styled.article`
 background-color: #ffffff;
 box-shadow: 0px 4px 4px #00000005;
 border-radius: 0.8rem;
-padding-top: 1.5rem;
-padding-right: 1rem;
-padding-left: 1rem;
+padding-top: 1%;
 padding-bottom: 4rem;
 margin-top: 4rem;
+width:100%;
 
 
 `

@@ -9,9 +9,11 @@ import { Swiper } from "swiper/react";
 
 
 export const SliderReviews = styled.div`
-  width:80rem; 
   margin-top: 10%;
   margin-left:15%;
+`
+export const SliderDashboard = styled.div`
+  margin-top: 5%;
 `
 export const BoxReviews = styled.div`
 background-color: #ffffff;
