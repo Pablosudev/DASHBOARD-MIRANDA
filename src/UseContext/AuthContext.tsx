@@ -19,8 +19,8 @@ const AuthContext = createContext<{
   setAuthState: React.Dispatch<React.SetStateAction<AuthState>>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  setEmail: React.Dispatch<React.SetStateAction<string>>; 
-  setPassword: React.Dispatch<React.SetStateAction<string>>; 
+  setEmail: (email: string) => void; 
+  setPassword: (password: string) => void;
 }>({
   authState: defaultAuthState,
   setAuthState: () => {},

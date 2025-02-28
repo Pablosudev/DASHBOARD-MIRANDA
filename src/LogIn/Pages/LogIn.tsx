@@ -18,6 +18,12 @@ export const LogIn = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if(!email || !password){
+      alert('Please fill in all fileds.')
+      return;
+    }
+
     await login(email, password); 
     navigate('/dashboard'); 
   };
