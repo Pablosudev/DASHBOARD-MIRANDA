@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Contacts } from "../Interfaces/ContactInterfaces";
 import { RootState } from "../../App/Store";
+import { GetAuthHeaders } from "../../UseContext/GetAuth";
 
 //THUNK ALL
 export const ContactAllThunks = createAsyncThunk<Contacts[], string | undefined>(
@@ -10,10 +11,7 @@ export const ContactAllThunks = createAsyncThunk<Contacts[], string | undefined>
           try {
             const response = await fetch("http://localhost:3001/api/v1/contacts", {
               method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-              },
+              headers: GetAuthHeaders(),
             });
             if (!response.ok) {
               return rejectWithValue("Error al cargar los datos de los contactos");
@@ -33,10 +31,7 @@ export const ContactIdThunks = createAsyncThunk<Contacts, string>(
     try {
       const response = await fetch(`http://localhost:3001/api/v1/contacts/${id}`, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-        },
+        headers: GetAuthHeaders(),
       });
       if (!response.ok) {
         return rejectWithValue("Error al cargar los datos de los contactos");
@@ -67,10 +62,7 @@ export const ContactDeleteThunk = createAsyncThunk<{ id: string }, string>(
         `http://localhost:3001/api/v1/contacts/${id}`,
         {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`, 
-          },
+          headers: GetAuthHeaders(),
         }
       );
 

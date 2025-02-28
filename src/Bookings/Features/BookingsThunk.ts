@@ -3,7 +3,7 @@ import {
   BookingsEditInter,
   BookingsInter,
 } from "../Interfaces/BookingsInterfaces";
-
+import { GetAuthHeaders } from "../../UseContext/GetAuth";
 //THUNKS TODOS
 export const AllBookingsThunk = createAsyncThunk<BookingsInter[], string>(
   "bookings/getBookings",
@@ -11,10 +11,7 @@ export const AllBookingsThunk = createAsyncThunk<BookingsInter[], string>(
     try {
       const response = await fetch("http://localhost:3001/api/v1/bookings", {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-        },
+        headers: GetAuthHeaders(),
       });
       if (!response.ok) {
         return rejectWithValue("Error al cargar los datos");
@@ -38,10 +35,7 @@ export const BookingsIdThunk = createAsyncThunk<BookingsInter, string>(
         `http://localhost:3001/api/v1/bookings/${id}`,
         {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-          },
+          headers: GetAuthHeaders(),
         }
       );
 
@@ -73,10 +67,7 @@ export const DeleteBookingsThunk = createAsyncThunk<{ id: string }, string>(
         `http://localhost:3001/api/v1/bookings/${id}`,
         {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-          },
+          headers: GetAuthHeaders(),
         }
       );
       if (!response.ok) {
@@ -98,10 +89,7 @@ export const CreateBookingThunk = createAsyncThunk<
   try {
     const response = await fetch("http://localhost:3001/api/v1/bookings", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-      },
+      headers: GetAuthHeaders(),
       body: JSON.stringify(newBooking),
     });
     if (!response.ok) {

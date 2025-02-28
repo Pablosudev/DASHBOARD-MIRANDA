@@ -1,52 +1,54 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { ButtonStyled, CustomIcon, DivStyled, InputStyled} from "../Components/LogInStyle";
-import { useAuthContext } from "../../UseContext/AuthContext";
-import { LogInInterface } from "../Interface/LogInInterface";
+import React from 'react';
+import { useAuthContext } from '../../UseContext/AuthContext';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { DivStyled, CustomIcon, InputStyled, ButtonStyled } from '../Components/LogInStyle';
 
 export const LogIn = () => {
+  const navigate = useNavigate();
+  const { authState, setEmail, setPassword, login } = useAuthContext();
+  const { email, password } = authState;
 
-    const {email, password, setEmail, setAuthenticated , setPassword }  = useAuthContext();
-  
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
 
-    const  navigate = useNavigate();
+  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
 
-    const handleChangeEmail = (e) => {
-        setEmail(e.target.value);
-    }
-    const handleChangePassword = (e) => {
-        setPassword(e.target.value);
-    }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await login(email, password); 
+    navigate('/dashboard'); 
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (email === '1234' && password === '1234'){
-            
-          setAuthenticated(true);
-
-          localStorage.setItem('isAuthenticated', 'true');
-          localStorage.setItem('email', email)
-          navigate('/dashboard');
-      
-        } else {
-            alert ('Incorrect password or email.')
-        }
-    }
-
-    return (
-        <DivStyled>
-          <CustomIcon/>
-          <h1 data-cy = "Title">HOTEL MIRANDA</h1>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <InputStyled type="text" placeholder="Email" value={email} onChange={handleChangeEmail} data-cy = "InputEmail"/>
-            </div>
-            <div>
-              <InputStyled type="text" placeholder="Contraseña" value={password} onChange={handleChangePassword} data-cy = "InputPassword"/>
-            </div>
-            <ButtonStyled type="submit" data-cy="ButtonStyled">Login</ButtonStyled>
-          </form>
-      </DivStyled>
-    )
-}
+  return (
+    <DivStyled>
+      <CustomIcon />
+      <h1 data-cy="Title">HOTEL MIRANDA</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <InputStyled
+            type="text"
+            placeholder="1234@gmail.com"
+            value={email}
+            onChange={handleChangeEmail}
+            data-cy="InputEmail"
+          />
+        </div>
+        <div>
+          <InputStyled
+            type="password" 
+            placeholder="1234"
+            value={password}
+            onChange={handleChangePassword}
+            data-cy="InputPassword"
+          />
+        </div>
+        <ButtonStyled type="submit" data-cy="ButtonStyled">
+          Login
+        </ButtonStyled>
+      </form>
+    </DivStyled>
+  );
+};

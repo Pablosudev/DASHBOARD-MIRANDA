@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Users, UsersEdit } from "../Interfaces/UsersInterfaces";
+import { Users } from "../Interfaces/UsersInterfaces";
+import { GetAuthHeaders } from "../../UseContext/GetAuth";
 
 export const UsersAllThunk = createAsyncThunk<Users[], string | undefined>(
   "users/getUsers",
@@ -8,10 +9,7 @@ export const UsersAllThunk = createAsyncThunk<Users[], string | undefined>(
           try {
             const response = await fetch("http://localhost:3001/api/v1/users", {
               method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-              },
+              headers: GetAuthHeaders(),
             });
             if (!response.ok) {
               return rejectWithValue("Error al cargar los datos");
@@ -32,10 +30,7 @@ export const IdUserThunk = createAsyncThunk<Users, string>(
     try {
       const response = await fetch(`http://localhost:3001/api/v1/users/${id}`, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-        },
+        headers: GetAuthHeaders(),
       });
       if (!response.ok) {
         return rejectWithValue("Error al cargar los datos");
@@ -66,10 +61,7 @@ export const DeleteUserThunk = createAsyncThunk<{ id: string }, string>(
         `http://localhost:3001/api/v1/users/${id}`,
         {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`, 
-          },
+          headers: GetAuthHeaders(),
         }
       );
 
@@ -92,10 +84,7 @@ export const CreateUserThunk = createAsyncThunk<Users, Users>(
     try {
       const response = await fetch("http://localhost:3001/api/v1/users", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-        },
+        headers: GetAuthHeaders(),
         body: JSON.stringify(newUser),
       });
       console.log(response)
@@ -119,10 +108,7 @@ export const EditUserThunk = createAsyncThunk<
   try {
     const response = await fetch(`http://localhost:3001/api/v1/users/${id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-      },
+      headers: GetAuthHeaders(),
       body: JSON.stringify(updatedUser),
     });
 

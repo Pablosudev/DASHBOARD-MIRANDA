@@ -1,5 +1,6 @@
 import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 import { RoomsInter, RoomsEdits } from "../Interfaces/RoomsInterfaces";
+import { GetAuthHeaders } from "../../UseContext/GetAuth";
 //FETCH TODOS
 export const RoomsThunk = createAsyncThunk<RoomsInter[]>(
   "rooms/getRooms",
@@ -7,10 +8,7 @@ export const RoomsThunk = createAsyncThunk<RoomsInter[]>(
     try {
       const response = await fetch("http://localhost:3001/api/v1/rooms", {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-        },
+        headers: GetAuthHeaders(),
       });
 
       if (!response.ok) {
@@ -33,10 +31,7 @@ export const IdRoomThunk = createAsyncThunk<RoomsInter, string>(
     try {
       const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-        },
+        headers: GetAuthHeaders(),
       });
       if (!response.ok) {
         return rejectWithValue("Error al cargar los datos");
@@ -64,10 +59,7 @@ export const EditRoomThunk = createAsyncThunk<
         try {
           const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`,{
             method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-      },
+      headers: GetAuthHeaders(),
       body: JSON.stringify(updatedRoom),
           });
           if (!response.ok) {
@@ -88,10 +80,7 @@ export const DeleteRoomThunk = createAsyncThunk<{ id: string }, string>(
           try {
             const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`, {
               method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`, 
-              },
+              headers: GetAuthHeaders(),
             });
 
             if (!response.ok) {
@@ -112,10 +101,7 @@ export const CreateRoomThunk = createAsyncThunk<RoomsInter, RoomsInter>(
           try {
             const response = await fetch("http://localhost:3001/api/v1/rooms" , {
               method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYXJsZXNfU2F3YXluMTRAZ21haWwuY29tIiwiaWF0IjoxNzQwNDU4MTEwLCJleHAiOjE3NzIwMTU3MTB9.7QDNSNaftYFVV8QNiXcKYYN9jdHUHOt13eQpSW-CorE`,
-        },
+        headers: GetAuthHeaders(),
         body: JSON.stringify(newRoom),
       });
       if (!response.ok) {

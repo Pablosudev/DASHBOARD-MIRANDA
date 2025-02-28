@@ -1,67 +1,118 @@
-import { useReducer , createContext, useContext } from "react";
-import { AuthState } from "./Interface/AuthContextInterface";
-import React from "react";
-const initialState: AuthState = {
-  email: "",
+import React, { createContext, useState, useContext, ReactNode } from 'react';
+
+
+
+export interface AuthState {
+  email: string;
+  authenticated: boolean;
+  password?: string;
+}
+
+const defaultAuthState: AuthState = {
+  email: '',
   authenticated: false,
-  password: ""
+  password: '',
 };
 
 const AuthContext = createContext<{
-  state: AuthState;
-  dispatch: React.Dispatch<any>;
+  authState: AuthState;
+  setAuthState: React.Dispatch<React.SetStateAction<AuthState>>;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
+  setEmail: React.Dispatch<React.SetStateAction<string>>; 
+  setPassword: React.Dispatch<React.SetStateAction<string>>; 
 }>({
-  state: initialState,
-  dispatch: () => null,
+  authState: defaultAuthState,
+  setAuthState: () => {},
+  login: async () => {},
+  logout: () => {},
+  setEmail: () => {}, 
+  setPassword: () => {}, 
 });
 
-const useAuthContext = () => {
-  return useContext(AuthContext);
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [authState, setAuthState] = useState<AuthState>(defaultAuthState);
+  
+  const setEmail = (email: string) => {
+    setAuthState((prevState) => ({
+      ...prevState,
+      email,
+    }));
+  };
 
+  const setPassword = (password: string) => {
+    setAuthState((prevState) => ({
+      ...prevState,
+      password,
+    }));
+  };
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "SET_EMAIL":
-      return { ...state, email: action.payload };
-    case "SET_PASSWORD":
-      return { ...state, password: action.payload };
-    case "SET_AUTHENTICATED":
-      return { ...state, authenticated: action.payload };
-    case "LOGOUT":
-      localStorage.removeItem('email');
-      localStorage.removeItem ('password');
-      localStorage.removeItem ('isAuthenticated')
-      return {
-        email:"",
-        authenticated: false,
-      }
-    
-    default:
-      return state;
+  const login = async (email: string, password: string) => {
+    try{
+    const response = await fetch('http://localhost:3001/api/v1/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Credenciales incorrectas');
+    }
+
+    const data = await response.json();
+    if (data.token) {
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('email', email);
+      localStorage.setItem('token', data.token);
+
+      setAuthState({
+        email,
+        authenticated: true,
+        password: '',
+      });
+      
+    } else {
+      
+      throw new Error('No se recibió el token');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert(error.message);
   }
-}
+};
 
-const AuthProvider = ({children}: { children: React.ReactNode }) => {
+  const logout = () => {
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('email');
+    localStorage.removeItem('token');
 
-  const [state, dispatch] = useReducer( reducer, initialState )
+    setAuthState({
+      email: '',
+      authenticated: false,
+      password: '',
+    });
+  };
 
-  return(
-    <AuthContext.Provider value={{
-      dispatch,
-      email: state.email,
-      password: state.password,
-      authenticated: state.authenticated,
-      setEmail: (email) => dispatch({ type: "SET_EMAIL", payload: email }),
-      setPassword: (password) => dispatch({ type: "SET_PASSWORD", payload: password }),
-      setAuthenticated: (status) => dispatch({ type: "SET_AUTHENTICATED", payload: status }),
-    }}>
+  return (
+    <AuthContext.Provider
+      value={{
+        authState,
+        setAuthState,
+        login,
+        logout,
+        setEmail,
+        setPassword,
+      }}
+    >
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
 
-export {
-  AuthProvider, useAuthContext
-}
+export const useAuthContext = () => useContext(AuthContext);
