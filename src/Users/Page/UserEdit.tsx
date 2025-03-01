@@ -42,7 +42,7 @@ export const UserEdit = () => {
   const [newUser, setNewUser] = useState<Users>({
     name: "",
     email: "",
-    start_date: new Date,
+    start_date: "",
     description: "",
     phone: "",
     status: "",
@@ -50,12 +50,13 @@ export const UserEdit = () => {
     password: "",
   });
 
+
+  
   const handleSave = () => {
     if (!id) {
       alert("ID no válido");
       return;
     }
-  
     dispatch(EditUserThunk({ id, updatedUser: newUser }))
       .unwrap()
       .then(() => {
@@ -68,10 +69,7 @@ export const UserEdit = () => {
         navigate("/users")
       });
   };
-  const formatDate = (date) => {
-    const newDate = new Date(date);
-    return newDate.toISOString().split("T")[0];
-  };
+  
   
   useEffect(() => {
     if (UserStatus === "idle" ) {
@@ -86,10 +84,10 @@ export const UserEdit = () => {
           description: Users.description,
           phone: Users.phone,
           email: Users.email,
-          password: "",
-          status: "",
-          department: "",
-          _id: "",
+          password: Users.password,
+          status: Users.status,
+          department: Users.department,
+          
         });
         if(Users._id != id){
           dispatch(IdUserThunk(id ?? ""))
@@ -187,7 +185,7 @@ export const UserEdit = () => {
               <InputName
                 type="date"
                 name="start_date"
-                value={newUser.start_date.toISOString().split('T')[0]}
+                value={newUser.start_date}
                 onChange={handleInputChange}
               />
             </div>
