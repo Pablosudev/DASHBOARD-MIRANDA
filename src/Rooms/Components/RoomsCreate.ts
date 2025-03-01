@@ -240,3 +240,14 @@ padding-right:0.5rem;
 background-color: #c5c5c5;
 margin-bottom: 40%;
 `
+export const SelectTypeRoom = styled.select`
+font-family: "Poppins";
+border: transparent;
+border-radius:12px;
+padding-top:8%;
+padding-bottom:8%;
+padding-left:0.5rem;
+padding-right:0.5rem;
+background-color: #c5c5c5;
+margin-bottom: 24%;
+`

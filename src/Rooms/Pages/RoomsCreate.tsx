@@ -11,11 +11,9 @@ import {
   TitlePrice,
   InputDiscount,
   TitleDescripition,
-  ButtonOffer,
   Price,
   PriceBox,
   InputCreate,
-  BoxInfo,
   RoomInfo,
   BoxTitle,
   TitleSection,
@@ -44,7 +42,8 @@ export const RoomsCreate = () => {
     const { name, value } = e.target;
     setNewRoom((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: name === "number" || name === "price" || name === "offer"
+      ? Number(value): value,
     }));
   };
 
@@ -54,14 +53,17 @@ export const RoomsCreate = () => {
         ? prevState.amenities.filter((item) => item !== amenity)
         : [...prevState.amenities, amenity];
       return {
+        
         ...prevState,
         amenities: changeAmenities,
       };
     });
   };
-  //BUTTON_CREATE
   const handleCreateRoom = () => {
+
+    
     dispatch(CreateRoomThunk(newRoom));
+    console.log(newRoom)
     navigate("/rooms");
   };
 
@@ -77,17 +79,22 @@ export const RoomsCreate = () => {
         <BoxTitle>
           <div>
             <TitleSection>Room Type</TitleSection>
-            <InputCreate
-              type="text"
+            <SelectCreateRoom
+              typeof="text"
               name="type"
               value={newRoom.type}
               onChange={handleInputChange}
-            />
+            >
+              <option value="Suite">Suite</option>
+              <option value="Double Superior">Double Superior</option>
+              <option value="Single Bed">Single Bed</option>
+              <option value="Double Bed">Double Bed</option>
+            </SelectCreateRoom>
           </div>
           <div>
             <TitleSection>Room Number</TitleSection>
             <InputCreate
-              type="text"
+              type="number"
               name="number"
               value={newRoom.number}
               onChange={handleInputChange}
@@ -96,13 +103,12 @@ export const RoomsCreate = () => {
           <div>
             <TitleSection>Status</TitleSection>
             <SelectCreateRoom
-              typeof="text"
-              name="status"
+              name="roomStatus"
               value={newRoom.roomStatus}
               onChange={handleInputChange}
             >
-              <option value="Avilable">Avilable</option>
               <option value="Booked">Booked</option>
+              <option value="Available">Available</option>
             </SelectCreateRoom>
           </div>
         </BoxTitle>
@@ -110,7 +116,7 @@ export const RoomsCreate = () => {
           <PriceBox>
             <TitlePrice>Price/Night</TitlePrice>
             <Price
-              type="text"
+              type="number"
               name="price"
               value={newRoom.price}
               onChange={handleInputChange}
@@ -119,7 +125,7 @@ export const RoomsCreate = () => {
           <PriceBox>
             <TitlePrice>Discount</TitlePrice>
             <InputDiscount
-              type="text"
+              type="number"
               name="offer"
               value={newRoom.offer}
               onChange={handleInputChange}

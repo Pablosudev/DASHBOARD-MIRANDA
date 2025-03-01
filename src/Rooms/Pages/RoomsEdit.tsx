@@ -18,6 +18,7 @@ import {
   CardCreate,
   SelectCreateRoom,
   BoxInfoRooms,
+  SelectTypeRoom,
 } from "../Components/RoomsCreate";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IdRoomThunk, EditRoomThunk } from "../Features/RoomsThunk";
@@ -111,12 +112,17 @@ export const RoomsEdit = () => {
         <BoxTitle>
           <div>
             <TitleSection>Room Type</TitleSection>
-            <InputCreate
-              type="text"
+            <SelectTypeRoom
+              typeof="text"
               name="type"
-              value={roomId?.type || ""}
+              value={roomId.type}
               onChange={handleChange}
-            />
+            >
+              <option value="Suite">Suite</option>
+              <option value="Double Superior">Double Superior</option>
+              <option value="Single Bed">Single Bed</option>
+              <option value="Double Bed">Double Bed</option>
+            </SelectTypeRoom>
           </div>
           <div>
             <TitleSection>Room Number</TitleSection>
@@ -128,16 +134,16 @@ export const RoomsEdit = () => {
             />
           </div>
           <div>
-          <TitleSection>Status</TitleSection>
-          <SelectCreateRoom
-            typeof="text"
-            name="status"
-            value={roomId.roomStatus}
-            onChange={handleChange}
-          >
-            <option value="Avilable">Avilable</option>
-            <option value="Booked">Booked</option>
-          </SelectCreateRoom>
+            <TitleSection>Status</TitleSection>
+            <SelectCreateRoom
+              typeof="text"
+              name="roomStatus"
+              value={roomId.roomStatus}
+              onChange={handleChange}
+            >
+              <option value="Available">Available</option>
+              <option value="Booked">Booked</option>
+            </SelectCreateRoom>
           </div>
         </BoxTitle>
         <BoxInfoRooms>
