@@ -16,7 +16,7 @@ export const UserCreate = () => {
     const[ newUser, setNewUser] = useState<Users>({
         name: "",
         email:"",
-        start_date: new Date,
+        start_date: "",
         description: "",
         phone: "",
         status: "",
@@ -105,7 +105,7 @@ export const UserCreate = () => {
                         <InputName type="password" name="password" onChange={handleInputChange}/> 
                     </div> <div>
                         <TypeInput>Star Date</TypeInput>
-                        <InputName type="date" name="start_date"  value={newUser.start_date.toISOString().split('T')[0]} onChange={handleInputChange}/> 
+                        <InputName type="date" name="start_date"  value={newUser.start_date} onChange={handleInputChange}/> 
                     </div> 
                 </BoxArticle>
             </ContainerInput>

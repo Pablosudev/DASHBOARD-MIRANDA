@@ -19,6 +19,7 @@ import {
   TitleSection,
   ContainerSections,
   CardCreate,
+  SelectCreateRoom,
 } from "../Components/RoomsCreate";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IdRoomThunk, EditRoomThunk } from "../Features/RoomsThunk";
@@ -27,24 +28,34 @@ import { getIdRoomsData, getIdRoomsStatus } from "../Features/RoomsSlice";
 import { AppDispatch } from "../../App/Store";
 import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import React from "react";
+import { SelectCreate, TypeInput } from "../../Users/Components/UsersCreate";
 
 export const RoomsEdit = () => {
-  const { id } = useParams<{id: string}>();
+  const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const RoomID: RoomsInter | undefined = useSelector(getIdRoomsData);
   const StatusRoom = useSelector(getIdRoomsStatus);
   const [roomId, setRoomId] = useState<RoomsInter>({
-    type:"",
     number: 0,
     price: 0,
     offer: 0,
     roomStatus: "",
-    _id:"",
-    amenities:[]
+    type: "",
+    amenities: [],
   });
-  
-  const handleChange = (e:any) => {
+  const handleAmenities = (amenity: string) => {
+    setRoomId((prevState) => {
+      const changeAmenities = prevState.amenities.includes(amenity)
+        ? prevState.amenities.filter((item) => item !== amenity)
+        : [...prevState.amenities, amenity];
+      return {
+        ...prevState,
+        amenities: changeAmenities,
+      };
+    });
+  };
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setRoomId((prevState) => ({
       ...prevState,
@@ -55,7 +66,7 @@ export const RoomsEdit = () => {
   const handleSave = () => {
     if (!id) {
       alert("ID no válido");
-      return; 
+      return;
     }
     dispatch(EditRoomThunk({ id, updatedRoom: roomId }))
       .unwrap()
@@ -65,31 +76,32 @@ export const RoomsEdit = () => {
       })
       .catch((error) => {
         alert("Error al actualizar la habitación: " + error.message);
+        navigate("/rooms");
       });
   };
 
-  
   useEffect(() => {
-    
     if (StatusRoom === "idle") {
-      if(id){
-      dispatch(IdRoomThunk(id));
+      if (id) {
+        dispatch(IdRoomThunk(id));
       }
     } else if (StatusRoom === "fulfilled") {
-      if(RoomID){
-      setRoomId({
-        type: RoomID.type,
-        number: RoomID.number,
-       price: RoomID.price,
-        offer: RoomID.offer,
-        roomStatus: RoomID.roomStatus,
-        _id: RoomID._id,
-        amenities: RoomID.amenities
-      })
-    }
+      if (RoomID) {
+        setRoomId({
+          number: RoomID.number,
+          price: RoomID.price,
+          offer: RoomID.offer,
+          roomStatus: RoomID.roomStatus,
+          type: RoomID.type,
+          amenities: RoomID.amenities,
+        });
+        if (RoomID._id != id) {
+          dispatch(IdRoomThunk(id ?? ""));
+        }
+      }
     } else if (StatusRoom === "rejected") {
       alert("Error al cargar los datos de la habitación");
-    } 
+    }
   }, [dispatch, id, StatusRoom]);
 
   return (
@@ -104,7 +116,7 @@ export const RoomsEdit = () => {
             <TitleSection>Room Type</TitleSection>
             <InputCreate
               type="text"
-              name="room_type"
+              name="type"
               value={roomId?.type || ""}
               onChange={handleChange}
             />
@@ -113,10 +125,22 @@ export const RoomsEdit = () => {
             <TitleSection>Room Number</TitleSection>
             <InputCreate
               type="text"
-              name="room_number"
+              name="number"
               value={roomId?.number || ""}
               onChange={handleChange}
             />
+          </div>
+          <div>
+          <TitleSection>Status</TitleSection>
+          <SelectCreateRoom
+            typeof="text"
+            name="status"
+            value={roomId.roomStatus}
+            onChange={handleChange}
+          >
+            <option value="Avilable">Avilable</option>
+            <option value="Booked">Booked</option>
+          </SelectCreateRoom>
           </div>
         </BoxTitle>
         <BoxInfo>
@@ -124,41 +148,17 @@ export const RoomsEdit = () => {
             <TitlePrice>Price/Night</TitlePrice>
             <Price
               type="text"
-              name="room_price"
+              name="price"
               value={roomId?.price || ""}
               onChange={handleChange}
             />
           </PriceBox>
-          <PriceBox>
-            <TitlePrice>Offer</TitlePrice>
-            <div>
-              <ButtonOffer
-                onClick={() =>
-                  setRoomId((prevState) => ({
-                    ...prevState,
-                    room_offer: 10,
-                  }))
-                }
-              >
-                10%
-              </ButtonOffer>
-              <ButtonOffer
-                onClick={() =>
-                  setRoomId((prevState) => ({
-                    ...prevState,
-                    room_offer: 15,
-                  }))
-                }
-              >
-                15%
-              </ButtonOffer>
-            </div>
-          </PriceBox>
+
           <PriceBox>
             <TitlePrice>Discount</TitlePrice>
             <InputDiscount
               type="text"
-              name="room_discount"
+              name="offer"
               value={roomId?.offer || ""}
               onChange={handleChange}
             />
@@ -177,33 +177,35 @@ export const RoomsEdit = () => {
           <div>
             <TitleDescripition>Amenities</TitleDescripition>
             <div>
-              <ButtonAmenities>
-                FREE WIFI
-              </ButtonAmenities>
-              <ButtonAmenities >
-                TV LED
-              </ButtonAmenities>
-              <ButtonAmenities>
-                2 BATHROOM
-              </ButtonAmenities>
-              <ButtonAmenities>
-                AC
-              </ButtonAmenities>
-              <ButtonAmenities>
-                3 BED SPACE
-              </ButtonAmenities>
-              <ButtonAmenities>
-                COFEE SET
-              </ButtonAmenities>
-              <ButtonAmenities>
-                BATHUP
-              </ButtonAmenities>
-              <ButtonAmenities>
-                TOWEL
-              </ButtonAmenities>
-              <ButtonAmenities>
-                SHOWER
-              </ButtonAmenities>
+              <div>
+                <ButtonAmenities onClick={() => handleAmenities("FREE WIFI")}>
+                  FREE WIFI
+                </ButtonAmenities>
+                <ButtonAmenities onClick={() => handleAmenities("TV LED")}>
+                  TV LED
+                </ButtonAmenities>
+                <ButtonAmenities onClick={() => handleAmenities("2 BATHROOM")}>
+                  2 BATHROOM
+                </ButtonAmenities>
+                <ButtonAmenities onClick={() => handleAmenities("AC")}>
+                  AC
+                </ButtonAmenities>
+                <ButtonAmenities onClick={() => handleAmenities("3 BED SPACE")}>
+                  3 BED SPACE
+                </ButtonAmenities>
+                <ButtonAmenities onClick={() => handleAmenities("COFEE SET")}>
+                  COFEE SET
+                </ButtonAmenities>
+                <ButtonAmenities onClick={() => handleAmenities("BATHUP")}>
+                  BATHUP
+                </ButtonAmenities>
+                <ButtonAmenities onClick={() => handleAmenities("TOWEL")}>
+                  TOWEL
+                </ButtonAmenities>
+                <ButtonAmenities onClick={() => handleAmenities("SHOWER")}>
+                  SHOWER
+                </ButtonAmenities>
+              </div>
             </div>
           </div>
         </BoxDescription>

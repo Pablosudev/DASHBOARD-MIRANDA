@@ -109,31 +109,29 @@ export const EditBookingThunk = createAsyncThunk<
   "booking/editBooking",
   async ({ id, updatedBooking }, { rejectWithValue }) => {
     try {
-      const bookingId = await new Promise<BookingsInter>((resolve, reject) => {
-        setTimeout(async () => {
-          try {
-            const response = await fetch("/Data/bookings.json");
-            if (!response.ok) {
-              reject("Error al cargar los datos");
-            }
-            const jsonData: BookingsInter[] = await response.json();
-            const updatedData = jsonData.map((booking) =>
-              booking._id === id ? { ...booking, ...updatedBooking } : booking
-            );
-            const updatedBookingData = updatedData.find(
-              (booking) => booking._id === id
-            );
-            if (updatedBookingData) {
-              resolve(updatedBookingData);
-            } else {
-              reject("Reserva no encontrada");
-            }
-          } catch (error) {
-            reject(error);
-          }
-        }, 200);
-      });
-      return bookingId;
+      const response = await fetch(
+        `http://localhost:3001/api/v1/bookings/${id}`,
+        {
+          method: "PUT",
+          headers: GetAuthHeaders(),
+          body: JSON.stringify(updatedBooking),
+        }
+      );
+      if (!response.ok) {
+        return rejectWithValue("Error al cargar los datos");
+      }
+      const jsonData: BookingsInter[] = await response.json();
+      const updatedData = jsonData.map((booking) =>
+        booking._id === id ? { ...booking, ...updatedBooking } : booking
+      );
+      const updatedBookingData = updatedData.find(
+        (booking) => booking._id === id
+      );
+      if (updatedBookingData) {
+        return updatedBookingData;
+      } else {
+        return rejectWithValue("Error al editar la reserva");
+      }
     } catch (error) {
       return rejectWithValue(error.message || "Error al editar la reserva");
     }

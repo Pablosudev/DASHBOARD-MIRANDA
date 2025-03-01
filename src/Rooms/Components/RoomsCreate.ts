@@ -222,3 +222,14 @@ export const ButtonBooked = styled.button`
    color: black;
   }
 `;
+export const SelectCreateRoom = styled.select`
+font-family: "Poppins";
+border: transparent;
+border-radius:12px;
+padding-top:13%;
+padding-bottom:13%;
+padding-left:0.5rem;
+padding-right:0.5rem;
+background-color: #c5c5c5;
+margin-bottom: 40%;
+`

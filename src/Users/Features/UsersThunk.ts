@@ -113,12 +113,10 @@ export const EditUserThunk = createAsyncThunk<
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
       return rejectWithValue("Error al editar el usuario");
     }
 
     const updatedUserData = await response.json();
-    console.log("Datos actualizados del usuario:", updatedUserData)
     return updatedUserData;
   } catch (error) {
     return rejectWithValue(error.message || "Error al editar el usuario");
