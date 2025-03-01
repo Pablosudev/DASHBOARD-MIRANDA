@@ -41,6 +41,10 @@ export const BoxInfo = styled.div`
   display: flex;
   justify-content: left;
 `;
+export const BoxInfoRooms = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
 export const InputCreate = styled.input`
   background-color: #c5c5c5;
   border: transparent;
@@ -65,7 +69,7 @@ export const DateBox = styled.div`
 export const TitlePrice = styled.h3`
   font-family: "Poppins";
   font-size: 1rem;
-  margin-left: 30%;
+  margin-left: 20%;
 `;
 export const Price = styled.input`
   background-color: #c5c5c5;
@@ -103,7 +107,7 @@ export const ButtonOffer = styled.button`
 export const TitleDescripition = styled.h3`
   font-family: "Poppins";
   font-size: 1.5rem;
-  margin-left: 18%;
+  margin-left: 40%;
 `;
 export const InputDescription = styled.input`
   padding-left: 10%;
@@ -127,9 +131,8 @@ export const InputDiscount = styled.input`
   text-align: center;
 `;
 export const BoxDescription = styled.div`
-  display: flex;
-  justify-content: left;
-  margin-left: 7%
+display:flex;
+justify-content:center;
 `;
 export const ImageCreate = styled.img`
 width:22rem;
@@ -145,7 +148,11 @@ export const ButtonAmenities = styled.button`
   background-color: #ffffff;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  margin-right: 0.5rem;
+  padding-left: 2%;
+  padding-right:2%;
+  margin-right: 2%;
+  margin-left: 2%;
+  margin-top:3%;
 
   &:hover {
     background-color: #135846;
@@ -171,7 +178,7 @@ export const ButtonSave = styled.button`
   color: #135846;
   border-radius: 12px;
   position: absolute;
-  left: 50%;
+  left: 48%;
   &:hover {
     background-color: #135846;
     color: #ffffff;

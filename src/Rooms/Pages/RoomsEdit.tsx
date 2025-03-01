@@ -7,19 +7,17 @@ import {
   BoxDescription,
   TitlePrice,
   InputDiscount,
-  InputDescription,
   TitleDescripition,
-  ButtonOffer,
   Price,
   PriceBox,
   InputCreate,
-  BoxInfo,
   RoomInfo,
   BoxTitle,
   TitleSection,
   ContainerSections,
   CardCreate,
   SelectCreateRoom,
+  BoxInfoRooms,
 } from "../Components/RoomsCreate";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IdRoomThunk, EditRoomThunk } from "../Features/RoomsThunk";
@@ -28,7 +26,6 @@ import { getIdRoomsData, getIdRoomsStatus } from "../Features/RoomsSlice";
 import { AppDispatch } from "../../App/Store";
 import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import React from "react";
-import { SelectCreate, TypeInput } from "../../Users/Components/UsersCreate";
 
 export const RoomsEdit = () => {
   const { id } = useParams<{ id: string }>();
@@ -143,7 +140,7 @@ export const RoomsEdit = () => {
           </SelectCreateRoom>
           </div>
         </BoxTitle>
-        <BoxInfo>
+        <BoxInfoRooms>
           <PriceBox>
             <TitlePrice>Price/Night</TitlePrice>
             <Price
@@ -163,17 +160,8 @@ export const RoomsEdit = () => {
               onChange={handleChange}
             />
           </PriceBox>
-        </BoxInfo>
+        </BoxInfoRooms>
         <BoxDescription>
-          {/* <div>
-            <TitleDescripition>Description</TitleDescripition>
-            <InputDescription
-              type="text"
-              name="room_description"
-              value={roomId?.room_description || ""}
-              onChange={handleChange}
-            />
-          </div> */}
           <div>
             <TitleDescripition>Amenities</TitleDescripition>
             <div>

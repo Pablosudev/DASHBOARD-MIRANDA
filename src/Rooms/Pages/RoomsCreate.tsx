@@ -20,17 +20,17 @@ import {
   BoxTitle,
   TitleSection,
   ContainerSections,
-  CardCreate
+  CardCreate,
+  SelectCreateRoom,
+  BoxInfoRooms,
 } from "../Components/RoomsCreate";
 import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import { AppDispatch } from "../../App/Store";
-
 
 export const RoomsCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  
   const [newRoom, setNewRoom] = useState<RoomsInter>({
     type: "",
     number: 0,
@@ -40,8 +40,7 @@ export const RoomsCreate = () => {
     amenities: [],
   });
 
-  
-  const handleInputChange = (e: any ) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setNewRoom((prevState) => ({
       ...prevState,
@@ -50,27 +49,30 @@ export const RoomsCreate = () => {
   };
 
   const handleAmenities = (amenity) => {
-    setNewRoom ((prevState) => {
+    setNewRoom((prevState) => {
       const changeAmenities = prevState.amenities.includes(amenity)
-      ?prevState.amenities.filter((item) => item !== amenity) : [...prevState.amenities,amenity];
+        ? prevState.amenities.filter((item) => item !== amenity)
+        : [...prevState.amenities, amenity];
       return {
         ...prevState,
         amenities: changeAmenities,
-      }
-    })
-  }
+      };
+    });
+  };
   //BUTTON_CREATE
   const handleCreateRoom = () => {
-    dispatch(CreateRoomThunk(newRoom)); 
-    navigate("/rooms"); 
+    dispatch(CreateRoomThunk(newRoom));
+    navigate("/rooms");
   };
-
-  
 
   return (
     <CardCreate>
       <ContainerSections>
-        <IconClose onClick={() => {navigate("/rooms")}} />
+        <IconClose
+          onClick={() => {
+            navigate("/rooms");
+          }}
+        />
         <RoomInfo>Room Info</RoomInfo>
         <BoxTitle>
           <div>
@@ -91,8 +93,20 @@ export const RoomsCreate = () => {
               onChange={handleInputChange}
             />
           </div>
+          <div>
+            <TitleSection>Status</TitleSection>
+            <SelectCreateRoom
+              typeof="text"
+              name="status"
+              value={newRoom.roomStatus}
+              onChange={handleInputChange}
+            >
+              <option value="Avilable">Avilable</option>
+              <option value="Booked">Booked</option>
+            </SelectCreateRoom>
+          </div>
         </BoxTitle>
-        <BoxInfo>
+        <BoxInfoRooms>
           <PriceBox>
             <TitlePrice>Price/Night</TitlePrice>
             <Price
@@ -103,31 +117,6 @@ export const RoomsCreate = () => {
             />
           </PriceBox>
           <PriceBox>
-            <TitlePrice>Offer</TitlePrice>
-            <div>
-              <ButtonOffer
-                onClick={() =>
-                  setNewRoom((prevState) => ({
-                    ...prevState,
-                    room_offer: 10,
-                  }))
-                }
-              >
-                10%
-              </ButtonOffer>
-              <ButtonOffer
-                onClick={() =>
-                  setNewRoom((prevState) => ({
-                    ...prevState,
-                    room_offer: 15,
-                  }))
-                }
-              >
-                15%
-              </ButtonOffer>
-            </div>
-          </PriceBox>
-          <PriceBox>
             <TitlePrice>Discount</TitlePrice>
             <InputDiscount
               type="text"
@@ -136,7 +125,7 @@ export const RoomsCreate = () => {
               onChange={handleInputChange}
             />
           </PriceBox>
-        </BoxInfo>
+        </BoxInfoRooms>
 
         <BoxDescription>
           {/* <div>
@@ -157,17 +146,13 @@ export const RoomsCreate = () => {
               <ButtonAmenities onClick={() => handleAmenities("TV LED")}>
                 TV LED
               </ButtonAmenities>
-              <ButtonAmenities
-                onClick={() => handleAmenities("2 BATHROOM")}
-              >
+              <ButtonAmenities onClick={() => handleAmenities("2 BATHROOM")}>
                 2 BATHROOM
               </ButtonAmenities>
               <ButtonAmenities onClick={() => handleAmenities("AC")}>
                 AC
               </ButtonAmenities>
-              <ButtonAmenities
-                onClick={() => handleAmenities("3 BED SPACE")}
-              >
+              <ButtonAmenities onClick={() => handleAmenities("3 BED SPACE")}>
                 3 BED SPACE
               </ButtonAmenities>
               <ButtonAmenities onClick={() => handleAmenities("COFEE SET")}>
