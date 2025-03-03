@@ -3,7 +3,7 @@
  
 export interface Contacts{
     status: string;
-    archived: any;
+    archived: boolean;
     date: string,
     _id:string,
     name:string,

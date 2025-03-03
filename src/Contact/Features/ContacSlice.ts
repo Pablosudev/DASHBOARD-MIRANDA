@@ -26,7 +26,17 @@ const initialState: ContactState =  {
 export const ContactSlice = createSlice({
   name: "contact",
   initialState,
-  reducers: {},
+  reducers: {
+    updateContact: (state, action) => {
+      const updatedContact = action.payload;
+      const contactIndex = state.data.findIndex(
+        (contact) => contact._id === updatedContact._id
+      );
+      if (contactIndex !== -1) {
+        state.data[contactIndex] = updatedContact;
+      }
+    },
+  },
   extraReducers: (builder) => {
     //SLICE THUNK
     builder
@@ -107,5 +117,5 @@ export const AllDataContact = (state: RootState): Contacts[] => state.contact.da
 export const AllStatusContact = (state: RootState): 'idle' | 'pending' | 'fulfilled' | 'rejected' => state.contact.status;
 export const ContactId = (state: RootState): Contacts | null => state.contact.contactId.data;
 
-
+export const { updateContact } = ContactSlice.actions;
 export default ContactSlice.reducer;

@@ -5,6 +5,7 @@ import {
   ContactInput,
   StyledSwiperSlide,
   StyledSwiper,
+  SectionContact,
 } from "../Components/Contact.js";
 import {
   SectionTable,
@@ -107,7 +108,20 @@ export const Contact = () => {
     setCurrentPage(1);
   };
   const handleArchive = (id: string) => {
-    dispatch(ContactSaveThunk(id));
+    dispatch(ContactSaveThunk(id))
+    .unwrap() // .unwrap() permite manejar el resultado de la acción
+    .then(() => {
+      // Después de archivar correctamente, podemos actualizar el estado local
+      const updatedData = DataContact.map((contact) =>
+        contact._id === id
+          ? { ...contact, archived: !contact.archived }
+          : contact
+      );
+      setContact(updatedData); // Actualizamos el estado local para reflejar los cambios inmediatamente
+    })
+    .catch((error) => {
+      console.error('Error al archivar el contacto:', error);
+    });
   };
   const archivedContact = () => {
     setShowAllcontact(false);
@@ -126,11 +140,13 @@ export const Contact = () => {
 
   useEffect(() => {
     if (StatusContact === "idle") {
+      console.log("Datos idle")
+      dispatch(ContactAllThunks());
       if(id){
-      dispatch(ContactAllThunks(id));
       dispatch(ContactIdThunks(id));
       }
     } else if (StatusContact === "fulfilled") {
+      console.log("Datos despues de cargar fulfilled", DataContact)
       setContact(DataContact);
     } else if (StatusContact === "rejected") {
       Error("fallo datos de contact");
@@ -139,7 +155,7 @@ export const Contact = () => {
 
   return (
     <>
-      <section>
+      <SectionContact>
         <SliderReviews>
           <StyledSwiper
             direction="horizontal"
@@ -269,7 +285,7 @@ export const Contact = () => {
             </ButtonGreen>
           </ContainerButtons>
         </SectionTable>
-      </section>
+      </SectionContact>
     </>
   );
 };
