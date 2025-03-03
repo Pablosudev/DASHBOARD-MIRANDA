@@ -129,7 +129,7 @@ export const RoomsList = () => {
   };
 
   const handleDeleteRoom = (id) => {
-    dispatch(DeleteRoomThunk(id));
+    dispatch(DeleteRoomThunk(id))
   };
 
   const handleFilterChange = (filter: string) => {

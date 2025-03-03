@@ -105,7 +105,13 @@ export const BookingsList = () => {
     }
   };
   const handleDeleteBookings = (id) => {
-    dispatch(DeleteBookingsThunk(id));
+    dispatch(DeleteBookingsThunk(id))
+      .then(() => {
+        dispatch(AllBookingsThunk(id!));
+      })
+      .catch((error) => {
+        alert("Error al eliminar la reserva");
+      });
   };
 
   const handleNewBooking = () => {
@@ -114,118 +120,118 @@ export const BookingsList = () => {
 
   return (
     <>
-        <SectionTable>
-          <BoxSelect>
-            <ContainerSelect>
-              <SelectTitle
-                onClick={() => handleStatusChange("all")}
-                isActive={selectedStatus === "all"}
-              >
-                All Bookings
-              </SelectTitle>
-              <SelectTitle
-                onClick={() => handleStatusChange("Check-In")}
-                isActive={selectedStatus === "Check-In"}
-              >
-                Check In
-              </SelectTitle>
-              <SelectTitle
-                onClick={() => handleStatusChange("Check-Out")}
-                isActive={selectedStatus === "Check-Out"}
-              >
-                Check Out
-              </SelectTitle>
-              <SelectTitle
-                onClick={() => handleStatusChange("In Progress")}
-                isActive={selectedStatus === "In Progress"}
-              >
-                In Progress
-              </SelectTitle>
-            </ContainerSelect>
-            <ContainerInput>
-              <UsersInput
-                type="text"
-                value={searchTerm}
-                onChange={handleSearch}
-              />
-              <label>
-                <IconSearch />
-              </label>
-            </ContainerInput>
-            <ButtonGreen type="secundary" onClick={handleNewBooking}>
-              + New Booking
-            </ButtonGreen>
-          </BoxSelect>
-          <TableBookings>
-            <TableHead>
-              <TableR>
-                <TableGuest>Guest</TableGuest>
-                <th>Order Date</th>
-                <th>Check In</th>
-                <th>Check Out</th>
-                <th>Special Request</th>
-                <th>Room Type</th>
-                <TableStatus>Status</TableStatus>
+      <SectionTable>
+        <BoxSelect>
+          <ContainerSelect>
+            <SelectTitle
+              onClick={() => handleStatusChange("all")}
+              isActive={selectedStatus === "all"}
+            >
+              All Bookings
+            </SelectTitle>
+            <SelectTitle
+              onClick={() => handleStatusChange("Check-In")}
+              isActive={selectedStatus === "Check-In"}
+            >
+              Check In
+            </SelectTitle>
+            <SelectTitle
+              onClick={() => handleStatusChange("Check-Out")}
+              isActive={selectedStatus === "Check-Out"}
+            >
+              Check Out
+            </SelectTitle>
+            <SelectTitle
+              onClick={() => handleStatusChange("In Progress")}
+              isActive={selectedStatus === "In Progress"}
+            >
+              In Progress
+            </SelectTitle>
+          </ContainerSelect>
+          <ContainerInput>
+            <UsersInput
+              type="text"
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+            <label>
+              <IconSearch />
+            </label>
+          </ContainerInput>
+          <ButtonGreen type="secundary" onClick={handleNewBooking}>
+            + New Booking
+          </ButtonGreen>
+        </BoxSelect>
+        <TableBookings>
+          <TableHead>
+            <TableR>
+              <TableGuest>Guest</TableGuest>
+              <th>Order Date</th>
+              <th>Check In</th>
+              <th>Check Out</th>
+              <th>Special Request</th>
+              <th>Room Type</th>
+              <TableStatus>Status</TableStatus>
+            </TableR>
+          </TableHead>
+          <TableBody>
+            {currentBookings.map((booking) => (
+              <TableR key={booking._id}>
+                <TableGuest>
+                  {booking.name} <br /> #{booking._id}
+                </TableGuest>
+                <ContainerId>{booking.date}</ContainerId>
+                <TableAmenities>{booking.check_in}</TableAmenities>
+                <TableAmenities>{booking.check_out}</TableAmenities>
+                <TableAmenities>{booking.request}</TableAmenities>
+                <TableAmenities>
+                  {booking.type} <br /> Room {booking.number}
+                </TableAmenities>
+                <td>
+                  <ButtonBookings status={booking.status}>
+                    {booking.status}
+                  </ButtonBookings>
+                </td>
+                <TableIcons>
+                  <Link to={`/bookings/details/${booking._id}`}>
+                    <EditIcon />
+                  </Link>
+                  <DeleteIcon
+                    onClick={() => handleDeleteBookings(booking._id)}
+                  />
+                </TableIcons>
               </TableR>
-            </TableHead>
-            <TableBody>
-              {currentBookings.map((booking) => (
-                <TableR key={booking._id}>
-                  <TableGuest>
-                    {booking.name} <br /> #{booking._id}
-                  </TableGuest>
-                  <ContainerId>{booking.date}</ContainerId>
-                  <TableAmenities>{booking.check_in}</TableAmenities>
-                  <TableAmenities>{booking.check_out}</TableAmenities>
-                  <TableAmenities>{booking.request}</TableAmenities>
-                  <TableAmenities>
-                    {booking.type} <br /> Room {booking.number}
-                  </TableAmenities>
-                  <td>
-                    <ButtonBookings status={booking.status}>
-                      {booking.status}
-                    </ButtonBookings>
-                  </td>
-                  <TableIcons>
-                    <Link to={`/bookings/details/${booking._id}`}>
-                      <EditIcon />
-                    </Link>
-                    <DeleteIcon
-                      onClick={() => handleDeleteBookings(booking._id)}
-                    />
-                  </TableIcons>
-                </TableR>
-              ))}
-            </TableBody>
-          </TableBookings>
-          <ContainerButtons>
-            <ButtonGreen
-              type="primary"
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-            >
-              Prev
-            </ButtonGreen>
-            <ContainerFake>
-              {[...Array(totalPages)].map((_, index) => (
-                <ButtonFake
-                  key={index}
-                  onClick={() => handlePageClick(index + 1)}
-                  active={currentPage === index + 1}
-                >
-                  {index + 1}
-                </ButtonFake>
-              ))}
-            </ContainerFake>
-            <ButtonGreen
-              type="primary"
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </ButtonGreen>
-          </ContainerButtons>
-        </SectionTable>
+            ))}
+          </TableBody>
+        </TableBookings>
+        <ContainerButtons>
+          <ButtonGreen
+            type="primary"
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            Prev
+          </ButtonGreen>
+          <ContainerFake>
+            {[...Array(totalPages)].map((_, index) => (
+              <ButtonFake
+                key={index}
+                onClick={() => handlePageClick(index + 1)}
+                active={currentPage === index + 1}
+              >
+                {index + 1}
+              </ButtonFake>
+            ))}
+          </ContainerFake>
+          <ButtonGreen
+            type="primary"
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </ButtonGreen>
+        </ContainerButtons>
+      </SectionTable>
     </>
   );
 };
