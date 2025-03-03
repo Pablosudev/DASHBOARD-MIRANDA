@@ -31,18 +31,20 @@ import { BookingsEditInter, BookingsInter } from "../Interfaces/BookingsInterfac
 export const BookingsEdit = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {id} = useParams();
+  const {id} = useParams<{id: string}>();
   const BookingId = useSelector(getBookingsId);
   const StatusBookingId = useSelector(getStatusId);
-  const [newBooking, setNewBooking] = useState<BookingsEditInter>({
-    full_name: "",
+  const [newBooking, setNewBooking] = useState<BookingsInter>({
+    name: "",
+    _id: "",
+    date: "",
     check_in: "",
     check_out: "",
-    room_type: "",
-    price: 0,
-    special_request: "",
+    request: "",
     status: "",
-    amenities: [],
+    room:{},
+    type: "",
+    number:0
   });
   const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,7 +54,7 @@ export const BookingsEdit = () => {
     }));
   };
   const handleEditBookings = () => {
-      dispatch(EditBookingThunk({ id: Number(id), updatedBooking: newBooking }))
+      dispatch(EditBookingThunk({ id, updatedBooking: newBooking }))
         .unwrap()
         .then(() => {
           alert("Reserva actualizada correctamente");
@@ -62,31 +64,33 @@ export const BookingsEdit = () => {
           alert("Error al actualizar la habitación: " + error.message);
         });
     };
-    const handleAmenities = (amenity: string) => {
-      setNewBooking ((prevState) => {
-        const changeAmenities = prevState.amenities.includes(amenity)
-        ?prevState.amenities.filter((item) => item !== amenity) : [...prevState.amenities,amenity];
-        return {
-          ...prevState,
-          amenities: changeAmenities,
-        }
-      })
-    }
+    // const handleAmenities = (amenity: string) => {
+    //   setNewBooking ((prevState) => {
+    //     const changeAmenities = prevState.amenities.includes(amenity)
+    //     ?prevState.amenities.filter((item) => item !== amenity) : [...prevState.amenities,amenity];
+    //     return {
+    //       ...prevState,
+    //       amenities: changeAmenities,
+    //     }
+    //   })
+    // }
 
   useEffect(() => {
     if (StatusBookingId === "idle") {
-      dispatch(IdRoomThunk(parseInt(id!)));
+      dispatch(IdRoomThunk((id!)));
     } else if (StatusBookingId === "fulfilled") {
       const booking = BookingId as BookingsInter;
       setNewBooking({
-        full_name: booking.full_name,
+        name: booking.name,
+        _id: booking._id,
+        date: booking.date,
         check_in: booking.check_in,
         check_out: booking.check_out,
-        room_type: booking.room_type,
-        price: booking.price,
-        special_request: booking.special_request,
+        request: booking.request,
         status: booking.status,
-        amenities: [],
+        room: booking.room,
+        type: booking.type,
+        number:booking.number
       });
     } else if (StatusBookingId === "rejected") {
       alert("Error al cargar los datos de la reserva");
@@ -108,7 +112,7 @@ export const BookingsEdit = () => {
             <InputCreate
               type="text"
               name="full"
-              value={newBooking.full_name}
+              value={newBooking.name}
               onChange={handleInputChange}
             />
           </div>
@@ -117,7 +121,7 @@ export const BookingsEdit = () => {
             <InputCreate
               type="text"
               name="room_type"
-              value={newBooking.room_type}
+              value={newBooking.room.type}
               onChange={handleInputChange}
             />
           </div>
@@ -128,7 +132,7 @@ export const BookingsEdit = () => {
             <Price
               type="text"
               name="price"
-              value={newBooking.price}
+              value={newBooking.room.price}
               onChange={handleInputChange}
             />
           </PriceBox>
@@ -167,38 +171,38 @@ export const BookingsEdit = () => {
             <InputDescription
               type="text"
               name="special_request"
-              value={newBooking.special_request}
+              value={newBooking.request}
               onChange={handleInputChange}
             />
           </div>
           <div>
             <TitleDescripition>Amenities</TitleDescripition>
             <div>
-              <ButtonAmenities onClick={() => handleAmenities("FREE WIFI")}>
+              <ButtonAmenities >
                 FREE WIFI
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenities("TV LED")}>
+              <ButtonAmenities>
                 TV LED
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenities("2 BATHROOM")}>
+              <ButtonAmenities>
                 2 BATHROOM
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenities("AC")}>
+              <ButtonAmenities>
                 AC
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenities("3 BED SPACE")}>
+              <ButtonAmenities>
                 3 BED SPACE
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenities("COFEE SET")}>
+              <ButtonAmenities>
                 COFEE SET
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenities("BATHUP")}>
+              <ButtonAmenities>
                 BATHUP
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenities("TOWEL")}>
+              <ButtonAmenities>
                 TOWEL
               </ButtonAmenities>
-              <ButtonAmenities onClick={() => handleAmenities("SHOWER")}>
+              <ButtonAmenities>
                 SHOWER
               </ButtonAmenities>
             </div>

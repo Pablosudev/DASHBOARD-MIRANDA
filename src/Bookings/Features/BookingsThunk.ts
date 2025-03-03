@@ -104,7 +104,7 @@ export const CreateBookingThunk = createAsyncThunk<
 //THUNK EDIT
 export const EditBookingThunk = createAsyncThunk<
   BookingsInter,
-  { id: string; updatedBooking: BookingsEditInter }
+  { id; updatedBooking: BookingsInter }
 >(
   "booking/editBooking",
   async ({ id, updatedBooking }, { rejectWithValue }) => {
