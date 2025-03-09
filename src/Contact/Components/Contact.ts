@@ -6,8 +6,6 @@ import { SwiperSlide } from "swiper/react";
 import { Swiper } from "swiper/react";
 
 
-
-
 export const SliderReviews = styled.div`
   margin-top: 10%;
   margin-left:2%
@@ -141,6 +139,7 @@ export const SectionContact = styled.div`
 width: 100%;
 max-width:100%;
 margin-left:2%;
+margin-right: 2%;
 margin-top: 10%;
 overflow: hidden;
 

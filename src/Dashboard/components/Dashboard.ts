@@ -12,11 +12,13 @@ export const DashboardSection = styled.section`
     width:100%;
     display:flex;
     flex-direction: column;
-    align-items: center
+    align-items: center;
+    overflow: hidden;
 `
 export const ContainerKpis = styled.div`
    display: flex;
-   
+   align-items:center;
+   margin-left: 4%;
 `
 export const Kpis = styled.div`
     display: flex;
