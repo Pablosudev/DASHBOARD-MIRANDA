@@ -137,6 +137,10 @@ export const TableDate = styled.td`
   font-family: "Poppins";
   text-align:center;
 `;
+export const TableCustomer = styled.td`
+font-family: "Poppins";
+text-align:center;
+`
 export const TableButton = styled.td`
   padding-right: 2rem;
   padding-top: 4rem;

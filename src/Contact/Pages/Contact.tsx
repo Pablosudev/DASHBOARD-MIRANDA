@@ -18,6 +18,7 @@ import {
   TableButton,
   TableComment,
   TableContacts,
+  TableCustomer,
 } from "../../commons/Table.ts";
 import {
   BoxSelect,
@@ -216,7 +217,7 @@ export const Contact = () => {
             <TableHead>
               <TableR>
                 <TableDate>Date</TableDate>
-                <th>Customer</th>
+                <TableCustomer>Customer</TableCustomer>
                 <TableComment>Comment</TableComment>
               </TableR>
             </TableHead>
