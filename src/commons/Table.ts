@@ -8,8 +8,7 @@ import {
 
 export const SectionTable = styled.section`
   margin-top: 6%;
-  margin-left: 1%;
-  margin-right: 1%;
+  margin-left: 2%;
   width: 100%;
 `;
 export const TableR = styled.tr`
@@ -49,9 +48,10 @@ export const TableBookings = styled.table`
   width: 100%;
 `;
 export const TableContacts = styled.table`
-  border-radius: 20px;
+   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
   border-collapse: collapse;
+  width: 100%;
 `;
 export const TableUsers = styled.table`
   border-radius: 20px;

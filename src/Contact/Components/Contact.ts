@@ -10,7 +10,7 @@ import { Swiper } from "swiper/react";
 
 export const SliderReviews = styled.div`
   margin-top: 10%;
-  margin-left:15%;
+  margin-left:2%
 `
 export const SliderDashboard = styled.div`
   margin-top: 5%;
@@ -18,13 +18,11 @@ export const SliderDashboard = styled.div`
 export const BoxReviews = styled.div`
 background-color: #ffffff;
 box-shadow: 0px 4px 4px #00000005;
-width: 27rem;
-height: 20rem;
 border-radius: 0.8rem;
-padding-left: 1rem;
-padding-right:1rem;
-padding-top: 1rem;
-padding-bottom: 1rem;
+padding-left: 2%;
+padding-right:2%;
+padding-top: 2%;
+padding-bottom: 1%;
 `
 export const CancelIcon = styled(GiCancel)`
 color: #E23428;
@@ -132,14 +130,18 @@ border: 1px solid rgba(19, 88, 70, 1);
 
 `
 export const  StyledSwiper = styled(Swiper)`
-
- 
+width:100%;
+margin:0%; 
 `;
 export const StyledSwiperSlide = styled(SwiperSlide)`
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 export const SectionContact = styled.div`
-width:100%;
+width: 100%;
+max-width:100%;
+margin-left:2%;
+margin-top: 10%;
+overflow: hidden;
+
 `

@@ -156,7 +156,6 @@ export const Contact = () => {
   return (
     <>
       <SectionContact>
-        <SliderReviews>
           <StyledSwiper
             direction="horizontal"
             slidesPerView={3}
@@ -187,9 +186,6 @@ export const Contact = () => {
               </StyledSwiperSlide>
             ))}
           </StyledSwiper>
-        </SliderReviews>
-
-        <SectionTable>
           <BoxSelect>
             <ContainerSelect>
               <SelectTitle
@@ -284,7 +280,7 @@ export const Contact = () => {
               Next
             </ButtonGreen>
           </ContainerButtons>
-        </SectionTable>
+      
       </SectionContact>
     </>
   );

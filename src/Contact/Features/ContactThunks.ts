@@ -9,7 +9,7 @@ export const ContactAllThunks = createAsyncThunk<Contacts[]>(
   "contacts/getContacts",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3001/api/v1/contacts", {
+      const response = await fetch("http://localhost:3003/api/v1/contacts", {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -32,7 +32,7 @@ export const ContactIdThunks = createAsyncThunk<Contacts, string>(
   async (id: string, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/contacts/${id}`,
+        `http://localhost:3003/api/v1/contacts/${id}`,
         {
           method: "GET",
           headers: GetAuthHeaders(),
@@ -64,7 +64,7 @@ export const ContactDeleteThunk = createAsyncThunk<{ id: string }, string>(
   async (id: string, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/contacts/${id}`,
+        `http://localhost:3003/api/v1/contacts/${id}`,
         {
           method: "DELETE",
           headers: GetAuthHeaders(),
@@ -72,12 +72,15 @@ export const ContactDeleteThunk = createAsyncThunk<{ id: string }, string>(
       );
 
       if (!response.ok) {
-        return rejectWithValue("Error al eliminar el contacto");
+        const errorData = await response.json();
+        return rejectWithValue(errorData.message || "Error al eliminar el contacto");
       }
 
       return { id };
     } catch (error) {
-      return rejectWithValue(error.message || "Error  al eliminar el contacto");
+      return rejectWithValue(
+        error instanceof Error ? error.message : "Error al eliminar el contacto"
+      );
     }
   }
 );
@@ -90,12 +93,13 @@ export const ContactSaveThunk = createAsyncThunk(
     try {
       const state = getState() as RootState;
       const contact = state.contact.data.find((contact) => contact._id === id);
+
       if (!contact) {
         return rejectWithValue("Contacto no encontrado");
       }
 
       const response = await fetch(
-        `http://localhost:3001/api/v1/contacts/${id}`,
+        `http://localhost:3003/api/v1/contacts/${id}`,
         {
           method: "PUT",
           headers: GetAuthHeaders(),
@@ -107,18 +111,17 @@ export const ContactSaveThunk = createAsyncThunk(
 
       if (!response.ok) {
         const errorData = await response.json();
-        return rejectWithValue(
-          errorData.message || "Error al archivar el contacto"
-        );
+        return rejectWithValue(errorData.message || "Error al archivar/desarchivar el contacto");
       }
 
       const updatedContact = await response.json();
-
       dispatch(updateContact(updatedContact));
 
       return updatedContact;
     } catch (error) {
-      return rejectWithValue(error.message || "Error al archivar el contacto");
+      return rejectWithValue(
+        error instanceof Error ? error.message : "Error al archivar/desarchivar el contacto"
+      );
     }
   }
 );
