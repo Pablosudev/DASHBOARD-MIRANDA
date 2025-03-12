@@ -9,7 +9,7 @@ export const ContactAllThunks = createAsyncThunk<Contacts[]>(
   "contacts/getContacts",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3003/api/v1/contacts", {
+      const response = await fetch("http://localhost:3005/api/v1/contacts", {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -27,12 +27,12 @@ export const ContactAllThunks = createAsyncThunk<Contacts[]>(
 );
 
 //THUNK ID
-export const ContactIdThunks = createAsyncThunk<Contacts, string>(
+export const ContactIdThunks = createAsyncThunk<Contacts, number>(
   "contactId/getIdContact",
-  async (id: string, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3003/api/v1/contacts/${id}`,
+        `http://localhost:3005/api/v1/contacts/${id}`,
         {
           method: "GET",
           headers: GetAuthHeaders(),
@@ -59,12 +59,12 @@ export const ContactIdThunks = createAsyncThunk<Contacts, string>(
 
 //THUNK DELETE
 
-export const ContactDeleteThunk = createAsyncThunk<{ id: string }, string>(
+export const ContactDeleteThunk = createAsyncThunk<{ id: number }, number>(
   "contact/deleteContact",
-  async (id: string, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3003/api/v1/contacts/${id}`,
+        `http://localhost:3005/api/v1/contacts/${id}`,
         {
           method: "DELETE",
           headers: GetAuthHeaders(),
@@ -89,17 +89,17 @@ export const ContactDeleteThunk = createAsyncThunk<{ id: string }, string>(
 
 export const ContactSaveThunk = createAsyncThunk(
   "contact/archiveContact",
-  async (id: string, { getState, dispatch, rejectWithValue }) => {
+  async (id: number, { getState, dispatch, rejectWithValue }) => {
     try {
       const state = getState() as RootState;
-      const contact = state.contact.data.find((contact) => contact._id === id);
+      const contact = state.contact.data.find((contact) => contact.id === id);
 
       if (!contact) {
         return rejectWithValue("Contacto no encontrado");
       }
 
       const response = await fetch(
-        `http://localhost:3003/api/v1/contacts/${id}`,
+        `http://localhost:3005/api/v1/contacts/${id}`,
         {
           method: "PUT",
           headers: GetAuthHeaders(),

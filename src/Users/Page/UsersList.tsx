@@ -77,10 +77,10 @@ export const UserList = () => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
-  const handleDeleteUser = (_id: string) => {
-    dispatch(DeleteUserThunk(_id))
+  const handleDeleteUser = (id: number) => {
+    dispatch(DeleteUserThunk(id))
     .then(()=> {
-      setUsers(prevUsers => prevUsers.filter(user => user._id !== _id))
+      setUsers(prevUsers => prevUsers.filter(user => user.id !== id))
     })
   };
   const handleStatusChange = ( status: string) => {
@@ -135,7 +135,7 @@ export const UserList = () => {
           </TableHead>
           <TableBody>
             {currentUsers.map((user) => (
-              <TableR key={user._id}>
+              <TableR key={user.id}>
                 <TableTd>
                   <TableImgUsers
                     src="/src/assets/Imagenes/users logo.jpg"
@@ -144,7 +144,7 @@ export const UserList = () => {
                 </TableTd>
                 <ContainerId>
                   {user.name} <br />
-                  {user._id}
+                  {user.id}
                 </ContainerId>
                 <TableDate>{user.start_date}</TableDate>
                 <TableDepartment>{user.department}</TableDepartment>
@@ -154,10 +154,10 @@ export const UserList = () => {
                   <StatusUsers status ={user.status}>{user.status}</StatusUsers>
                 </TabledStatus>
                 <TabledIcons>
-                  <Link to= {`/users/edit/${user._id}`}> <EditIcon /></Link>
+                  <Link to= {`/users/edit/${user.id}`}> <EditIcon /></Link>
                   
                   <DeleteIcon
-                    onClick={() => handleDeleteUser(user._id)}
+                    onClick={() => handleDeleteUser(user.id)}
                     aria-label="Delete user"
                   />
                 </TabledIcons>

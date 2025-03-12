@@ -2,15 +2,20 @@
  
  
 export interface Contacts{
+    date: string;
+    id: number;
+    name:string;
+    email:string;
+    phone: string;
+    subject: string;
+    comment: string;
     status: string;
     archived: boolean;
-    date: string,
-    _id:string,
-    name:string,
-    email:string,
-    phone: string,
-    asunto: string,
-    comment: string, 
+
+    
+    
+   
+    request: string,
 }
 
 

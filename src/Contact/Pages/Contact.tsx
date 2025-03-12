@@ -108,13 +108,13 @@ export const Contact = () => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
-  const handleArchive = (id: string) => {
+  const handleArchive = (id: number) => {
     dispatch(ContactSaveThunk(id))
     .unwrap() // .unwrap() permite manejar el resultado de la acción
     .then(() => {
       // Después de archivar correctamente, podemos actualizar el estado local
       const updatedData = DataContact.map((contact) =>
-        contact._id === id
+        contact.id === id
           ? { ...contact, archived: !contact.archived }
           : contact
       );
@@ -141,7 +141,7 @@ export const Contact = () => {
 
   useEffect(() => {
     if (StatusContact === "idle") {
-      console.log("Datos idle")
+      
       dispatch(ContactAllThunks());
       if(id){
       dispatch(ContactIdThunks(id));
@@ -164,9 +164,9 @@ export const Contact = () => {
             loop={true}
           >
             {DataContact.map((contact) => (
-              <StyledSwiperSlide key={contact._id}>
+              <StyledSwiperSlide key={contact.id}>
                 <BoxReviews>
-                  <Review>{contact.comment}</Review>
+                  <Review>{contact.request}</Review>
                   <BoxCard>
                     <ImgUser
                       src="/src/assets/Imagenes/user phot.jpg"
@@ -223,27 +223,27 @@ export const Contact = () => {
             </TableHead>
             <TableBody>
               {currentContact.map((contact) => (
-                <TableR key={contact._id}>
+                <TableR key={contact.id}>
                   <TableDate>
-                    {contact.date} <br /> #{contact._id}
+                    {contact.date} <br /> #{contact.id}
                   </TableDate>
                   <TableAmenities>
                     {contact.name} <br /> {contact.email} <br />{" "}
                     {contact.phone}
                   </TableAmenities>
-                  <TableContact>{contact.comment}</TableContact>
+                  <TableContact>{contact.request}</TableContact>
                   <TableButton>
                     {contact.archived ? (
                       <CancelArchive
-                        onClick={() => handleArchive(contact._id)}
+                        onClick={() => handleArchive(contact.id)}
                       />
                     ) : (
-                      <ButtonDefault onClick={() => handleArchive(contact._id)}>
+                      <ButtonDefault onClick={() => handleArchive(contact.id)}>
                         ARCHIVE
                       </ButtonDefault>
                     )}
                     <ButtonDelete
-                      onClick={() => handleDeleteContact(contact._id)}
+                      onClick={() => handleDeleteContact(contact.id)}
                     >
                       DELETE
                     </ButtonDelete>

@@ -30,7 +30,7 @@ export const ContactSlice = createSlice({
     updateContact: (state, action) => {
       const updatedContact = action.payload;
       const contactIndex = state.data.findIndex(
-        (contact) => contact._id === updatedContact._id
+        (contact) => contact.id === updatedContact._id
       );
       if (contactIndex !== -1) {
         state.data[contactIndex] = updatedContact;
@@ -76,12 +76,12 @@ export const ContactSlice = createSlice({
         state.statusDelete = "fulfilled";
 
         state.data = state.data.filter(
-          (contacts) => contacts._id !== action.payload.id
+          (contacts) => contacts.id !== action.payload.id
         );
 
         if (
           state.contactId.data &&
-          state.contactId.data._id === action.payload.id
+          state.contactId.data.id === action.payload.id
         ) {
           state.contactId.data = null;
         }
@@ -99,7 +99,7 @@ export const ContactSlice = createSlice({
        
         const updatedContact = action.payload;
         const contactIndex = state.data.findIndex(
-          (contact) => contact._id === updatedContact._id
+          (contact) => contact.id === updatedContact._id
         );
         if (contactIndex !== -1) {
           state.data[contactIndex] = updatedContact;

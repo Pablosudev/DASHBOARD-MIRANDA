@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (email: string, password: string) => {
     try{
-    const response = await fetch('http://localhost:3001/api/v1/login', {
+    const response = await fetch('http://localhost:3005/api/v1/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
