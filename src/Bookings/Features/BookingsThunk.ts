@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  BookingsEditInter,
+
   BookingsInter,
 } from "../Interfaces/BookingsInterfaces";
 import { GetAuthHeaders } from "../../UseContext/GetAuth";
@@ -9,7 +9,7 @@ export const AllBookingsThunk = createAsyncThunk<BookingsInter[], string>(
   "bookings/getBookings",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3001/api/v1/bookings", {
+      const response = await fetch("http://localhost:3005/api/v1/bookings", {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -32,7 +32,7 @@ export const BookingsIdThunk = createAsyncThunk<BookingsInter, string>(
   async (id, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/bookings/${id}`,
+        `http://localhost:3005/api/v1/bookings/${id}`,
         {
           method: "GET",
           headers: GetAuthHeaders(),
@@ -64,7 +64,7 @@ export const DeleteBookingsThunk = createAsyncThunk<{ id: string }, string>(
   async (id: string, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/bookings/${id}`,
+        `http://localhost:3005/api/v1/bookings/${id}`,
         {
           method: "DELETE",
           headers: GetAuthHeaders(),
@@ -87,7 +87,7 @@ export const CreateBookingThunk = createAsyncThunk<
   BookingsInter
 >("bookings/createBookings", async (newBooking, { rejectWithValue }) => {
   try {
-    const response = await fetch("http://localhost:3001/api/v1/bookings", {
+    const response = await fetch("http://localhost:3005/api/v1/bookings", {
       method: "POST",
       headers: GetAuthHeaders(),
       body: JSON.stringify(newBooking),
@@ -110,7 +110,7 @@ export const EditBookingThunk = createAsyncThunk<
   async ({ id, updatedBooking }, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/bookings/${id}`,
+        `http://localhost:3005/api/v1/bookings/${id}`,
         {
           method: "PUT",
           headers: GetAuthHeaders(),

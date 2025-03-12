@@ -110,15 +110,19 @@ export const Contact = () => {
   };
   const handleArchive = (id: number) => {
     dispatch(ContactSaveThunk(id))
-    .unwrap() // .unwrap() permite manejar el resultado de la acción
+    .unwrap() 
     .then(() => {
-      // Después de archivar correctamente, podemos actualizar el estado local
+    dispatch(ContactAllThunks())
       const updatedData = DataContact.map((contact) =>
         contact.id === id
           ? { ...contact, archived: !contact.archived }
           : contact
       );
-      setContact(updatedData); // Actualizamos el estado local para reflejar los cambios inmediatamente
+     dispatch(ContactAllThunks())
+     .then(() => {
+      setContact(DataContact); 
+     })
+      
     })
     .catch((error) => {
       console.error('Error al archivar el contacto:', error);
@@ -134,20 +138,18 @@ export const Contact = () => {
     setArchive(false);
     setSelectedStaus("all");
   };
-  // MANEJAR DELETE
+  
   const handleDeleteContact = (id) => {
     dispatch(ContactDeleteThunk(id));
   };
 
   useEffect(() => {
     if (StatusContact === "idle") {
-      
       dispatch(ContactAllThunks());
       if(id){
-      dispatch(ContactIdThunks(id));
+      dispatch(ContactIdThunks(Number(id)));
       }
     } else if (StatusContact === "fulfilled") {
-      console.log("Datos despues de cargar fulfilled", DataContact)
       setContact(DataContact);
     } else if (StatusContact === "rejected") {
       Error("fallo datos de contact");
@@ -166,7 +168,7 @@ export const Contact = () => {
             {DataContact.map((contact) => (
               <StyledSwiperSlide key={contact.id}>
                 <BoxReviews>
-                  <Review>{contact.request}</Review>
+                  <Review>{contact.comment}</Review>
                   <BoxCard>
                     <ImgUser
                       src="/src/assets/Imagenes/user phot.jpg"
@@ -231,7 +233,7 @@ export const Contact = () => {
                     {contact.name} <br /> {contact.email} <br />{" "}
                     {contact.phone}
                   </TableAmenities>
-                  <TableContact>{contact.request}</TableContact>
+                  <TableContact>{contact.comment}</TableContact>
                   <TableButton>
                     {contact.archived ? (
                       <CancelArchive

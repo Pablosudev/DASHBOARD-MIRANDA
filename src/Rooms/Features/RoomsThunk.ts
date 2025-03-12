@@ -6,7 +6,7 @@ export const RoomsThunk = createAsyncThunk<RoomsInter[]>(
   "rooms/getRooms",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3001/api/v1/rooms", {
+      const response = await fetch("http://localhost:3005/api/v1/rooms", {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -25,11 +25,11 @@ export const RoomsThunk = createAsyncThunk<RoomsInter[]>(
 );
 
 //FETCH UNO
-export const IdRoomThunk = createAsyncThunk<RoomsInter, string>(
+export const IdRoomThunk = createAsyncThunk<RoomsInter, number>(
   "roomId/getIdRoom",
-  async (id: string, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`, {
+      const response = await fetch(`http://localhost:3005/api/v1/rooms/${id}`, {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -54,10 +54,10 @@ export const IdRoomThunk = createAsyncThunk<RoomsInter, string>(
 //FETCH EDIT
 export const EditRoomThunk = createAsyncThunk<
   RoomsInter,
-  { id: string; updatedRoom: RoomsInter }
+  { id: number; updatedRoom: RoomsInter }
 >("room/editRoom", async ({ id, updatedRoom }, { rejectWithValue }) => {
         try {
-          const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`,{
+          const response = await fetch(`http://localhost:3005/api/v1/rooms/${id}`,{
             method: "PUT",
       headers: GetAuthHeaders(),
       body: JSON.stringify(updatedRoom),
@@ -73,12 +73,12 @@ export const EditRoomThunk = createAsyncThunk<
         }
       });
 //FETCH DELETE
-export const DeleteRoomThunk = createAsyncThunk<{ id: string }, string>(
+export const DeleteRoomThunk = createAsyncThunk<{ id: number }, number>(
   "room/deleteRoom",
-  async (id: string, {rejectWithValue}) => {
+  async (id: number, {rejectWithValue}) => {
 
           try {
-            const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`, {
+            const response = await fetch(`http://localhost:3005/api/v1/rooms/${id}`, {
               method: "DELETE",
               headers: GetAuthHeaders(),
             });
@@ -87,7 +87,7 @@ export const DeleteRoomThunk = createAsyncThunk<{ id: string }, string>(
               return rejectWithValue("Error al eliminar la habitación");
             }
 
-            return ({ id });
+            return { id };
           } catch (error) {
             return rejectWithValue(error.message ||error.message || "Error desconocido al eliminar la habitación");
           }
@@ -99,7 +99,7 @@ export const CreateRoomThunk = createAsyncThunk<RoomsInter, RoomsInter>(
   "room/createRoom",
   async (newRoom, { rejectWithValue }) => {
           try {
-            const response = await fetch("http://localhost:3001/api/v1/rooms" , {
+            const response = await fetch("http://localhost:3005/api/v1/rooms" , {
               method: "POST",
         headers: GetAuthHeaders(),
         body: JSON.stringify(newRoom),

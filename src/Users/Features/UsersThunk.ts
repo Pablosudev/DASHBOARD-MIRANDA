@@ -7,7 +7,7 @@ export const UsersAllThunk = createAsyncThunk<Users[], number | undefined>(
   async (_, {rejectWithValue}) => {
     
           try {
-            const response = await fetch("http://localhost:3001/api/v1/users", {
+            const response = await fetch("http://localhost:3005/api/v1/users", {
               method: "GET",
               headers: GetAuthHeaders(),
             });
@@ -28,7 +28,7 @@ export const IdUserThunk = createAsyncThunk<Users, number>(
   "userId/getIdUser",
   async (id: number, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:3003/api/v1/users/${id}`, {
+      const response = await fetch(`http://localhost:3005/api/v1/users/${id}`, {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -58,7 +58,7 @@ export const DeleteUserThunk = createAsyncThunk<{ id: number }, number>(
   async (id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3003/api/v1/users/${id}`,
+        `http://localhost:3005/api/v1/users/${id}`,
         {
           method: "DELETE",
           headers: GetAuthHeaders(),
@@ -82,7 +82,7 @@ export const CreateUserThunk = createAsyncThunk<Users, Users>(
   "user/createUser",
   async (newUser, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3003/api/v1/users", {
+      const response = await fetch("http://localhost:3005/api/v1/users", {
         method: "POST",
         headers: GetAuthHeaders(),
         body: JSON.stringify(newUser),
@@ -106,7 +106,7 @@ export const EditUserThunk = createAsyncThunk<
   { id: string; updatedUser: Users }
 >("user/editUser", async ({ id, updatedUser }, { rejectWithValue }) => {
   try {
-    const response = await fetch(`http://localhost:3003/api/v1/users/${id}`, {
+    const response = await fetch(`http://localhost:3005/api/v1/users/${id}`, {
       method: "PUT",
       headers: GetAuthHeaders(),
       body: JSON.stringify(updatedUser),

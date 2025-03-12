@@ -1,12 +1,12 @@
 export interface RoomsInter {
   image_url?: string;
   number: number;
-  _id?: string;
+  id?: number;
   price: number;
   offer: number;
   roomStatus: string;
   type: string;
-  amenities: string[];
+  amenities: string;
 }
 export interface RoomsState {
   status: "idle" | "fulfilled" | "rejected" | "pending";

@@ -50,7 +50,7 @@ export const UserList = () => {
   const StatusUser = useSelector(AllStatusUsers);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const {id} = useParams<{id:string}>();
+  const {id} = useParams<{id}>();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedStatus , setSelectedStatus] = useState<string>("all")
 
