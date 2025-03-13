@@ -27,10 +27,10 @@ import React from "react";
 export const UserEdit = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id }>();
   const Users = useSelector(IdData);
   const UserStatus = useSelector(StatusId);
-
+  const numericId = Number(id);
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setNewUser((prevState) => ({
@@ -40,6 +40,7 @@ export const UserEdit = () => {
   };
 
   const [newUser, setNewUser] = useState<Users>({
+    id:0,
     name: "",
     email: "",
     start_date: "",
@@ -53,6 +54,7 @@ export const UserEdit = () => {
 
   
   const handleSave = () => {
+    
     if (!id) {
       alert("ID no válido");
       return;
@@ -71,12 +73,13 @@ export const UserEdit = () => {
   };
   
   
+
   useEffect(() => {
-    if (UserStatus === "idle" ) {
-      if(id){
-      dispatch(IdUserThunk(id));
-      }
-    } else if (UserStatus === "fulfilled") {
+    if (UserStatus === "idle" && Users) {
+      dispatch(IdUserThunk(numericId));
+    
+    } else if (UserStatus === "fulfilled" && Users) {
+      console.log('Estado fulfilled')
       if (Users) {
         setNewUser({
           name: Users.name,
@@ -87,16 +90,16 @@ export const UserEdit = () => {
           password: Users.password,
           status: Users.status,
           department: Users.department,
-          
+          id: Users.id
         });
-        if(Users._id != id){
-          dispatch(IdUserThunk(id ?? ""))
+        if(Users.id != numericId){
+          dispatch(IdUserThunk(numericId))
         }
       }
     } else if (UserStatus === "rejected") {
       alert("Error al cargar los datos de la habitación");
     }
-  }, [dispatch, id, UserStatus, Users]);
+  }, [dispatch, numericId, UserStatus, Users]);
 
   return (
     <>
@@ -150,8 +153,8 @@ export const UserEdit = () => {
               <TypeInput>Job</TypeInput>
               <SelectCreate
                 typeof="text"
-                name="description"
-                value={newUser.description}
+                name="department"
+                value={newUser.department}
                 onChange={handleInputChange}
               >
                 <option value="MANAGER">MANAGER</option>
@@ -164,7 +167,8 @@ export const UserEdit = () => {
               <TypeInput>Job Desk</TypeInput>
               <InputDesk
                 type="text"
-                name="job_desk"
+                name="description"
+                value={newUser.description}
                 onChange={handleInputChange}
               />
             </div>

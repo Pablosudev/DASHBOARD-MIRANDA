@@ -5,7 +5,7 @@ import {
 } from "../Interfaces/BookingsInterfaces";
 import { GetAuthHeaders } from "../../UseContext/GetAuth";
 //THUNKS TODOS
-export const AllBookingsThunk = createAsyncThunk<BookingsInter[], string>(
+export const AllBookingsThunk = createAsyncThunk<BookingsInter[]>(
   "bookings/getBookings",
   async (_, { rejectWithValue }) => {
     try {
@@ -27,7 +27,7 @@ export const AllBookingsThunk = createAsyncThunk<BookingsInter[], string>(
 );
 
 //THUNKS ID
-export const BookingsIdThunk = createAsyncThunk<BookingsInter, string>(
+export const BookingsIdThunk = createAsyncThunk<BookingsInter, number>(
   "bookingsId/getIdBookings",
   async (id, { rejectWithValue }) => {
     try {
@@ -59,9 +59,9 @@ export const BookingsIdThunk = createAsyncThunk<BookingsInter, string>(
 );
 
 //THUNK DELETE
-export const DeleteBookingsThunk = createAsyncThunk<{ id: string }, string>(
+export const DeleteBookingsThunk = createAsyncThunk<{ id: number }, number>(
   "bookings/deleteBookings",
-  async (id: string, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `http://localhost:3005/api/v1/bookings/${id}`,

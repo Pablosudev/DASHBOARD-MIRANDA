@@ -146,7 +146,7 @@ export const UserList = () => {
                   {user.name} <br />
                   {user.id}
                 </ContainerId>
-                <TableDate>{user.start_date}</TableDate>
+                <TableDate>{new Date(user.start_date).toLocaleDateString()}</TableDate>
                 <TableDepartment>{user.department}</TableDepartment>
                 <TableDate>{user.phone}</TableDate>
                 <TableEmail>{user.email}</TableEmail>

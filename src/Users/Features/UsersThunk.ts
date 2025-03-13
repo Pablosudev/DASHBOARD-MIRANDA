@@ -33,7 +33,7 @@ export const IdUserThunk = createAsyncThunk<Users, number>(
         headers: GetAuthHeaders(),
       });
       if (!response.ok) {
-        return rejectWithValue("Error al cargar los datos");
+        console.log("Error en la respuesta de la API:", response);
       }
       const userData: Users = await response.json();
 
@@ -103,7 +103,7 @@ export const CreateUserThunk = createAsyncThunk<Users, Users>(
 //FETCH EDIT
 export const EditUserThunk = createAsyncThunk<
   Users,
-  { id: string; updatedUser: Users }
+  { id: number; updatedUser: Users }
 >("user/editUser", async ({ id, updatedUser }, { rejectWithValue }) => {
   try {
     const response = await fetch(`http://localhost:3005/api/v1/users/${id}`, {

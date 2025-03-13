@@ -50,7 +50,6 @@ export const UsersSlice = createSlice({
         state.userId.status = "fulfilled";
         state.userId.data = action.payload ;
         state.userId.error = undefined;
-        console.log("Datos de la habitación cargados:", action.payload);
       })
       .addCase(IdUserThunk.rejected, (state, action) => {
         state.userId.status = "rejected";

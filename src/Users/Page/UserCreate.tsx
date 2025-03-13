@@ -14,6 +14,7 @@ export const UserCreate = () => {
     const navigate = useNavigate();
 
     const[ newUser, setNewUser] = useState<Users>({
+        id:0,
         name: "",
         email:"",
         start_date: "",
