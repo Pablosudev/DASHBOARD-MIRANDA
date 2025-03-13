@@ -189,7 +189,7 @@ export const UserList = () => {
           </ContainerFake>
           <ButtonGreen
             onClick={nextPage}
-            type ="primary"
+            type = "primary"
             disabled={currentPage * usersPerPage >= sortedUsers.length}
           >
             Next
