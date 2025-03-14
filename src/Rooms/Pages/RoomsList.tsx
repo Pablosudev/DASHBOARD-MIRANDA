@@ -206,7 +206,7 @@ export const RoomsList = () => {
             <TableRow key={Number(room.id)} index={Number(room.id)}>
               <TableTd>
                 <TableImg
-                  src={room.image_url || "/src/assets/Imagenes/room10.jpg"}
+                  src= "/src/assets/Imagenes/room10.jpg"
                   alt={`Room ${room.number} photo`}
                 />
               </TableTd>

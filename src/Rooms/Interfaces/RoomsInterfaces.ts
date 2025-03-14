@@ -1,5 +1,4 @@
 export interface RoomsInter {
-  image_url?: string;
   number: number;
   id?: number;
   price: number;
@@ -37,10 +36,7 @@ export interface RoomCreate {
   number: number;
   price: number;
   offer: number;
-  discount: number;
-  description: string;
   roomStatus: string;
   amenities: string[];
-  _id: string,
-  image_url: string,
+ 
 }

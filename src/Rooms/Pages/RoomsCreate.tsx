@@ -24,12 +24,12 @@ import {
 } from "../Components/RoomsCreate";
 import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import { AppDispatch } from "../../App/Store";
-
+import { RoomCreate } from "../Interfaces/RoomsInterfaces";
 export const RoomsCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const [newRoom, setNewRoom] = useState<RoomsInter>({
+  const [newRoom, setNewRoom] = useState<RoomCreate>({
     type: "",
     number: 0,
     price: 0,
