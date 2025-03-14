@@ -56,7 +56,7 @@ export const BookingsList = () => {
 
   useEffect(() => {
     if (StatusBookings === "idle") {
-      dispatch(AllBookingsThunk(id!));
+      dispatch(AllBookingsThunk());
     } else if (StatusBookings === "fulfilled") {
       setBookingsData(DataBookings);
     } else if (StatusBookings === "rejected") {
@@ -107,7 +107,7 @@ export const BookingsList = () => {
   const handleDeleteBookings = (id) => {
     dispatch(DeleteBookingsThunk(id))
       .then(() => {
-        dispatch(AllBookingsThunk(id!));
+        dispatch(AllBookingsThunk());
       })
       .catch((error) => {
         alert("Error al eliminar la reserva");
@@ -176,28 +176,28 @@ export const BookingsList = () => {
           </TableHead>
           <TableBody>
             {currentBookings.map((booking) => (
-              <TableR key={booking._id}>
+              <TableR key={booking.id}>
                 <TableGuest>
-                  {booking.name} <br /> #{booking._id}
+                  {booking.name} <br /> #{booking.id}
                 </TableGuest>
-                <ContainerId>{booking.date}</ContainerId>
-                <TableAmenities>{booking.check_in}</TableAmenities>
-                <TableAmenities>{booking.check_out}</TableAmenities>
+                <ContainerId>{booking.date.toDateString()}</ContainerId>
+                <TableAmenities>{booking.check_in.toDateString()}</TableAmenities>
+                <TableAmenities>{booking.check_out.toDateString()}</TableAmenities>
                 <TableAmenities>{booking.request}</TableAmenities>
-                <TableAmenities>
+                {/* <TableAmenities>
                   {booking.type} <br /> Room {booking.number}
-                </TableAmenities>
+                </TableAmenities> */}
                 <td>
                   <ButtonBookings status={booking.status}>
                     {booking.status}
                   </ButtonBookings>
                 </td>
                 <TableIcons>
-                  <Link to={`/bookings/details/${booking._id}`}>
+                  <Link to={`/bookings/details/${booking.id}`}>
                     <EditIcon />
                   </Link>
                   <DeleteIcon
-                    onClick={() => handleDeleteBookings(booking._id)}
+                    onClick={() => handleDeleteBookings(booking.id)}
                   />
                 </TableIcons>
               </TableR>

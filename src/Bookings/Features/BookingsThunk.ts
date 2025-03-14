@@ -1,8 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-
-  BookingsInter,
-} from "../Interfaces/BookingsInterfaces";
+import {BookingsInter} from "../Interfaces/BookingsInterfaces";
 import { GetAuthHeaders } from "../../UseContext/GetAuth";
 //THUNKS TODOS
 export const AllBookingsThunk = createAsyncThunk<BookingsInter[]>(
@@ -122,10 +119,10 @@ export const EditBookingThunk = createAsyncThunk<
       }
       const jsonData: BookingsInter[] = await response.json();
       const updatedData = jsonData.map((booking) =>
-        booking._id === id ? { ...booking, ...updatedBooking } : booking
+        booking.id === id ? { ...booking, ...updatedBooking } : booking
       );
       const updatedBookingData = updatedData.find(
-        (booking) => booking._id === id
+        (booking) => booking.id === id
       );
       if (updatedBookingData) {
         return updatedBookingData;

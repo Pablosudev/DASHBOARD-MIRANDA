@@ -1,16 +1,13 @@
-import { RoomsInter } from "../../Rooms/Interfaces/RoomsInterfaces";
 
 export interface BookingsInter {
   name: string;
-  _id: string;
-  date: string;
-  check_in: string;
-  check_out: string;
+  id?: number;
+  date: Date;
+  check_in: Date;
+  check_out: Date;
   request: string;
   status: string;
-  room: Partial<RoomsInter>;
-  type:string;
-  number:number
+  roomId: number; 
 }
 
 export interface BookingsState {
