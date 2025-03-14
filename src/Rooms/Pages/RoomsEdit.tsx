@@ -29,7 +29,7 @@ import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import React from "react";
 
 export const RoomsEdit = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id }>();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const RoomID: RoomsInter | undefined = useSelector(getIdRoomsData);
@@ -66,7 +66,7 @@ export const RoomsEdit = () => {
       alert("ID no válido");
       return;
     }
-    dispatch(EditRoomThunk({ id, updatedRoom: roomId }))
+    dispatch(EditRoomThunk({id, updatedRoom: roomId }))
       .unwrap()
       .then(() => {
         alert("Habitación actualizada correctamente");
@@ -93,7 +93,7 @@ export const RoomsEdit = () => {
           type: RoomID.type,
           amenities: RoomID.amenities,
         });
-        if (RoomID._id != id) {
+        if (RoomID.id != id) {
           dispatch(IdRoomThunk(id ?? ""));
         }
       }

@@ -2,7 +2,7 @@ export interface Users {
     id: number
     name: string,
     email: string,
-    start_date: Date,
+    start_date: string,
     description: string,
     phone: string,
     status: string,

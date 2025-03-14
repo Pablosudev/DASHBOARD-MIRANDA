@@ -43,7 +43,7 @@ export const UserEdit = () => {
     id:0,
     name: "",
     email: "",
-    start_date: "",
+    start_date: new Date().toISOString().split('T')[0],
     description: "",
     phone: "",
     status: "",
@@ -62,12 +62,9 @@ export const UserEdit = () => {
     dispatch(EditUserThunk({ id, updatedUser: newUser }))
       .unwrap()
       .then(() => {
-        alert("Usuario actualizado correctamente");
         navigate("/users");
       })
       .catch((error) => {
-        console.error("Error en handleSave:", error);
-        alert("Error al actualizar el usuario: " + (error.payload?.message || error.message || "Error desconocido"));
         navigate("/users")
       });
   };
@@ -75,25 +72,33 @@ export const UserEdit = () => {
   
 
   useEffect(() => {
-    if (UserStatus === "idle" && Users) {
-      dispatch(IdUserThunk(numericId));
-    
+    if (UserStatus === "idle") {
+      if (id) {
+        dispatch(IdUserThunk(numericId));
+      }
     } else if (UserStatus === "fulfilled" && Users) {
-      console.log('Estado fulfilled')
+      console.log('Estado fulfilled');
       if (Users) {
+        
+        const isValidDate = Users.start_date && !isNaN(new Date(Users.start_date).getTime());
+        const formattedDate = isValidDate
+          ? new Date(Users.start_date).toISOString().split('T')[0]
+          : new Date().toISOString().split('T')[0]; 
+  
         setNewUser({
           name: Users.name,
-          start_date: Users.start_date,
+          start_date: formattedDate, 
           description: Users.description,
           phone: Users.phone,
           email: Users.email,
           password: Users.password,
           status: Users.status,
           department: Users.department,
-          id: Users.id
+          id: Users.id,
         });
-        if(Users.id != numericId){
-          dispatch(IdUserThunk(numericId))
+  
+        if (Users.id != numericId) {
+          dispatch(IdUserThunk(numericId));
         }
       }
     } else if (UserStatus === "rejected") {
@@ -189,7 +194,7 @@ export const UserEdit = () => {
               <InputName
                 type="date"
                 name="start_date"
-                value={newUser.start_date}
+                value={newUser.start_date} 
                 onChange={handleInputChange}
               />
             </div>

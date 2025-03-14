@@ -6,7 +6,7 @@ export interface RoomsInter {
   offer: number;
   roomStatus: string;
   type: string;
-  amenities: string;
+  amenities: string[];
 }
 export interface RoomsState {
   status: "idle" | "fulfilled" | "rejected" | "pending";
