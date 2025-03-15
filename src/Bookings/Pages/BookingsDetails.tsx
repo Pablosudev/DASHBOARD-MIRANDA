@@ -40,11 +40,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BookingsIdThunk } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
-import {
-  BookingsDetailsInter,
-  BookingsInter,
-
-} from "../Interfaces/BookingsInterfaces";
+import { BookingsInter } from "../Interfaces/BookingsInterfaces";
 
 export const BookingsDetails = () => {
   const [currentImage, setCurrentImage] = useState<number>(0);
@@ -54,11 +50,11 @@ export const BookingsDetails = () => {
     "/src/assets/Imagenes/room5.jpg",
     "/src/assets/Imagenes/room4.jpg",
   ];
-  const [bookingsDetails, setBookingDetails] = useState<BookingsDetailsInter>({
+  const [bookingsDetails, setBookingDetails] = useState<BookingsInter>({
     name: "",
-    date: "",
-    check_in: "",
-    check_out: "",
+    date: new Date(),
+    check_in: new Date(),
+    check_out: new Date(),
     type: "",
     price: 0,
     request: "",
@@ -68,7 +64,7 @@ export const BookingsDetails = () => {
   const StatusBookingsId = useSelector(getStatusId);
   const BookingsId: BookingsInter | null = useSelector(getBookingsId);
   const dispatch = useDispatch<AppDispatch>();
-  const { id } = useParams<string>();
+  const { id } = useParams();
   const navigate = useNavigate();
 
   //BOTONES PARA IMG
@@ -81,29 +77,30 @@ export const BookingsDetails = () => {
       (prevIndex) => (prevIndex - 1 + images.length) % images.length
     );
   };
-  const handleChangeEdit = (_id: string ) => {
-    navigate(`/bookings/edit/${bookingsDetails._id}`);
+  const handleChangeEdit = (_id: number) => {
+    navigate(`/bookings/edit/${bookingsDetails.id}`);
   };
 
   useEffect(() => {
     if (StatusBookingsId === "idle") {
-      dispatch(BookingsIdThunk(id));
+      dispatch(BookingsIdThunk(Number(id)));
     } else if (StatusBookingsId === "fulfilled") {
       if (BookingsId !== null) {
         const parsedId = parseInt(id!);
 
         if (BookingsId.id !== parsedId) {
-          dispatch(BookingsIdThunk(id));
+          dispatch(BookingsIdThunk(Number(id)));
         }
         setBookingDetails({
           name: BookingsId.name,
+          date: BookingsId.date,
           check_in: BookingsId.check_in,
           check_out: BookingsId.check_out,
           type: BookingsId.type,
           price: BookingsId.price,
           request: BookingsId.request,
           status: BookingsId.status,
-          number: BookingsId.number,
+          number: BookingsId.number
         });
       }
     } else if (StatusBookingsId === "rejected") {
@@ -113,19 +110,19 @@ export const BookingsDetails = () => {
 
   return (
     <>
-      <CardBookings key={bookingsDetails._id}>
+      <CardBookings key={bookingsDetails.id}>
         <CardInfo>
           <Link to={"/bookings"}>
             <CloseIcon />
           </Link>
           <NameBooking>{bookingsDetails.name}</NameBooking>
-          <IdBookings>{bookingsDetails._id}</IdBookings>
+          <IdBookings>{bookingsDetails.id}</IdBookings>
           <BoxMessage>
             <PhoneIcon />
             <ButtonMessage>
               <IconMessage /> Send Message
             </ButtonMessage>
-            <ButtonMessage onClick={() => handleChangeEdit(id)}>
+            <ButtonMessage onClick={() => handleChangeEdit(Number(id))}>
               Edit <ButtonEditDetails />
             </ButtonMessage>
           </BoxMessage>
@@ -156,7 +153,7 @@ export const BookingsDetails = () => {
             </BoxRoom>
           </ContainerRoom>
 
-          <Request>{bookingsDetails.special_request}</Request>
+          <Request>{bookingsDetails.request}</Request>
           <TitleData>Amenities</TitleData>
           <div>
             <ButtonDetails>FREE WIFI</ButtonDetails>
@@ -183,8 +180,8 @@ export const BookingsDetails = () => {
             <IconArrowLeft />
           </ButtonSlideLeft>
           <BoxDescription>
-            <TypeSlide>{bookingsDetails.room_type}</TypeSlide>
-            <DescriptionRoom>{bookingsDetails.special_request}</DescriptionRoom>
+            <TypeSlide>{bookingsDetails.type}</TypeSlide>
+            <DescriptionRoom>{bookingsDetails.request}</DescriptionRoom>
           </BoxDescription>
         </CardSlide>
       </CardBookings>

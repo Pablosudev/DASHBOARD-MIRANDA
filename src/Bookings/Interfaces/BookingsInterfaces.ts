@@ -1,3 +1,4 @@
+import { RoomsInter } from "../../Rooms/Interfaces/RoomsInterfaces";
 
 export interface BookingsInter {
   name: string;
@@ -7,7 +8,12 @@ export interface BookingsInter {
   check_out: Date;
   request: string;
   status: string;
-  roomId: number; 
+  room_id?: number; 
+  room?: Partial<RoomsInter>;
+  type?:string;
+  number?:number;
+  price?: number;
+  
 }
 
 export interface BookingsState {
@@ -35,14 +41,17 @@ export interface BookingsEditInter {
 }
 export interface BookingsDetailsInter {
   name: string;
-  check_in: string;
-  check_out: string;
+  date: Date,
+  check_in: Date;
+  check_out: Date;
   type: string;
   price: number;
   request: string;
   status: string;
   number: number;
-  _id: string;
+  id?: number;
+  
+  
 }
 export interface ButtonBookingsProps {
   status: string;

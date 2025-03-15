@@ -180,9 +180,9 @@ export const BookingsList = () => {
                 <TableGuest>
                   {booking.name} <br /> #{booking.id}
                 </TableGuest>
-                <ContainerId>{booking.date.toDateString()}</ContainerId>
-                <TableAmenities>{booking.check_in.toDateString()}</TableAmenities>
-                <TableAmenities>{booking.check_out.toDateString()}</TableAmenities>
+                <ContainerId>{booking.date}</ContainerId>
+                <TableAmenities>{booking.check_in}</TableAmenities>
+                <TableAmenities>{booking.check_out}</TableAmenities>
                 <TableAmenities>{booking.request}</TableAmenities>
                 {/* <TableAmenities>
                   {booking.type} <br /> Room {booking.number}

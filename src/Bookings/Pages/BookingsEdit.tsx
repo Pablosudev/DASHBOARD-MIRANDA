@@ -34,17 +34,14 @@ export const BookingsEdit = () => {
   const {id} = useParams<{id: string}>();
   const BookingId = useSelector(getBookingsId);
   const StatusBookingId = useSelector(getStatusId);
+  const formatedDate = Date.toString()
   const [newBooking, setNewBooking] = useState<BookingsInter>({
     name: "",
-    _id: "",
-    date: "",
-    check_in: "",
-    check_out: "",
+    date: new Date,
+    check_in: new Date,
+    check_out: new Date,
     request: "",
-    status: "",
-    room:{},
-    type: "",
-    number:0
+    status: ""
   });
   const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -77,19 +74,19 @@ export const BookingsEdit = () => {
 
   useEffect(() => {
     if (StatusBookingId === "idle") {
-      dispatch(IdRoomThunk((id!)));
+      dispatch(IdRoomThunk(Number(id)));
     } else if (StatusBookingId === "fulfilled") {
       const booking = BookingId as BookingsInter;
       setNewBooking({
         name: booking.name,
-        _id: booking._id,
+        id: booking.id,
         date: booking.date,
         check_in: booking.check_in,
         check_out: booking.check_out,
         request: booking.request,
         status: booking.status,
-        room: booking.room,
-        type: booking.type,
+        room_id: booking.room_id,
+        type: room.type,
         number:booking.number
       });
     } else if (StatusBookingId === "rejected") {
