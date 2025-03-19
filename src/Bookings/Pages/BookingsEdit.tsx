@@ -26,7 +26,7 @@ import { getBookingsId, getStatusId } from "../Features/BookingsSlice";
 import { IdRoomThunk } from "../../Rooms/Features/RoomsThunk";
 import { EditBookingThunk } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
-import { BookingsEditInter, BookingsInter } from "../Interfaces/BookingsInterfaces";
+import { BookingsInter } from "../Interfaces/BookingsInterfaces";
 
 export const BookingsEdit = () => {
   const navigate = useNavigate();
@@ -86,7 +86,7 @@ export const BookingsEdit = () => {
         request: booking.request,
         status: booking.status,
         room_id: booking.room_id,
-        type: room.type,
+        type: booking.type,
         number:booking.number
       });
     } else if (StatusBookingId === "rejected") {
@@ -118,7 +118,7 @@ export const BookingsEdit = () => {
             <InputCreate
               type="text"
               name="room_type"
-              value={newBooking.room.type}
+              value={newBooking.type}
               onChange={handleInputChange}
             />
           </div>
@@ -129,7 +129,7 @@ export const BookingsEdit = () => {
             <Price
               type="text"
               name="price"
-              value={newBooking.room.price}
+              value={newBooking.price}
               onChange={handleInputChange}
             />
           </PriceBox>

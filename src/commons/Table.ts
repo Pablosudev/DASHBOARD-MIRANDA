@@ -18,7 +18,7 @@ export const TableR = styled.tr`
   border-bottom: 1px solid rgba(248, 248, 248, 1);
 `;
 export const TableHeadName = styled.th`
-  padding-left: 1.5%;
+  padding-left: 10%;
 `;
 export const TableRow = styled.tr<TableRowProps>`
   border-left: transparent;
@@ -195,7 +195,7 @@ export const PopUpContacts = styled.div`
   display: none;
 `;
 export const HeadType = styled.th`
-  padding-left: 26%;
+  padding-left: 21%;
 `;
 export const HeadPrice = styled.th`
 padding-left: 31%;
@@ -220,16 +220,16 @@ export const HeadContact = styled.th`
 padding-left: 16%;
 `
 export const HeadEmail = styled.th`
-padding-left:  5%;
+padding-left:  17%;
 `
 export const HeadDepartment = styled.th`
-padding-left: 20%;
+padding-left: 16%;
 `
 export const HeadAmenities = styled.th`
   padding-left: 3%;
 `;
 export const HeadStatus = styled.th`
-  padding-left: 1%;
+  padding-left: 16%;
 `;
 export const TabledIcons = styled.td`
 display: flex;

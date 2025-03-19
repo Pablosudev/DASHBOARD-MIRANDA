@@ -7,6 +7,8 @@ import { CreateUserThunk } from "../Features/UsersThunk";
 import React from "react";
 import { AppDispatch } from "../../App/Store";
 import { Users } from "../Interfaces/UsersInterfaces";
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
 
 
 export const UserCreate = () => {
@@ -32,9 +34,28 @@ export const UserCreate = () => {
           [name]: value,
         }));
       };
-    const handleCreateUser = () => {
-        dispatch(CreateUserThunk(newUser));
-        navigate("/users")
+    const handleCreateUser = async () => {
+        try{
+        await dispatch(CreateUserThunk(newUser));
+        navigate("/users");
+        Toastify({
+            text: "¡Usuario creado con éxito!",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "linear-gradient(to right, #28a745, #218838)", 
+            stopOnFocus: true
+          }).showToast();
+        }catch (error){
+            Toastify({
+                text: "¡Error al crear el usuario!",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(to right, #f0290e, #c7f012)", 
+                stopOnFocus: true
+            }).showToast();
+        }
     }
 
     return (

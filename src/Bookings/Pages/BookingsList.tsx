@@ -184,9 +184,9 @@ export const BookingsList = () => {
                 <TableAmenities>{booking.check_in}</TableAmenities>
                 <TableAmenities>{booking.check_out}</TableAmenities>
                 <TableAmenities>{booking.request}</TableAmenities>
-                {/* <TableAmenities>
+                 <TableAmenities>
                   {booking.type} <br /> Room {booking.number}
-                </TableAmenities> */}
+                </TableAmenities> 
                 <td>
                   <ButtonBookings status={booking.status}>
                     {booking.status}

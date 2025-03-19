@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   TypeSlide,
   BoxDescription,
@@ -41,6 +41,9 @@ import { useDispatch } from "react-redux";
 import { BookingsIdThunk } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
 import { BookingsInter } from "../Interfaces/BookingsInterfaces";
+import { RoomsInter } from "../../Rooms/Interfaces/RoomsInterfaces";
+import { getIdRoomsData } from "../../Rooms/Features/RoomsSlice";
+import { IdRoomThunk } from "../../Rooms/Features/RoomsThunk";
 
 export const BookingsDetails = () => {
   const [currentImage, setCurrentImage] = useState<number>(0);
@@ -55,17 +58,16 @@ export const BookingsDetails = () => {
     date: new Date(),
     check_in: new Date(),
     check_out: new Date(),
-    type: "",
-    price: 0,
     request: "",
     status: "",
-    number: 0,
   });
   const StatusBookingsId = useSelector(getStatusId);
   const BookingsId: BookingsInter | null = useSelector(getBookingsId);
+  const RoomsId: RoomsInter | undefined = useSelector(getIdRoomsData);
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
   const navigate = useNavigate();
+  const numericId = Number(id);
 
   //BOTONES PARA IMG
   const handleButtonNext = () => {
@@ -83,30 +85,32 @@ export const BookingsDetails = () => {
 
   useEffect(() => {
     if (StatusBookingsId === "idle") {
-      dispatch(BookingsIdThunk(Number(id)));
+      if (numericId) {
+        dispatch(BookingsIdThunk(numericId));
+        dispatch(IdRoomThunk(numericId));
+      }
     } else if (StatusBookingsId === "fulfilled") {
-      if (BookingsId !== null) {
-        const parsedId = parseInt(id!);
-
-        if (BookingsId.id !== parsedId) {
-          dispatch(BookingsIdThunk(Number(id)));
-        }
+      console.log("Estado en fullfiled");
+      if (BookingsId) {
         setBookingDetails({
           name: BookingsId.name,
           date: BookingsId.date,
           check_in: BookingsId.check_in,
           check_out: BookingsId.check_out,
-          type: BookingsId.type,
-          price: BookingsId.price,
           request: BookingsId.request,
           status: BookingsId.status,
-          number: BookingsId.number
+          price: RoomsId?.price,
+          number: RoomsId?.number,
+          type: RoomsId?.type,
         });
+        if (BookingsId.id != numericId) {
+          dispatch(BookingsIdThunk(numericId));
+        }
       }
     } else if (StatusBookingsId === "rejected") {
-      alert("Error al cargar los datos de la reserva");
+      alert("Error al cargar los datos ");
     }
-  }, [dispatch, id, StatusBookingsId, BookingsId]);
+  }, [dispatch, numericId, StatusBookingsId, BookingsId]);
 
   return (
     <>
@@ -130,18 +134,19 @@ export const BookingsDetails = () => {
           <ContainerDetails>
             <BoxCheck>
               <TitleData>Check In</TitleData>
-              <DataCheck>{bookingsDetails.check_in}</DataCheck>
+               <DataCheck>{new Date(bookingsDetails.check_in).toLocaleDateString()}</DataCheck> 
             </BoxCheck>
             <BoxCheck>
               <TitleData>Check Out</TitleData>
-              <DataCheck>{bookingsDetails.check_out}</DataCheck>
+              <DataCheck>{new Date (bookingsDetails.check_out).toLocaleDateString()}</DataCheck>
             </BoxCheck>
           </ContainerDetails>
           <ContainerRoom>
             <BoxRoom>
               <TitleData>Room Info</TitleData>
+
               <TypeRoom>
-                {bookingsDetails.type} {bookingsDetails.number}
+                {RoomsId?.type} - {RoomsId?.number}
               </TypeRoom>
             </BoxRoom>
             <BoxRoom>

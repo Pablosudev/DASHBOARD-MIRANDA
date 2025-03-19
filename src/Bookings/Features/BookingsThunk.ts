@@ -26,7 +26,7 @@ export const AllBookingsThunk = createAsyncThunk<BookingsInter[]>(
 //THUNKS ID
 export const BookingsIdThunk = createAsyncThunk<BookingsInter, number>(
   "bookingsId/getIdBookings",
-  async (id, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `http://localhost:3005/api/v1/bookings/${id}`,

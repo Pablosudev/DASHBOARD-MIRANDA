@@ -16,7 +16,8 @@ import {
   TableDepartment,
   HeadDepartment,
   HeadContact,
-  HeadEmail
+  HeadEmail,
+  HeadStatus
 } from "../../commons/Table";
 import {
   ContainerSelect,
@@ -41,6 +42,8 @@ import {
 import { Link } from "react-router-dom";
 import React from "react";
 import { AppDispatch } from "../../App/Store";
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
 
 export const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -72,6 +75,7 @@ export const UserList = () => {
   
   const handleCreateUser = () => {
     navigate("/users/new")
+  
   }
   const handleSearch = (event: any) => {
     setSearchTerm(event.target.value);
@@ -82,6 +86,14 @@ export const UserList = () => {
     .then(()=> {
       setUsers(prevUsers => prevUsers.filter(user => user.id !== id))
     })
+    Toastify({
+      text: "¡Usuario eliminado con éxito!",
+      duration: 3000,  
+      gravity: "top",  
+      position: "right",  
+      backgroundColor: "linear-gradient(to right, #28a745, #218838)",
+      stopOnFocus: true  
+    }).showToast();
   };
   const handleStatusChange = ( status: string) => {
     setSelectedStatus(status);
@@ -128,9 +140,8 @@ export const UserList = () => {
               <HeadType>Start Date</HeadType>
               <HeadDepartment>Department</HeadDepartment>
               <HeadContact>Contact</HeadContact>
-              <th></th>
               <HeadEmail>Email</HeadEmail>
-              <th>Status</th>
+              <HeadStatus>Status</HeadStatus>
             </TableR>
           </TableHead>
           <TableBody>

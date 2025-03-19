@@ -23,6 +23,8 @@ import { IdUserThunk, EditUserThunk } from "../Features/UsersThunk";
 import { AppDispatch } from "../../App/Store";
 import { Users } from "../Interfaces/UsersInterfaces";
 import React from "react";
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
 
 export const UserEdit = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -67,6 +69,14 @@ export const UserEdit = () => {
       .catch((error) => {
         navigate("/users")
       });
+      Toastify({
+            text: "¡Usuario editado con éxito!",
+            duration: 3000,  
+            gravity: "top",  
+            position: "right",  
+            backgroundColor: "linear-gradient(to right, #28a745, #218838)",
+            stopOnFocus: true  
+          }).showToast();
   };
   
   
@@ -77,7 +87,7 @@ export const UserEdit = () => {
         dispatch(IdUserThunk(numericId));
       }
     } else if (UserStatus === "fulfilled" && Users) {
-      console.log('Estado fulfilled');
+      
       if (Users) {
         
         const isValidDate = Users.start_date && !isNaN(new Date(Users.start_date).getTime());

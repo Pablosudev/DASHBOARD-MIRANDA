@@ -76,7 +76,7 @@ export const IconClose = styled(IoMdCloseCircleOutline)`
 color:#135846;
 font-size:3rem;
 position: absolute;
-right: 4%;
+right: 1%;
 top:1%;
 `
 export const SelectCreate = styled.select`

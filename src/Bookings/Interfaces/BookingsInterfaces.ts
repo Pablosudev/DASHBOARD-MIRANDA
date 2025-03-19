@@ -29,28 +29,14 @@ export interface BookingsState {
   };
 }
 
-export interface BookingsEditInter {
-  full_name: string;
-  check_in: string;
-  check_out: string;
-  room_type: string;
-  price: number;
-  special_request: string;
-  status: string;
-  amenities: string[];
-}
 export interface BookingsDetailsInter {
   name: string;
   date: Date,
   check_in: Date;
   check_out: Date;
-  type: string;
-  price: number;
   request: string;
   status: string;
-  number: number;
   id?: number;
-  
   
 }
 export interface ButtonBookingsProps {
