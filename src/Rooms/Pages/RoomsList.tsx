@@ -16,9 +16,6 @@ import {
   TableRow,
   TableStatusRooms,
   TableIcons,
-  HeadType,
-  HeadAmenities,
-  HeadStatus,
   HeadRoomType,
   HeadRoomAmenities,
   HeadPrice,
@@ -55,38 +52,41 @@ export const RoomsList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const DataAllRooms: RoomsInter[] = useSelector(getAllRoomsData);
   const StatusAllRooms = useSelector(getAllRoomsStatus);
-  const [rooms , setRooms] = useState<RoomsInter []>(DataAllRooms);
+  const [rooms, setRooms] = useState<RoomsInter[]>(DataAllRooms);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const roomsPerPage = 10;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedFilter, setSelectedFilter] = useState<string>("All Rooms");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [statusFilter, setStatusFilter] = useState<"Available" | "Booked">("Available");
+  const [statusFilter, setStatusFilter] = useState<"Available" | "Booked">(
+    "Available"
+  );
 
   useEffect(() => {
     if (StatusAllRooms === "idle") {
       dispatch(RoomsThunk());
-    }else if (StatusAllRooms === "fulfilled"){
-      setRooms(DataAllRooms)
+    } else if (StatusAllRooms === "fulfilled") {
+      setRooms(DataAllRooms);
     }
   }, [StatusAllRooms, dispatch]);
- 
 
-  let filteredRooms = DataAllRooms.filter((room) => 
-    room.number.toString().includes(searchTerm) ||
-    room.type.toLowerCase().includes(searchTerm.toLowerCase())
+  let filteredRooms = DataAllRooms.filter(
+    (room) =>
+      room.number.toString().includes(searchTerm) ||
+      room.type.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const sortRooms = (rooms: RoomsInter[]) => {
     let sortedRooms = rooms;
 
     if (selectedFilter === "Status") {
-      sortedRooms = sortedRooms.filter((room) => room.roomStatus === statusFilter);
+      sortedRooms = sortedRooms.filter(
+        (room) => room.roomStatus === statusFilter
+      );
     }
 
-
     if (selectedFilter === "Price") {
-      sortedRooms.sort((a, b) => 
+      sortedRooms.sort((a, b) =>
         sortOrder === "asc" ? a.price - b.price : b.price - a.price
       );
     }
@@ -129,13 +129,12 @@ export const RoomsList = () => {
   };
 
   const handleDeleteRoom = (id) => {
-    dispatch(DeleteRoomThunk(id))
-    
+    dispatch(DeleteRoomThunk(id));
   };
 
   const handleFilterChange = (filter: string) => {
     setSelectedFilter(filter);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const handleStatusFilter = () => {
@@ -158,16 +157,17 @@ export const RoomsList = () => {
             isActive={selectedFilter === "Price"}
             onClick={() => {
               handleFilterChange("Price");
-              setSortOrder(sortOrder === "asc" ? "desc" : "asc"); 
+              setSortOrder(sortOrder === "asc" ? "desc" : "asc");
             }}
           >
-            Price {selectedFilter === "Price" && (sortOrder === "asc" ? "↑" : "↓")}
+            Price{" "}
+            {selectedFilter === "Price" && (sortOrder === "asc" ? "↑" : "↓")}
           </SelectTitleRooms>
           <SelectTitleRooms
             isActive={selectedFilter === "Status"}
             onClick={() => {
               handleFilterChange("Status");
-              handleStatusFilter(); 
+              handleStatusFilter();
             }}
           >
             Status {selectedFilter === "Status" && `(${statusFilter})`}
@@ -206,7 +206,7 @@ export const RoomsList = () => {
             <TableRow key={Number(room.id)} index={Number(room.id)}>
               <TableTd>
                 <TableImg
-                  src= "/src/assets/Imagenes/room10.jpg"
+                  src="/src/assets/Imagenes/room10.jpg"
                   alt={`Room ${room.number} photo`}
                 />
               </TableTd>
@@ -225,14 +225,12 @@ export const RoomsList = () => {
               </TablePrice>
               <OfferPrice>
                 {" "}
-                ${" "}
-                {(
-                  room.price -
-                  room.price * (room.offer / 100)
-                ).toFixed(2)}
+                {(room.price - room.price * (room.offer / 100)).toFixed(2)}$
               </OfferPrice>
               <TableStatusRooms>
-                <ButtonTable status={room.roomStatus}>{room.roomStatus}</ButtonTable>
+                <ButtonTable status={room.roomStatus}>
+                  {room.roomStatus}
+                </ButtonTable>
               </TableStatusRooms>
               <TableIcons>
                 <Link to={`/rooms/edit/${room.id}`} aria-label="Edit room">

@@ -1,6 +1,6 @@
 export interface RoomsInter {
   number: number;
-  id?: number;
+  id: number;
   price: number;
   offer: number;
   roomStatus: string;
@@ -38,5 +38,6 @@ export interface RoomCreate {
   offer: number;
   roomStatus: string;
   amenities: string[];
+  id:number
  
 }

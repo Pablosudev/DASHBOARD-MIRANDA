@@ -198,22 +198,22 @@ export const HeadType = styled.th`
   padding-left: 21%;
 `;
 export const HeadPrice = styled.th`
-padding-left: 31%;
+padding-left: 28%;
 `;
 export const HeadOffer = styled.th`
-padding-left: 9%;
+padding-left: 13%;
 
 `;
 
 export const HeadRoomType = styled.th`
-  padding-left: 19%;
+  padding-left: 11%;
   
 `;
 export const HeadRoomStatus = styled.th`
-  padding-left: 10%;
+  padding-left: 13%;
 `;
 export const HeadRoomAmenities= styled.th`
-padding-left: 20%;
+padding-left: 17%;
 width:10rem;
 `
 export const HeadContact = styled.th`

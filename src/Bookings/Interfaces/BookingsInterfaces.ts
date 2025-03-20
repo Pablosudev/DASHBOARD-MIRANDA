@@ -8,7 +8,7 @@ export interface BookingsInter {
   check_out: Date;
   request: string;
   status: string;
-  room_id?: number; 
+  room_id: number; 
   room?: Partial<RoomsInter>;
   type?:string;
   number?:number;

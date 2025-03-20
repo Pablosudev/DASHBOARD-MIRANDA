@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { SelectTitle } from "../../Users/Components/Users";
 import {
   ContainerSelect,
@@ -40,29 +40,44 @@ import {
 } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
 import { BookingsInter } from "../Interfaces/BookingsInterfaces";
+import { getAllRoomsData, getIdRoomsData } from "../../Rooms/Features/RoomsSlice";
+import { RoomsThunk } from "../../Rooms/Features/RoomsThunk";
+import { RoomsInter } from "../../Rooms/Interfaces/RoomsInterfaces";
+
 
 export const BookingsList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const DataBookings: BookingsInter[] = useSelector(getAllBookingsData);
   const StatusBookings = useSelector(getAllBookingsStatus);
+  const RoomData: RoomsInter [] = useSelector(getAllRoomsData);
+  const RoomId: RoomsInter | undefined = useSelector(getIdRoomsData);
   const { id } = useParams<string>();
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [bookingsData, setBookingsData] =
-    useState<BookingsInter[]>(DataBookings);
+  const [bookingsData, setBookingsData] = useState<BookingsInter[]>(DataBookings);
   const bookingsPerPage: number = 10;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const navigate = useNavigate();
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
+  const [room, setRoom] = useState<RoomsInter | undefined>(RoomId)
 
   useEffect(() => {
     if (StatusBookings === "idle") {
       dispatch(AllBookingsThunk());
+      dispatch(RoomsThunk())
     } else if (StatusBookings === "fulfilled") {
-      setBookingsData(DataBookings);
+      setBookingsData(DataBookings)
     } else if (StatusBookings === "rejected") {
       alert("Error al cargar los datos de los usuarios");
     }
-  }, [dispatch, id, StatusBookings, DataBookings]);
+  }, [dispatch, id, StatusBookings]);
+
+  const roomsMap = useMemo(() => {
+    const map: { [key: string]: RoomsInter } = {};
+    RoomData.forEach((room) => {
+      map[room.id] = room;
+    });
+    return map;
+  }, [RoomData]);
 
   //FILTRADO DE BOOKINGS
   const filteredBookings = DataBookings.filter((booking) => {
@@ -175,7 +190,10 @@ export const BookingsList = () => {
             </TableR>
           </TableHead>
           <TableBody>
-            {currentBookings.map((booking) => (
+            {currentBookings.map((booking) =>{
+              const room = roomsMap[booking.room_id]
+            return (
+              
               <TableR key={booking.id}>
                 <TableGuest>
                   {booking.name} <br /> #{booking.id}
@@ -184,9 +202,15 @@ export const BookingsList = () => {
                 <TableAmenities>{booking.check_in}</TableAmenities>
                 <TableAmenities>{booking.check_out}</TableAmenities>
                 <TableAmenities>{booking.request}</TableAmenities>
-                 <TableAmenities>
-                  {booking.type} <br /> Room {booking.number}
-                </TableAmenities> 
+                <TableAmenities>
+                {room ? (
+            <>
+              {room.type} <br /> Room {room.number}
+            </>
+          ) : (
+            "Room details loading..." // Puedes mostrar esto mientras se cargan los detalles de la habitación
+          )}
+                </TableAmenities>
                 <td>
                   <ButtonBookings status={booking.status}>
                     {booking.status}
@@ -201,7 +225,8 @@ export const BookingsList = () => {
                   />
                 </TableIcons>
               </TableR>
-            ))}
+            )
+            })}
           </TableBody>
         </TableBookings>
         <ContainerButtons>

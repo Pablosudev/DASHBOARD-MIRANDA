@@ -12,6 +12,7 @@ export const CardCreate = styled.section`
   justify-content: space-between;
   position: relative;
   margin-bottom: 6rem;
+  width:100%;
 `;
 export const ContainerSections = styled.div`
   width: 92rem;

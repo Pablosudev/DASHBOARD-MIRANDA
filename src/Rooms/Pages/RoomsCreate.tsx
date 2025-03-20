@@ -22,7 +22,6 @@ import {
   SelectCreateRoom,
   BoxInfoRooms,
 } from "../Components/RoomsCreate";
-import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import { AppDispatch } from "../../App/Store";
 import { RoomCreate } from "../Interfaces/RoomsInterfaces";
 export const RoomsCreate = () => {
@@ -36,6 +35,7 @@ export const RoomsCreate = () => {
     offer: 0,
     roomStatus: "",
     amenities: [],
+    id: 0
   });
 
   const handleInputChange = (e: any) => {
