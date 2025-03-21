@@ -129,9 +129,8 @@ export const StatusUsers = styled.p<StatusUsersProps>`
 
 export const TableContact = styled.td`
   font-family: "Poppins";
-  padding-right: 2rem;
-  padding-left: 2rem;
-  max-width: 38rem;
+  text-align:center;
+  max-width: 10rem;
 `;
 export const TableDate = styled.td`
   font-family: "Poppins";
@@ -139,17 +138,16 @@ export const TableDate = styled.td`
   min-width: 2rem; 
   padding-left:1%;
 `
-export const TableCustomer = styled.td`
-font-family: "Poppins";
-text-align:center;
-`
 export const TableButton = styled.td`
-  padding-right: 2rem;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+  padding-right: 10%;
+  padding-left: 10%;
+  padding-top: 15%;
+  padding-bottom: 15%;
+  display: flex;
+  flex-direction:column;
 `;
 export const TableComment = styled.th`
-  padding-left: 5rem;
+  text-align: center;
 `;
 export const TableGuest = styled.td`
   padding-left: 1.5rem;
