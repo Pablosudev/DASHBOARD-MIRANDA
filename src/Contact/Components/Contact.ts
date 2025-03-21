@@ -4,6 +4,7 @@ import { FaRegCircleCheck } from "react-icons/fa6"
 import { MdOutlineCancel } from "react-icons/md";
 import { SwiperSlide } from "swiper/react";
 import { Swiper } from "swiper/react";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 
 export const SliderReviews = styled.div`
@@ -76,6 +77,8 @@ color: red;
 font-size: 1.5rem;
 margin-top: 0.5rem;
 margin-left: 1.5rem;
+align-items:center;
+cursor: pointer;
 `
 export const ButtonDelete = styled.button`
     background: rgb(216, 231, 226) 0% 0% no-repeat padding-box;
@@ -93,6 +96,7 @@ export const ButtonDelete = styled.button`
     padding-top:3%;
     padding-bottom: 3%;
     margin-top: 1rem;
+    cursor: pointer;
 `
 
 export const SelectTitle = styled.h3<{ $isActive: boolean }>`
@@ -142,5 +146,36 @@ margin-left:2%;
 margin-right: 2%;
 margin-top: 10%;
 overflow: hidden;
-
+`
+export const PopUp = styled.div`
+position: fixed; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  background-color: white; 
+  padding: 20px; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  z-index: 9999;
+  font-family: "Poppins";
+  padding-top: 5%;
+  padding-bottom: 5%;
+`
+export const ClosePopUp = styled(IoCloseCircleOutline )`
+position: absolute;
+top: 2%;
+right: 1%;
+width: 2rem;
+height: 2rem;
+cursor: pointer;
+`
+export const NamePopUp = styled.p`
+font-family: "Poppins";
+font-size: 1.5rem;
+margin-bottom: 1%;
+`
+export const DatePopUp= styled.p`
+font-family: "Poppins";
+font-size: 1.2rem;
+margin-bottom: 1%;
 `

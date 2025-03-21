@@ -6,9 +6,12 @@ import {
   StyledSwiperSlide,
   StyledSwiper,
   SectionContact,
+  PopUp,
+  ClosePopUp,
+  NamePopUp,
+  DatePopUp,
 } from "../Components/Contact.js";
 import {
-  SectionTable,
   TableBody,
   TableHead,
   TableR,
@@ -74,6 +77,7 @@ export const Contact = () => {
   const [archive, setArchive] = useState<boolean>(false);
   const [showAllContact, setShowAllcontact] = useState<boolean>(true);
   const [selectedStatus, setSelectedStaus] = useState<string>("all");
+  const [open, setOpen] = useState<number | null>(null);
 
   const filteredContact = Array.isArray(DataContact)
     ? DataContact.filter((contact) =>
@@ -110,23 +114,21 @@ export const Contact = () => {
   };
   const handleArchive = (id: number) => {
     dispatch(ContactSaveThunk(id))
-    .unwrap() 
-    .then(() => {
-    dispatch(ContactAllThunks())
-      const updatedData = DataContact.map((contact) =>
-        contact.id === id
-          ? { ...contact, archived: !contact.archived }
-          : contact
-      );
-     dispatch(ContactAllThunks())
-     .then(() => {
-      setContact(DataContact); 
-     })
-      
-    })
-    .catch((error) => {
-      console.error('Error al archivar el contacto:', error);
-    });
+      .unwrap()
+      .then(() => {
+        dispatch(ContactAllThunks());
+        const updatedData = DataContact.map((contact) =>
+          contact.id === id
+            ? { ...contact, archived: !contact.archived }
+            : contact
+        );
+        dispatch(ContactAllThunks()).then(() => {
+          setContact(DataContact);
+        });
+      })
+      .catch((error) => {
+        console.error("Error al archivar el contacto:", error);
+      });
   };
   const archivedContact = () => {
     setShowAllcontact(false);
@@ -138,16 +140,23 @@ export const Contact = () => {
     setArchive(false);
     setSelectedStaus("all");
   };
-  
+
   const handleDeleteContact = (id) => {
     dispatch(ContactDeleteThunk(id));
+  };
+  const handlePopUp = (id: number) => {
+    if (open === id) {
+      setOpen(null);
+    } else {
+      setOpen(id);
+    }
   };
 
   useEffect(() => {
     if (StatusContact === "idle") {
       dispatch(ContactAllThunks());
-      if(id){
-      dispatch(ContactIdThunks(Number(id)));
+      if (id) {
+        dispatch(ContactIdThunks(Number(id)));
       }
     } else if (StatusContact === "fulfilled") {
       setContact(DataContact);
@@ -159,131 +168,134 @@ export const Contact = () => {
   return (
     <>
       <SectionContact>
-          <StyledSwiper
-            direction="horizontal"
-            slidesPerView={3}
-            spaceBetween={20}
-            loop={true}
-          >
-            {DataContact.map((contact) => (
-              <StyledSwiperSlide key={contact.id}>
-                <BoxReviews>
-                  <Review>{contact.comment}</Review>
-                  <BoxCard>
-                    <ImgUser
-                      src="/src/assets/Imagenes/user phot.jpg"
-                      alt="photoUser"
-                    />
-                    <BoxName>
-                      <NameReview>{contact.name}</NameReview>
-                      <BoxTime>
-                        <TimeReview>{contact.date}</TimeReview>
-                        <BoxIcon>
-                          <CancelIcon />
-                          <CheckIcon />
-                        </BoxIcon>
-                      </BoxTime>
-                    </BoxName>
-                  </BoxCard>
-                </BoxReviews>
-              </StyledSwiperSlide>
-            ))}
-          </StyledSwiper>
-          <BoxSelect>
-            <ContainerSelect>
-              <SelectTitle
-                onClick={handleAllContacts}
-                $isActive={selectedStatus === "all"}
-              >
-                All Contacts
-              </SelectTitle>
-              <SelectTitle
-                onClick={archivedContact}
-                $isActive={selectedStatus === "Archived"}
-              >
-                Archived
-              </SelectTitle>
-            </ContainerSelect>
-            <ContainerInput>
-              <ContactInput
-                type="text"
-                value={searchTerm}
-                onChange={handleSearch}
-              />
-              <label>
-                <IconSearch />
-              </label>
-            </ContainerInput>
-          </BoxSelect>
-          <TableContacts>
-            <TableHead>
-              <TableR>
-                <TableDate>Date</TableDate>
-                <TableCustomer>Customer</TableCustomer>
-                <TableComment>Comment</TableComment>
+        <StyledSwiper
+          direction="horizontal"
+          slidesPerView={3}
+          spaceBetween={20}
+          loop={true}
+        >
+          {DataContact.map((contact) => (
+            <StyledSwiperSlide key={contact.id}>
+              <BoxReviews>
+                <Review onClick={() => handlePopUp(contact.id)}>{contact.comment}</Review>
+                <BoxCard>
+                  <ImgUser
+                    src="/src/assets/Imagenes/user phot.jpg"
+                    alt="photoUser"
+                  />
+                  <BoxName>
+                    <NameReview>{contact.name}</NameReview>
+                    <BoxTime>
+                      <TimeReview >{contact.date}</TimeReview>
+                      <BoxIcon>
+                        <CancelIcon />
+                        <CheckIcon />
+                      </BoxIcon>
+                    </BoxTime>
+                  </BoxName>
+                </BoxCard>
+              </BoxReviews>
+            </StyledSwiperSlide>
+          ))}
+            {open !== null && (
+          <PopUp>
+            <b>
+              <NamePopUp>{DataContact.find(contact => contact.id === open)?.name}</NamePopUp><DatePopUp>{DataContact.find(contact => contact.id === open)?.date}</DatePopUp>
+            </b>
+            <p>{DataContact.find(contact => contact.id === open)?.comment}</p>
+            <ClosePopUp onClick={() => setOpen(null)}>&#x2716;</ClosePopUp> {/* Icono de cierre */}
+          </PopUp>
+        )}
+        </StyledSwiper>
+        <BoxSelect>
+          <ContainerSelect>
+            <SelectTitle
+              onClick={handleAllContacts}
+              $isActive={selectedStatus === "all"}
+            >
+              All Contacts
+            </SelectTitle>
+            <SelectTitle
+              onClick={archivedContact}
+              $isActive={selectedStatus === "Archived"}
+            >
+              Archived
+            </SelectTitle>
+          </ContainerSelect>
+          <ContainerInput>
+            <ContactInput
+              type="text"
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+            <label>
+              <IconSearch />
+            </label>
+          </ContainerInput>
+        </BoxSelect>
+        <TableContacts>
+          <TableHead>
+            <TableR>
+              <TableDate>Date</TableDate>
+              <TableCustomer>Customer</TableCustomer>
+              <TableComment>Comment</TableComment>
+            </TableR>
+          </TableHead>
+          <TableBody>
+            {currentContact.map((contact) => (
+              <TableR key={contact.id}>
+                <TableDate>
+                  {contact.date} <br /> #{contact.id}
+                </TableDate>
+                <TableAmenities>
+                  {contact.name} <br /> {contact.email} <br /> {contact.phone}
+                </TableAmenities>
+                <TableContact>{contact.comment}</TableContact>
+                <TableButton>
+                  {contact.archived ? (
+                    <CancelArchive onClick={() => handleArchive(contact.id)} />
+                  ) : (
+                    <ButtonDefault onClick={() => handleArchive(contact.id)}>
+                      ARCHIVE
+                    </ButtonDefault>
+                  )}
+                  <ButtonDelete onClick={() => handleDeleteContact(contact.id)}>
+                    DELETE
+                  </ButtonDelete>
+                </TableButton>
               </TableR>
-            </TableHead>
-            <TableBody>
-              {currentContact.map((contact) => (
-                <TableR key={contact.id}>
-                  <TableDate>
-                    {contact.date} <br /> #{contact.id}
-                  </TableDate>
-                  <TableAmenities>
-                    {contact.name} <br /> {contact.email} <br />{" "}
-                    {contact.phone}
-                  </TableAmenities>
-                  <TableContact>{contact.comment}</TableContact>
-                  <TableButton>
-                    {contact.archived ? (
-                      <CancelArchive
-                        onClick={() => handleArchive(contact.id)}
-                      />
-                    ) : (
-                      <ButtonDefault onClick={() => handleArchive(contact.id)}>
-                        ARCHIVE
-                      </ButtonDefault>
-                    )}
-                    <ButtonDelete
-                      onClick={() => handleDeleteContact(contact.id)}
-                    >
-                      DELETE
-                    </ButtonDelete>
-                  </TableButton>
-                </TableR>
-              ))}
-            </TableBody>
-          </TableContacts>
-          <ContainerButtons>
-            <ButtonGreen
-              onClick={prevPage}
-              type="primary"
-              disabled={currentPage === 1}
-            >
-              Prev
-            </ButtonGreen>
-            <ContainerFake>
-              {[...Array(Math.ceil(sortedContact.length / contactPerPage))].map(
-                (_, index) => (
-                  <ButtonFake
-                    key={index + 1}
-                    onClick={() => setCurrentPage(index + 1)}
-                    active={currentPage === index + 1}
-                  >
-                    {index + 1}
-                  </ButtonFake>
-                )
-              )}
-            </ContainerFake>
-            <ButtonGreen
-              onClick={nextPage}
-              type="primary"
-              disabled={currentPage * contactPerPage >= sortedContact.length}
-            >
-              Next
-            </ButtonGreen>
-          </ContainerButtons>
-      
+            ))}
+          </TableBody>
+        </TableContacts>
+        <ContainerButtons>
+          <ButtonGreen
+            onClick={prevPage}
+            type="primary"
+            disabled={currentPage === 1}
+          >
+            Prev
+          </ButtonGreen>
+          <ContainerFake>
+            {[...Array(Math.ceil(sortedContact.length / contactPerPage))].map(
+              (_, index) => (
+                <ButtonFake
+                  key={index + 1}
+                  onClick={() => setCurrentPage(index + 1)}
+                  active={currentPage === index + 1}
+                >
+                  {index + 1}
+                </ButtonFake>
+              )
+            )}
+          </ContainerFake>
+          <ButtonGreen
+            onClick={nextPage}
+            type="primary"
+            disabled={currentPage * contactPerPage >= sortedContact.length}
+          >
+            Next
+          </ButtonGreen>
+        </ContainerButtons>
       </SectionContact>
     </>
   );

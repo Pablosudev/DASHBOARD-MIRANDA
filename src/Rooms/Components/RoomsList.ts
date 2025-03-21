@@ -42,6 +42,7 @@ background-color:#F5F5F5;
 margin-left:1rem;
 margin-right:1rem;
 border-radius: 12px;
+
 `
 export const BoxSelect = styled.div`
 display:flex;

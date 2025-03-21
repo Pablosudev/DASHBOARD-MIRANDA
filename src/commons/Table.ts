@@ -136,7 +136,9 @@ export const TableContact = styled.td`
 export const TableDate = styled.td`
   font-family: "Poppins";
   text-align:center;
-`;
+  min-width: 2rem; 
+  padding-left:1%;
+`
 export const TableCustomer = styled.td`
 font-family: "Poppins";
 text-align:center;

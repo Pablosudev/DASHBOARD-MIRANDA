@@ -198,9 +198,9 @@ export const BookingsList = () => {
                 <TableGuest>
                   {booking.name} <br /> #{booking.id}
                 </TableGuest>
-                <ContainerId>{booking.date}</ContainerId>
-                <TableAmenities>{booking.check_in}</TableAmenities>
-                <TableAmenities>{booking.check_out}</TableAmenities>
+                <ContainerId>{new Date(booking.date).toLocaleDateString()}</ContainerId>
+                <TableAmenities>{new Date(booking.check_in).toLocaleDateString()}</TableAmenities>
+                <TableAmenities>{new Date(booking.check_out).toLocaleDateString()}</TableAmenities>
                 <TableAmenities>{booking.request}</TableAmenities>
                 <TableAmenities>
                 {room ? (

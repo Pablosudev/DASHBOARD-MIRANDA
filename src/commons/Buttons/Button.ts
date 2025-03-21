@@ -16,4 +16,5 @@ export const ButtonDefault = styled.button`
     padding-right: 10%;
     padding-top:3%;
     padding-bottom: 3%;
+    cursor: pointer;
 `

@@ -12,5 +12,6 @@ export const ButtonFake = styled.button.withConfig({
   padding-right: 1.2rem;
   border-radius: 12px;
   border: transparent;
+  cursor: pointer;
 `;
 
