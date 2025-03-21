@@ -154,7 +154,7 @@ export const Contact = () => {
     if (StatusContact === "idle") {
       dispatch(ContactAllThunks());
       if (id) {
-        dispatch(ContactIdThunks(Number(id)));
+      dispatch(ContactIdThunks(Number(id)));
       }
     } else if (StatusContact === "fulfilled") {
       setContact(DataContact);

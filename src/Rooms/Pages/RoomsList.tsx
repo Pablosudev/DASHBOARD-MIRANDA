@@ -209,10 +209,11 @@ export const RoomsList = () => {
                   src="/src/assets/Imagenes/room10.jpg"
                   alt={`Room ${room.number} photo`}
                 />
-              </TableTd>
-              <ContainerId>
+                <ContainerId>
                 <Night>{room.number}</Night> <p>#{room.id}</p>
               </ContainerId>
+              </TableTd>
+              
               <TableAmenities>{room.type}</TableAmenities>
               <TableAmenities>
                 {Array.isArray(room.amenities)

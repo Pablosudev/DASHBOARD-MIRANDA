@@ -78,6 +78,7 @@ export const TableImgUsers = styled.img`
 
 export const TableTd = styled.td`
   height: 7.5rem;
+  display:flex;
 `;
 export const ButtonTable = styled.button<ButtonTableProps>`
   border-radius: 12px;
@@ -93,7 +94,6 @@ export const TableAmenities = styled.td`
   font-family: "Poppins";
   font-size: 1rem;
   padding-right: 2%;
-  padding-left: 3rem;
 `;
 export const TableEmail = styled.td`
   font-family: "Poppins";
@@ -105,8 +105,7 @@ export const TablePrice = styled.td`
   display: flex;
   align-items: center;
   font-family: "Poppins";
-  align-items: center;
-  margin-top: 32%;
+  text-align:center;
   padding-right: 2rem;
   
 `;
@@ -186,6 +185,7 @@ export const TableIcons = styled.td`
   display: flex;
   flex-direction: column;
   padding-right: 2rem;
+  justify-content:center;
 `;
 export const PopUpContacts = styled.div`
   padding-top: 4rem;
@@ -198,23 +198,21 @@ export const HeadType = styled.th`
   padding-left: 21%;
 `;
 export const HeadPrice = styled.th`
-padding-left: 28%;
+text-align:start;
 `;
 export const HeadOffer = styled.th`
-padding-left: 13%;
-
+text-align:start
 `;
 
 export const HeadRoomType = styled.th`
-  padding-left: 11%;
+  text-align:start;
   
 `;
 export const HeadRoomStatus = styled.th`
-  padding-left: 13%;
+ text-align:start;
 `;
 export const HeadRoomAmenities= styled.th`
-padding-left: 17%;
-width:10rem;
+text-align: start;
 `
 export const HeadContact = styled.th`
 padding-left: 16%;
