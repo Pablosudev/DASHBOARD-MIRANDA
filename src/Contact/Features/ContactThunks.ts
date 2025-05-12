@@ -9,7 +9,7 @@ export const ContactAllThunks = createAsyncThunk<Contacts[]>(
   "contacts/getContacts",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3005/api/v1/contacts", {
+      const response = await fetch("https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/contacts", {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -32,7 +32,7 @@ export const ContactIdThunks = createAsyncThunk<Contacts, number>(
   async (id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3005/api/v1/contacts/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/contacts/${id}`,
         {
           method: "GET",
           headers: GetAuthHeaders(),
@@ -64,7 +64,7 @@ export const ContactDeleteThunk = createAsyncThunk<{ id: number }, number>(
   async (id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3005/api/v1/contacts/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/contacts/${id}`,
         {
           method: "DELETE",
           headers: GetAuthHeaders(),
@@ -99,7 +99,7 @@ export const ContactSaveThunk = createAsyncThunk(
       }
 
       const response = await fetch(
-        `http://localhost:3005/api/v1/contacts/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/contacts/${id}`,
         {
           method: "PUT",
           headers: GetAuthHeaders(),
