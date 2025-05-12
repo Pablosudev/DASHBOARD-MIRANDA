@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuthContext } from '../../UseContext/AuthContext';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import { DivStyled, CustomIcon, InputStyled, ButtonStyled } from '../Components/LogInStyle';
 
 export const LogIn = () => {
