@@ -6,7 +6,7 @@ export const RoomsThunk = createAsyncThunk<RoomsInter[]>(
   "rooms/getRooms",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3005/api/v1/rooms", {
+      const response = await fetch("https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms", {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -29,7 +29,7 @@ export const IdRoomThunk = createAsyncThunk<RoomsInter, number>(
   "roomId/getIdRoom",
   async (id: number, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:3005/api/v1/rooms/${id}`, {
+      const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${id}`, {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -57,7 +57,7 @@ export const EditRoomThunk = createAsyncThunk<
   { id: number; updatedRoom: RoomsInter }
 >("room/editRoom", async ({ id, updatedRoom }, { rejectWithValue }) => {
         try {
-          const response = await fetch(`http://localhost:3005/api/v1/rooms/${id}`,{
+          const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${id}`,{
             method: "PUT",
       headers: GetAuthHeaders(),
       body: JSON.stringify(updatedRoom),
@@ -78,7 +78,7 @@ export const DeleteRoomThunk = createAsyncThunk<{ id: number }, number>(
   async (id: number, {rejectWithValue}) => {
 
           try {
-            const response = await fetch(`http://localhost:3005/api/v1/rooms/${id}`, {
+            const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${id}`, {
               method: "DELETE",
               headers: GetAuthHeaders(),
             });
@@ -99,7 +99,7 @@ export const CreateRoomThunk = createAsyncThunk<RoomsInter, RoomsInter>(
   "room/createRoom",
   async (newRoom, { rejectWithValue }) => {
           try {
-            const response = await fetch("http://localhost:3005/api/v1/rooms" , {
+            const response = await fetch("https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms" , {
               method: "POST",
         headers: GetAuthHeaders(),
         body: JSON.stringify(newRoom),
