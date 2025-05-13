@@ -68,7 +68,7 @@ export const Contact = () => {
   const DataContact: Contacts[] = useSelector(AllDataContact);
   const dispatch = useDispatch<AppDispatch>();
   const [contact, setContact] = useState<Contacts[]>(DataContact);
-  const { id } = useParams<{ id: string }>();
+  const { _id } = useParams<{ _id: string }>();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const contactPerPage = 10;
@@ -110,13 +110,13 @@ export const Contact = () => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
-  const handleArchive = (id: number) => {
-    dispatch(ContactSaveThunk(id))
+  const handleArchive = (_id: number) => {
+    dispatch(ContactSaveThunk(_id))
       .unwrap()
       .then(() => {
         dispatch(ContactAllThunks());
         const updatedData = DataContact.map((contact) =>
-          contact.id === id
+          contact._id === _id
             ? { ...contact, archived: !contact.archived }
             : contact
         );
@@ -139,29 +139,29 @@ export const Contact = () => {
     setSelectedStaus("all");
   };
 
-  const handleDeleteContact = (id) => {
-    dispatch(ContactDeleteThunk(id));
+  const handleDeleteContact = (_id: number) => {
+    dispatch(ContactDeleteThunk(_id));
   };
-  const handlePopUp = (id: number) => {
-    if (open === id) {
+  const handlePopUp = (_id: number) => {
+    if (open === _id) {
       setOpen(null);
     } else {
-      setOpen(id);
+      setOpen(_id);
     }
   };
 
   useEffect(() => {
     if (StatusContact === "idle") {
       dispatch(ContactAllThunks());
-      if (id) {
-      dispatch(ContactIdThunks(Number(id)));
+      if (_id) {
+      dispatch(ContactIdThunks(Number(_id)));
       }
     } else if (StatusContact === "fulfilled") {
       setContact(DataContact);
     } else if (StatusContact === "rejected") {
       Error("fallo datos de contact");
     }
-  }, [dispatch, id, StatusContact, DataContact]);
+  }, [dispatch, _id, StatusContact, DataContact]);
 
   return (
     <>
@@ -173,9 +173,9 @@ export const Contact = () => {
           loop={true}
         >
           {DataContact.map((contact) => (
-            <StyledSwiperSlide key={contact.id}>
+            <StyledSwiperSlide key={contact._id}>
               <BoxReviews>
-                <Review onClick={() => handlePopUp(contact.id)}>{contact.comment}</Review>
+                <Review onClick={() => handlePopUp(contact._id)}>{contact.comment}</Review>
                 <BoxCard>
                   <ImgUser
                     src="/src/assets/Imagenes/user phot.jpg"
@@ -198,9 +198,9 @@ export const Contact = () => {
             {open !== null && (
           <PopUp>
             <b>
-              <NamePopUp>{DataContact.find(contact => contact.id === open)?.name}</NamePopUp><DatePopUp>{DataContact.find(contact => contact.id === open)?.date}</DatePopUp>
+              <NamePopUp>{DataContact.find(contact => contact._id === open)?.name}</NamePopUp><DatePopUp>{DataContact.find(contact => contact._id === open)?.date}</DatePopUp>
             </b>
-            <p>{DataContact.find(contact => contact.id === open)?.comment}</p>
+            <p>{DataContact.find(contact => contact._id === open)?.comment}</p>
             <ClosePopUp onClick={() => setOpen(null)}>&#x2716;</ClosePopUp> {/* Icono de cierre */}
           </PopUp>
         )}
@@ -241,9 +241,9 @@ export const Contact = () => {
           </TableHead>
           <TableBody>
             {currentContact.map((contact) => (
-              <TableR key={contact.id}>
+              <TableR key={contact._id}>
                 <TableDate>
-                  {contact.date} <br /> #{contact.id}
+                  {contact.date} <br /> #{contact._id}
                 </TableDate>
                 <TableContact>
                   {contact.name} <br /> {contact.email} <br /> {contact.phone}
@@ -251,13 +251,13 @@ export const Contact = () => {
                 <TableContact>{contact.comment}</TableContact>
                 <TableButton>
                   {contact.archived ? (
-                    <CancelArchive onClick={() => handleArchive(contact.id)} />
+                    <CancelArchive onClick={() => handleArchive(contact._id)} />
                   ) : (
-                    <ButtonDefault onClick={() => handleArchive(contact.id)}>
+                    <ButtonDefault onClick={() => handleArchive(contact._id)}>
                       ARCHIVE
                     </ButtonDefault>
                   )}
-                  <ButtonDelete onClick={() => handleDeleteContact(contact.id)}>
+                  <ButtonDelete onClick={() => handleDeleteContact(contact._id)}>
                     DELETE
                   </ButtonDelete>
                 </TableButton>

@@ -1,6 +1,6 @@
 export interface RoomsInter {
   number: number;
-  id: number;
+  _id: number;
   price: number;
   offer: number;
   roomStatus: string;

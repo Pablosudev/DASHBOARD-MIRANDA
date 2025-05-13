@@ -3,7 +3,7 @@
  
 export interface Contacts{
     date: string;
-    id: number;
+    _id: number;
     name:string;
     email:string;
     phone: string;
@@ -11,10 +11,6 @@ export interface Contacts{
     comment: string;
     status: string;
     archived: boolean;
-
-    
-    
-   
     request: string,
 }
 

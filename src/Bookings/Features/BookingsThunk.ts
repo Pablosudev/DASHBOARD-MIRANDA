@@ -6,7 +6,7 @@ export const AllBookingsThunk = createAsyncThunk<BookingsInter[]>(
   "bookings/getBookings",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3005/api/v1/bookings", {
+      const response = await fetch("https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings", {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -29,7 +29,7 @@ export const BookingsIdThunk = createAsyncThunk<BookingsInter, number>(
   async (id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3005/api/v1/bookings/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings/${id}`,
         {
           method: "GET",
           headers: GetAuthHeaders(),
@@ -61,7 +61,7 @@ export const DeleteBookingsThunk = createAsyncThunk<{ id: number }, number>(
   async (id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3005/api/v1/bookings/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings/${id}`,
         {
           method: "DELETE",
           headers: GetAuthHeaders(),
@@ -84,7 +84,7 @@ export const CreateBookingThunk = createAsyncThunk<
   BookingsInter
 >("bookings/createBookings", async (newBooking, { rejectWithValue }) => {
   try {
-    const response = await fetch("http://localhost:3005/api/v1/bookings", {
+    const response = await fetch("https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings", {
       method: "POST",
       headers: GetAuthHeaders(),
       body: JSON.stringify(newBooking),
@@ -107,7 +107,7 @@ export const EditBookingThunk = createAsyncThunk<
   async ({ id, updatedBooking }, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:3005/api/v1/bookings/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings/${id}`,
         {
           method: "PUT",
           headers: GetAuthHeaders(),

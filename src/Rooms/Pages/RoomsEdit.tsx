@@ -41,7 +41,7 @@ export const RoomsEdit = () => {
     roomStatus: "",
     type: "",
     amenities: [],
-    id: 0
+    _id: 0
   });
   const handleAmenities = (amenity: string) => {
     setRoomId((prevState) => {
@@ -93,9 +93,9 @@ export const RoomsEdit = () => {
           roomStatus: RoomID.roomStatus,
           type: RoomID.type,
           amenities: RoomID.amenities,
-          id: RoomID.id
+          _id: RoomID._id
         });
-        if (RoomID.id != id) {
+        if (RoomID._id != _id) {
           dispatch(IdRoomThunk(id ?? ""));
         }
       }

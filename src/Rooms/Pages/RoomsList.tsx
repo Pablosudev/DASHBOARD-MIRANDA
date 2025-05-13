@@ -128,8 +128,8 @@ export const RoomsList = () => {
     navigate("/rooms/create");
   };
 
-  const handleDeleteRoom = (id) => {
-    dispatch(DeleteRoomThunk(id));
+  const handleDeleteRoom = (_id) => {
+    dispatch(DeleteRoomThunk(_id));
   };
 
   const handleFilterChange = (filter: string) => {
@@ -203,14 +203,14 @@ export const RoomsList = () => {
         </TableHead>
         <TableBody>
           {currentRooms.map((room) => (
-            <TableRow key={Number(room.id)} index={Number(room.id)}>
+            <TableRow key={Number(room._id)} index={Number(room._id)}>
               <TableTd>
                 <TableImg
                   src="/src/assets/Imagenes/room10.jpg"
                   alt={`Room ${room.number} photo`}
                 />
                 <ContainerId>
-                <Night>{room.number}</Night> <p>#{room.id}</p>
+                <Night>{room.number}</Night> <p>#{room._id}</p>
               </ContainerId>
               </TableTd>
               
@@ -234,11 +234,11 @@ export const RoomsList = () => {
                 </ButtonTable>
               </TableStatusRooms>
               <TableIcons>
-                <Link to={`/rooms/edit/${room.id}`} aria-label="Edit room">
+                <Link to={`/rooms/edit/${room._id}`} aria-label="Edit room">
                   <EditIcon />
                 </Link>
                 <DeleteIcon
-                  onClick={() => handleDeleteRoom(room.id)}
+                  onClick={() => handleDeleteRoom(room._id)}
                   aria-label="Delete room"
                 />
               </TableIcons>

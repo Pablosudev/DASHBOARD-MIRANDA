@@ -29,10 +29,10 @@ export const ContactAllThunks = createAsyncThunk<Contacts[]>(
 //THUNK ID
 export const ContactIdThunks = createAsyncThunk<Contacts, number>(
   "contactId/getIdContact",
-  async (id: number, { rejectWithValue }) => {
+  async (_id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/contacts/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/contacts/${_id}`,
         {
           method: "GET",
           headers: GetAuthHeaders(),
@@ -89,17 +89,17 @@ export const ContactDeleteThunk = createAsyncThunk<{ id: number }, number>(
 
 export const ContactSaveThunk = createAsyncThunk(
   "contact/archiveContact",
-  async (id: number, { getState, dispatch, rejectWithValue }) => {
+  async (_id: number, { getState, dispatch, rejectWithValue }) => {
     try {
       const state = getState() as RootState;
-      const contact = state.contact.data.find((contact) => contact.id === id);
+      const contact = state.contact.data.find((contact) => contact._id === _id);
 
       if (!contact) {
         return rejectWithValue("Contacto no encontrado");
       }
 
       const response = await fetch(
-        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/contacts/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/contacts/${_id}`,
         {
           method: "PUT",
           headers: GetAuthHeaders(),
