@@ -46,18 +46,18 @@ export const Dashboard = () => {
   const StatusContact = useSelector(AllStatusContact)
   const dispatch = useDispatch<AppDispatch>();
   const [ contact, setContact ] = useState<Contacts[]>(DataContact)
-  const {id} = useParams<{id: string}>();
+  const {_id} = useParams<{_id: string}>();
 
 
   useEffect(() => {
     if(StatusContact === 'idle'){
-      dispatch(ContactAllThunks(id))
+      dispatch(ContactAllThunks())
     } else if (StatusContact === 'fulfilled'){
       setContact(DataContact);
     } else if (StatusContact === 'rejected'){
       Error('Error contact')
     }
-  },[StatusContact, id , DataContact])
+  },[StatusContact, _id , DataContact])
   return (
     <>
       <DashboardSection>

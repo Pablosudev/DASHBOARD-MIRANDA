@@ -119,7 +119,6 @@ width:100%;
 export const BoxReviews = styled.div`
 background-color: #ffffff;
 border: 1px solid #EBEBEB;
-max-width: 27rem;
 border-radius: 0.8rem;
 margin-left: 1rem;
 padding-left: 1rem;
