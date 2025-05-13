@@ -57,7 +57,6 @@ import {
   CancelIcon,
   CheckIcon,
 } from "../Components/Contact.js";
-import React from "react";
 import { AppDispatch } from "../../App/Store.js";
 import { Contacts } from "../Interfaces/ContactInterfaces.js";
 import { IconSearch } from "../../Users/Components/Users.ts";
@@ -115,7 +114,7 @@ export const Contact = () => {
       .unwrap()
       .then(() => {
         dispatch(ContactAllThunks());
-        const updatedData = DataContact.map((contact) =>
+        DataContact.map((contact) =>
           contact._id === _id
             ? { ...contact, archived: !contact.archived }
             : contact

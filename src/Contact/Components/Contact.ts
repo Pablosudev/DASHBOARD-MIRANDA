@@ -22,16 +22,17 @@ padding-left: 2%;
 padding-right:2%;
 padding-top: 2%;
 padding-bottom: 1%;
+width: 100%;
+
 `
 export const CancelIcon = styled(GiCancel)`
 color: #E23428;
-font-size:1.5rem;
-margin-right: 1rem;
+font-size:2rem;
+margin-right:15%;
 `
 export const CheckIcon = styled(FaRegCircleCheck)`
 color:#5AD07A;
-font-size:1.5rem;
-margin-right: 1rem;
+font-size:2rem;
 `
 export const TimeReview = styled.p`
 text-align: left;
@@ -58,6 +59,7 @@ margin-left:1rem;
 export const BoxCard = styled.div`
 display: flex;
 align-items: center;
+
 `
 export const ImgUser = styled.img`
 width:3.5rem;
@@ -70,13 +72,15 @@ color: #262626;
 margin-bottom:0%;
 `
 export const BoxIcon = styled.div`
-margin-left:12.7rem;
+position:absolute;
+right: 2%;
+display: flex;
 `
 export const CancelArchive = styled(MdOutlineCancel)`
 color: red;
 font-size: 1.5rem;
 margin-top: 0.5rem;
-margin-left: 1.5rem;
+margin-left: 40%;
 align-items:center;
 cursor: pointer;
 `
