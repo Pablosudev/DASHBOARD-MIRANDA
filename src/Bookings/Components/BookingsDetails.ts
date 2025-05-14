@@ -244,3 +244,10 @@ export const Edit = styled.p`
 export const ContainerDescription = styled.div`
 margin-left: 5%;
 `
+export const ButtonsRequest  =styled.button`
+border:transparent;
+padding: 4%;
+border-radius:15%;
+margin-left:8%;
+font-family: "Poppins";
+`

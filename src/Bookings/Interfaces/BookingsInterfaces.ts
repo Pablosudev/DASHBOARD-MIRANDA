@@ -2,7 +2,7 @@ import { RoomsInter } from "../../Rooms/Interfaces/RoomsInterfaces";
 
 export interface BookingsInter {
   name: string;
-  id?: number;
+  _id: number;
   date: Date;
   check_in: Date;
   check_out: Date;
@@ -36,7 +36,7 @@ export interface BookingsDetailsInter {
   check_out: Date;
   request: string;
   status: string;
-  id?: number;
+  _id?: number;
   
 }
 export interface ButtonBookingsProps {

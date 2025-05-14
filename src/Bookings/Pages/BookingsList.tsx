@@ -25,7 +25,7 @@ import {
   IconSearch,
   ContainerInput,
 } from "../../Users/Components/Users";
-import { DeleteIcon, EditIcon } from "../Components/BookingsDetails";
+import { ButtonsRequest, DeleteIcon, EditIcon } from "../Components/BookingsDetails";
 import { ButtonGreen } from "../../commons/Buttons/ButtonGreen";
 import { ButtonFake } from "../../commons/Buttons/ButtonFake";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -43,6 +43,7 @@ import { BookingsInter } from "../Interfaces/BookingsInterfaces";
 import { getAllRoomsData, getIdRoomsData } from "../../Rooms/Features/RoomsSlice";
 import { RoomsThunk } from "../../Rooms/Features/RoomsThunk";
 import { RoomsInter } from "../../Rooms/Interfaces/RoomsInterfaces";
+import { ClosePopUp, PopUp } from "../../Contact/Components/Contact";
 
 
 export const BookingsList = () => {
@@ -51,7 +52,7 @@ export const BookingsList = () => {
   const StatusBookings = useSelector(getAllBookingsStatus);
   const RoomData: RoomsInter [] = useSelector(getAllRoomsData);
   const RoomId: RoomsInter | undefined = useSelector(getIdRoomsData);
-  const { id } = useParams<string>();
+  const { _id } = useParams<string>();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [bookingsData, setBookingsData] = useState<BookingsInter[]>(DataBookings);
   const bookingsPerPage: number = 10;
@@ -59,6 +60,7 @@ export const BookingsList = () => {
   const navigate = useNavigate();
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [room, setRoom] = useState<RoomsInter | undefined>(RoomId)
+  const [open, setOpen] = useState<number | null>(null);
 
   useEffect(() => {
     if (StatusBookings === "idle") {
@@ -69,12 +71,12 @@ export const BookingsList = () => {
     } else if (StatusBookings === "rejected") {
       alert("Error al cargar los datos de los usuarios");
     }
-  }, [dispatch, id, StatusBookings]);
+  }, [dispatch, _id, StatusBookings]);
 
   const roomsMap = useMemo(() => {
     const map: { [key: string]: RoomsInter } = {};
     RoomData.forEach((room) => {
-      map[room.id] = room;
+      map[room._id] = room;
     });
     return map;
   }, [RoomData]);
@@ -128,6 +130,13 @@ export const BookingsList = () => {
         alert("Error al eliminar la reserva");
       });
   };
+  const handlePopUp = (_id:number) => {
+    if (open === _id) {
+      setOpen(null);
+    } else {
+      setOpen(_id);
+    }
+  }
 
   const handleNewBooking = () => {
     navigate("/bookings/create");
@@ -194,21 +203,27 @@ export const BookingsList = () => {
               const room = roomsMap[booking.room_id]
             return (
               
-              <TableR key={booking.id}>
+              <TableR key={booking._id}>
                 <TableGuest>
-                  {booking.name} <br /> #{booking.id}
+                  {booking.name} <br /> #{booking._id}
                 </TableGuest>
                 <ContainerId>{new Date(booking.date).toLocaleDateString()}</ContainerId>
                 <TableAmenities>{new Date(booking.check_in).toLocaleDateString()}</TableAmenities>
                 <TableAmenities>{new Date(booking.check_out).toLocaleDateString()}</TableAmenities>
-                <TableAmenities>{booking.request}</TableAmenities>
+                <TableAmenities><ButtonsRequest onClick={() => handlePopUp(booking._id)}>VIEW REQUEST</ButtonsRequest></TableAmenities>
+                {open !== null &&(
+                <PopUp>
+                  <p>{DataBookings.find(booking => booking._id === open)?.request}</p>
+                  <ClosePopUp onClick={() => setOpen(null)}>&#x2716;</ClosePopUp>
+                </PopUp>
+                )}
                 <TableAmenities>
                 {room ? (
             <>
               {room.type} <br /> Room {room.number}
             </>
           ) : (
-            "Room details loading..." // Puedes mostrar esto mientras se cargan los detalles de la habitación
+            "Room details loading..." 
           )}
                 </TableAmenities>
                 <td>
@@ -217,11 +232,11 @@ export const BookingsList = () => {
                   </ButtonBookings>
                 </td>
                 <TableIcons>
-                  <Link to={`/bookings/details/${booking.id}`}>
+                  <Link to={`/bookings/details/${booking._id}`}>
                     <EditIcon />
                   </Link>
                   <DeleteIcon
-                    onClick={() => handleDeleteBookings(booking.id)}
+                    onClick={() => handleDeleteBookings(booking._id)}
                   />
                 </TableIcons>
               </TableR>

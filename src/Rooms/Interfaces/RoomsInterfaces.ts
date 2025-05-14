@@ -38,6 +38,6 @@ export interface RoomCreate {
   offer: number;
   roomStatus: string;
   amenities: string[];
-  id:number
+  _id:number
  
 }
