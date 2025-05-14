@@ -26,9 +26,9 @@ export const UsersAllThunk = createAsyncThunk<Users[], number | undefined>(
 //FETCH ID
 export const IdUserThunk = createAsyncThunk<Users, number>(
   "userId/getIdUser",
-  async (id: number, { rejectWithValue }) => {
+  async (_id: number, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/users/${id}`, {
+      const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/users/${_id}`, {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -53,12 +53,12 @@ export const IdUserThunk = createAsyncThunk<Users, number>(
 
 //FETCH DELETE
 
-export const DeleteUserThunk = createAsyncThunk<{ id: number }, number>(
+export const DeleteUserThunk = createAsyncThunk<{ _id: number }, number>(
   "user/deleteUser",
-  async (id: number, { rejectWithValue }) => {
+  async (_id: number, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/users/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/users/${_id}`,
         {
           method: "DELETE",
           headers: GetAuthHeaders(),
@@ -69,7 +69,7 @@ export const DeleteUserThunk = createAsyncThunk<{ id: number }, number>(
         return rejectWithValue("Error al eliminar el usuario");
       }
 
-      return { id };
+      return { _id };
     } catch (error) {
       return rejectWithValue(error.message || "Error desconocido al eliminar el usuario");
     }
@@ -103,10 +103,10 @@ export const CreateUserThunk = createAsyncThunk<Users, Users>(
 //FETCH EDIT
 export const EditUserThunk = createAsyncThunk<
   Users,
-  { id: number; updatedUser: Users }
->("user/editUser", async ({ id, updatedUser }, { rejectWithValue }) => {
+  { _id: number; updatedUser: Users }
+>("user/editUser", async ({ _id, updatedUser }, { rejectWithValue }) => {
   try {
-    const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/users/${id}`, {
+    const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/users/${_id}`, {
       method: "PUT",
       headers: GetAuthHeaders(),
       body: JSON.stringify(updatedUser),

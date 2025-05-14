@@ -22,17 +22,16 @@ import { IdData, StatusId } from "../Features/UsersSlice";
 import { IdUserThunk, EditUserThunk } from "../Features/UsersThunk";
 import { AppDispatch } from "../../App/Store";
 import { Users } from "../Interfaces/UsersInterfaces";
-import React from "react";
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 
 export const UserEdit = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { id } = useParams<{ id }>();
+  const { _id } = useParams<{ _id }>();
   const Users = useSelector(IdData);
   const UserStatus = useSelector(StatusId);
-  const numericId = Number(id);
+  const numericId = Number(_id);
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setNewUser((prevState) => ({
@@ -42,7 +41,7 @@ export const UserEdit = () => {
   };
 
   const [newUser, setNewUser] = useState<Users>({
-    id:0,
+    _id:0,
     name: "",
     email: "",
     start_date: new Date().toISOString().split('T')[0],
@@ -57,11 +56,11 @@ export const UserEdit = () => {
   
   const handleSave = () => {
     
-    if (!id) {
+    if (!_id) {
       alert("ID no válido");
       return;
     }
-    dispatch(EditUserThunk({ id, updatedUser: newUser }))
+    dispatch(EditUserThunk({ _id, updatedUser: newUser }))
       .unwrap()
       .then(() => {
         navigate("/users");
@@ -83,7 +82,7 @@ export const UserEdit = () => {
 
   useEffect(() => {
     if (UserStatus === "idle") {
-      if (id) {
+      if (_id) {
         dispatch(IdUserThunk(numericId));
       }
     } else if (UserStatus === "fulfilled" && Users) {
@@ -104,10 +103,10 @@ export const UserEdit = () => {
           password: Users.password,
           status: Users.status,
           department: Users.department,
-          id: Users.id,
+          _id: Users._id,
         });
   
-        if (Users.id != numericId) {
+        if (Users._id != numericId) {
           dispatch(IdUserThunk(numericId));
         }
       }

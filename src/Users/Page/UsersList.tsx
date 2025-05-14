@@ -53,7 +53,7 @@ export const UserList = () => {
   const StatusUser = useSelector(AllStatusUsers);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const {id} = useParams<{id}>();
+  const {_id} = useParams<{_id}>();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedStatus , setSelectedStatus] = useState<string>("all")
 
@@ -81,10 +81,10 @@ export const UserList = () => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
-  const handleDeleteUser = (id: number) => {
-    dispatch(DeleteUserThunk(id))
+  const handleDeleteUser = (_id: number) => {
+    dispatch(DeleteUserThunk(_id))
     .then(()=> {
-      setUsers(prevUsers => prevUsers.filter(user => user.id !== id))
+      setUsers(prevUsers => prevUsers.filter(user => user._id !== _id))
     })
     Toastify({
       text: "¡Usuario eliminado con éxito!",
@@ -146,7 +146,7 @@ export const UserList = () => {
           </TableHead>
           <TableBody>
             {currentUsers.map((user) => (
-              <TableR key={user.id}>
+              <TableR key={user._id}>
                 <TableTd>
                   <TableImgUsers
                     src="/src/assets/Imagenes/users logo.jpg"
@@ -155,7 +155,7 @@ export const UserList = () => {
                 </TableTd>
                 <ContainerId>
                   {user.name} <br />
-                  {user.id}
+                  {user._id}
                 </ContainerId>
                 <TableDate>{new Date(user.start_date).toLocaleDateString()}</TableDate>
                 <TableDepartment>{user.department}</TableDepartment>
@@ -165,10 +165,10 @@ export const UserList = () => {
                   <StatusUsers status ={user.status}>{user.status}</StatusUsers>
                 </TabledStatus>
                 <TabledIcons>
-                  <Link to= {`/users/edit/${user.id}`}> <EditIcon /></Link>
+                  <Link to= {`/users/edit/${user._id}`}> <EditIcon /></Link>
                   
                   <DeleteIcon
-                    onClick={() => handleDeleteUser(user.id)}
+                    onClick={() => handleDeleteUser(user._id)}
                     aria-label="Delete user"
                   />
                 </TabledIcons>

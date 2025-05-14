@@ -9,6 +9,7 @@ import {
 export const SectionTable = styled.section`
   margin-top: 6%;
   margin-left: 2%;
+  margin-right:2%;
   width: 100%;
 `;
 export const TableR = styled.tr`
@@ -230,11 +231,7 @@ export const HeadStatus = styled.th`
   padding-left: 16%;
 `;
 export const TabledIcons = styled.td`
-display: flex;
-flex-direction:column;
-align-items: center;
-padding: 1rem;
-margin-top: 20%;
+padding-right:15%;
 `
 export const TabledStatus = styled.td`
 padding-right: 2rem;
