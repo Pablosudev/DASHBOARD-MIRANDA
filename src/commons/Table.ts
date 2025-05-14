@@ -212,7 +212,7 @@ export const HeadRoomType = styled.th`
   
 `;
 export const HeadRoomStatus = styled.th`
- text-align:start;
+  padding-left:3%;
 `;
 export const HeadRoomAmenities= styled.th`
 text-align: start;
