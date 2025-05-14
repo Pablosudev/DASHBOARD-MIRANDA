@@ -137,6 +137,7 @@ export const UserList = () => {
           <TableHead>
             <TableR>
               <TableHeadName>Name</TableHeadName>
+              <th></th>
               <HeadType>Start Date</HeadType>
               <HeadDepartment>Department</HeadDepartment>
               <HeadContact>Contact</HeadContact>
