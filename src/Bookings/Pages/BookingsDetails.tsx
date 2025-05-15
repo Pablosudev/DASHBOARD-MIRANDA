@@ -33,6 +33,7 @@ import {
   CloseIcon,
   ButtonEditDetails,
   ButtonBookingsDetails,
+  CardDetails,
 } from "../Components/BookingsDetails";
 import { useSelector } from "react-redux";
 import { getBookingsId, getStatusId } from "../Features/BookingsSlice";
@@ -114,7 +115,7 @@ export const BookingsDetails = () => {
   }, [dispatch, numericId, StatusBookingsId, BookingsId]);
 
   return (
-    <>
+    <CardDetails>
       <CardBookings key={bookingsDetails._id}>
         <CardInfo>
           <Link to={"/bookings"}>
@@ -191,6 +192,6 @@ export const BookingsDetails = () => {
           </BoxDescription>
         </CardSlide>
       </CardBookings>
-    </>
+    </CardDetails>
   );
 };

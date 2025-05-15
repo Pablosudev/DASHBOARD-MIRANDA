@@ -13,11 +13,15 @@ import { ButtonBookingsProps } from "../Interfaces/BookingsInterfaces";
 export const CardBookings = styled.section`
 background-color: #ffffff;
 margin-left: 4%;
+margin-right:4%;
 margin-top:10%;
 border-radius:0.8rem; 
 display: flex; 
-max-width: 92rem;
 max-height: 47rem;
+
+`
+export const CardDetails = styled.div`
+width: 100%;
 `
 export const CardInfo = styled.article`
 padding-left: 4rem;
@@ -26,9 +30,10 @@ position: relative;
 `
 export const CardSlide = styled.article`
 position: relative;
+
 `
 export const ImgSlide = styled.img`
-width:46rem;
+width: 100%;
 height:47rem;
 border-bottom-right-radius: 12px;
 border-top-right-radius: 12px;

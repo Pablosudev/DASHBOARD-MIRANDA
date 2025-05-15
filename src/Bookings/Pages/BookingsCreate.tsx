@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { CreateBookingThunk } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
-import { BookingsCreateInter, BookingsInter } from "../Interfaces/BookingsInterfaces";
+import { BookingsInter } from "../Interfaces/BookingsInterfaces";
 import { SelectCreateBookings } from "../../Users/Components/UsersCreate";
 import { ContainerDescription, BoxDescription } from "../Components/BookingsDetails";
 

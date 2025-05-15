@@ -37,11 +37,13 @@ export const BookingsEdit = () => {
   const formatedDate = Date.toString()
   const [newBooking, setNewBooking] = useState<BookingsInter>({
     name: "",
+    _id: 0,
     date: new Date,
     check_in: new Date,
     check_out: new Date,
     request: "",
-    status: ""
+    status: "",
+    room_id: 0,
   });
   const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -79,7 +81,7 @@ export const BookingsEdit = () => {
       const booking = BookingId as BookingsInter;
       setNewBooking({
         name: booking.name,
-        id: booking.id,
+        _id: booking._id,
         date: booking.date,
         check_in: booking.check_in,
         check_out: booking.check_out,
