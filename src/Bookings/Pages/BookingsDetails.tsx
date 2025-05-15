@@ -40,7 +40,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BookingsIdThunk } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
-import { BookingsInter } from "../Interfaces/BookingsInterfaces";
+import { BookingsDetailsInter, BookingsInter } from "../Interfaces/BookingsInterfaces";
 import { RoomsInter } from "../../Rooms/Interfaces/RoomsInterfaces";
 import { getIdRoomsData } from "../../Rooms/Features/RoomsSlice";
 import { IdRoomThunk } from "../../Rooms/Features/RoomsThunk";
@@ -53,13 +53,14 @@ export const BookingsDetails = () => {
     "/src/assets/Imagenes/room5.jpg",
     "/src/assets/Imagenes/room4.jpg",
   ];
-  const [bookingsDetails, setBookingDetails] = useState<BookingsInter>({
+  const [bookingsDetails, setBookingDetails] = useState<BookingsDetailsInter>({
     name: "",
     date: new Date(),
     check_in: new Date(),
     check_out: new Date(),
     request: "",
     status: "",
+
   });
   const StatusBookingsId = useSelector(getStatusId);
   const BookingsId: BookingsInter | null = useSelector(getBookingsId);
@@ -80,7 +81,7 @@ export const BookingsDetails = () => {
     );
   };
   const handleChangeEdit = (_id: number) => {
-    navigate(`/bookings/edit/${bookingsDetails.id}`);
+    navigate(`/bookings/edit/${bookingsDetails._id}`);
   };
 
   useEffect(() => {
@@ -103,7 +104,7 @@ export const BookingsDetails = () => {
           number: RoomsId?.number,
           type: RoomsId?.type,
         });
-        if (BookingsId.id != numericId) {
+        if (BookingsId._id != numericId) {
           dispatch(BookingsIdThunk(numericId));
         }
       }
@@ -114,13 +115,13 @@ export const BookingsDetails = () => {
 
   return (
     <>
-      <CardBookings key={bookingsDetails.id}>
+      <CardBookings key={bookingsDetails._id}>
         <CardInfo>
           <Link to={"/bookings"}>
             <CloseIcon />
           </Link>
           <NameBooking>{bookingsDetails.name}</NameBooking>
-          <IdBookings>{bookingsDetails.id}</IdBookings>
+          <IdBookings>{bookingsDetails._id}</IdBookings>
           <BoxMessage>
             <PhoneIcon />
             <ButtonMessage>

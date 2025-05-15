@@ -37,16 +37,21 @@ export interface BookingsDetailsInter {
   request: string;
   status: string;
   _id?: number;
+  type?:string;
+  number?:number;
+  price?: number;
   
 }
 export interface ButtonBookingsProps {
   status: string;
 }
 export interface BookingsCreateInter{
+    _id: number,
+    room_id?: number,
     name:string,
-    date: string,
-    check_in: string,
-    check_out: string,
+    date: Date,
+    check_in: Date,
+    check_out: Date,
     request: string,
     type: string,
     number:number,

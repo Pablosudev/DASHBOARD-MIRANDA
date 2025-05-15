@@ -23,22 +23,24 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { CreateBookingThunk } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
-import { BookingsCreateInter } from "../Interfaces/BookingsInterfaces";
+import { BookingsCreateInter, BookingsInter } from "../Interfaces/BookingsInterfaces";
 import { SelectCreateBookings } from "../../Users/Components/UsersCreate";
 import { ContainerDescription, BoxDescription } from "../Components/BookingsDetails";
 
 export const BookingsCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const [newBooking, setNewBooking] = useState<BookingsCreateInter>({
+  const [newBooking, setNewBooking] = useState<BookingsInter>({
     name: "",
-    date: "",
-    check_in: "",
-    check_out: "",
+    _id: 0 ,
+    date: new Date,
+    check_in: new Date,
+    check_out: new Date,
     request: "",
+    status: "",
+    room_id: 0,
     type: "",
     number: 0,
-    status: "",
     room: {},
   });
   const handleInputChange = (e: any) => {
@@ -73,7 +75,7 @@ export const BookingsCreate = () => {
             navigate("/bookings");
           }}
         />
-        <RoomInfo>Bookings Edit</RoomInfo>
+        <RoomInfo>Bookings Create</RoomInfo>
         <BoxTitle>
           <div>
             <TitleSection>Name</TitleSection>
@@ -154,7 +156,7 @@ export const BookingsCreate = () => {
             <Price
               type="date"
               name="date"
-              value={newBooking.date}
+              value= {new Date(newBooking.date).toISOString().split('T')[0]}
               onChange={handleInputChange}
             />
           </DateBox>
