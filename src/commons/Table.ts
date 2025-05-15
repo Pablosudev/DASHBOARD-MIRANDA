@@ -187,7 +187,8 @@ export const TableStatusRooms = styled.td`
 export const TableIcons = styled.td`
   display: flex;
   flex-direction: column;
-  padding-right: 2rem;
+  padding-right: 8%;
+  padding-top:75%;
   justify-content:center;
 `;
 export const PopUpContacts = styled.div`

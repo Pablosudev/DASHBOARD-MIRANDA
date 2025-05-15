@@ -4,6 +4,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 export const CardCreate = styled.section`
   margin-top: 10%;
   margin-left: 4%;
+  margin-right:4%;
   background-color: #ffffff;
   border-radius: 12px;
   padding-bottom: 10rem;
@@ -15,7 +16,7 @@ export const CardCreate = styled.section`
   width:100%;
 `;
 export const ContainerSections = styled.div`
-  width: 92rem;
+  width: 100%;
 `;
 export const TitleSection = styled.h3`
   font-family: "Poppins";
@@ -139,6 +140,8 @@ export const ImageCreate = styled.img`
 width:22rem;
 height:12rem;
 border-radius:8%;
+position:absolute;
+right: 5%;
 `
 export const ButtonAmenities = styled.button`
   border-radius: 0.8rem;

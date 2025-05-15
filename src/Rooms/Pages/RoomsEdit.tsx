@@ -29,7 +29,7 @@ import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import React from "react";
 
 export const RoomsEdit = () => {
-  const { id } = useParams<{ id }>();
+  const { _id } = useParams<{ _id }>();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const RoomID: RoomsInter | undefined = useSelector(getIdRoomsData);
@@ -63,11 +63,11 @@ export const RoomsEdit = () => {
   };
 
   const handleSave = () => {
-    if (!id) {
+    if (!_id) {
       alert("ID no válido");
       return;
     }
-    dispatch(EditRoomThunk({id, updatedRoom: roomId }))
+    dispatch(EditRoomThunk({_id, updatedRoom: roomId }))
       .unwrap()
       .then(() => {
         alert("Habitación actualizada correctamente");
@@ -81,8 +81,8 @@ export const RoomsEdit = () => {
 
   useEffect(() => {
     if (StatusRoom === "idle") {
-      if (id) {
-        dispatch(IdRoomThunk(id));
+      if (_id) {
+        dispatch(IdRoomThunk(_id));
       }
     } else if (StatusRoom === "fulfilled") {
       if (RoomID) {
@@ -96,13 +96,13 @@ export const RoomsEdit = () => {
           _id: RoomID._id
         });
         if (RoomID._id != _id) {
-          dispatch(IdRoomThunk(id ?? ""));
+          dispatch(IdRoomThunk(_id ?? ""));
         }
       }
     } else if (StatusRoom === "rejected") {
       alert("Error al cargar los datos de la habitación");
     }
-  }, [dispatch, id, StatusRoom]);
+  }, [dispatch, _id, StatusRoom]);
 
   return (
     <CardCreate>

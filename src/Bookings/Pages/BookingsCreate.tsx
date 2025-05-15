@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   CardCreate,
   IconClose,
   ButtonSave,
   CancellationBox,
-  ButtonAmenities,
   TitlePrice,
-  InputDiscount,
   InputDescription,
   TitleDescripition,
-  ButtonOffer,
   Price,
   PriceBox,
   InputCreate,
@@ -27,7 +24,7 @@ import { useDispatch } from "react-redux";
 import { CreateBookingThunk } from "../Features/BookingsThunk";
 import { AppDispatch } from "../../App/Store";
 import { BookingsCreateInter } from "../Interfaces/BookingsInterfaces";
-import { SelectCreate, SelectCreateBookings, TypeInput } from "../../Users/Components/UsersCreate";
+import { SelectCreateBookings } from "../../Users/Components/UsersCreate";
 import { ContainerDescription, BoxDescription } from "../Components/BookingsDetails";
 
 export const BookingsCreate = () => {

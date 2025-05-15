@@ -54,10 +54,10 @@ export const IdRoomThunk = createAsyncThunk<RoomsInter, number>(
 //FETCH EDIT
 export const EditRoomThunk = createAsyncThunk<
   RoomsInter,
-  { id: number; updatedRoom: RoomsInter }
->("room/editRoom", async ({ id, updatedRoom }, { rejectWithValue }) => {
+  { _id: number; updatedRoom: RoomsInter }
+>("room/editRoom", async ({ _id, updatedRoom }, { rejectWithValue }) => {
         try {
-          const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${id}`,{
+          const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${_id}`,{
             method: "PUT",
       headers: GetAuthHeaders(),
       body: JSON.stringify(updatedRoom),
@@ -73,12 +73,12 @@ export const EditRoomThunk = createAsyncThunk<
         }
       });
 //FETCH DELETE
-export const DeleteRoomThunk = createAsyncThunk<{ id: number }, number>(
+export const DeleteRoomThunk = createAsyncThunk<{ _id: number }, number>(
   "room/deleteRoom",
-  async (id: number, {rejectWithValue}) => {
+  async (_id: number, {rejectWithValue}) => {
 
           try {
-            const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${id}`, {
+            const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${_id}`, {
               method: "DELETE",
               headers: GetAuthHeaders(),
             });
@@ -87,7 +87,7 @@ export const DeleteRoomThunk = createAsyncThunk<{ id: number }, number>(
               return rejectWithValue("Error al eliminar la habitación");
             }
 
-            return { id };
+            return { _id };
           } catch (error) {
             return rejectWithValue(error.message ||error.message || "Error desconocido al eliminar la habitación");
           }

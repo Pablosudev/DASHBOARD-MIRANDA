@@ -35,7 +35,7 @@ export const RoomsCreate = () => {
     offer: 0,
     roomStatus: "",
     amenities: [],
-    id: 0
+   _id: 0
   });
 
   const handleInputChange = (e: any) => {
