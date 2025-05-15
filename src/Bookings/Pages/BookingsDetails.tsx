@@ -67,9 +67,9 @@ export const BookingsDetails = () => {
   const BookingsId: BookingsInter | null = useSelector(getBookingsId);
   const RoomsId: RoomsInter | undefined = useSelector(getIdRoomsData);
   const dispatch = useDispatch<AppDispatch>();
-  const { id } = useParams();
+  const { _id } = useParams();
   const navigate = useNavigate();
-  const numericId = Number(id);
+  const numericId = Number(_id);
 
   //BOTONES PARA IMG
   const handleButtonNext = () => {
@@ -128,7 +128,7 @@ export const BookingsDetails = () => {
             <ButtonMessage>
               <IconMessage /> Send Message
             </ButtonMessage>
-            <ButtonMessage onClick={() => handleChangeEdit(Number(id))}>
+            <ButtonMessage onClick={() => handleChangeEdit(Number(_id))}>
               Edit <ButtonEditDetails />
             </ButtonMessage>
           </BoxMessage>

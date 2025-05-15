@@ -119,10 +119,10 @@ export const EditBookingThunk = createAsyncThunk<
       }
       const jsonData: BookingsInter[] = await response.json();
       const updatedData = jsonData.map((booking) =>
-        booking.id === id ? { ...booking, ...updatedBooking } : booking
+        booking._id === id ? { ...booking, ...updatedBooking } : booking
       );
       const updatedBookingData = updatedData.find(
-        (booking) => booking.id === id
+        (booking) => booking._id === id
       );
       if (updatedBookingData) {
         return updatedBookingData;
