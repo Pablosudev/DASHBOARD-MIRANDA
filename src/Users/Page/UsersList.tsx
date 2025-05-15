@@ -84,7 +84,7 @@ export const UserList = () => {
   const handleDeleteUser = (_id: number) => {
     dispatch(DeleteUserThunk(_id))
     .then(()=> {
-      setUsers(prevUsers => prevUsers.filter(user => user._id !== _id))
+      dispatch(UsersAllThunk())
     })
     Toastify({
       text: "¡Usuario eliminado con éxito!",

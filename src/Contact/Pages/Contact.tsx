@@ -139,7 +139,13 @@ export const Contact = () => {
   };
 
   const handleDeleteContact = (_id: number) => {
-    dispatch(ContactDeleteThunk(_id));
+    dispatch(ContactDeleteThunk(_id))
+    .then(() => {
+            dispatch(ContactAllThunks());
+          })
+          .catch((error) => {
+            alert("Error al eliminar el contacto");
+          });
   };
   const handlePopUp = (_id: number) => {
     if (open === _id) {
