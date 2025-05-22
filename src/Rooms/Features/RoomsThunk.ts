@@ -1,5 +1,5 @@
 import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
-import { RoomsInter, RoomsEdits } from "../Interfaces/RoomsInterfaces";
+import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import { GetAuthHeaders } from "../../UseContext/GetAuth";
 //FETCH TODOS
 export const RoomsThunk = createAsyncThunk<RoomsInter[]>(

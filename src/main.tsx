@@ -35,14 +35,14 @@ createRoot(document.getElementById('root') as HTMLElement).render(
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/bookings'>
                 <Route path='' element = {<BookingsList/>}/>
-                <Route path='/bookings/details/:id' element = {<BookingsDetails/>}/>
-                <Route path='/bookings/edit/:id' element = {<BookingsEdit/>}/>
+                <Route path='/bookings/details/:_id' element = {<BookingsDetails/>}/>
+                <Route path='/bookings/edit/:_id' element = {<BookingsEdit/>}/>
                 <Route path='/bookings/create' element = {<BookingsCreate/>}/>
               </Route>
               <Route path='/rooms'>
                 <Route path='' element={<RoomsList />} />
                 <Route path='create' element={<RoomsCreate />} />
-                <Route path="/rooms/edit/:id" element={<RoomsEdit />} />
+                <Route path="/rooms/edit/:_id" element={<RoomsEdit />} />
               </Route>
               <Route path='/contact' element ={<Contact/>}/>
               <Route path='/users'>

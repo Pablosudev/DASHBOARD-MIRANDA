@@ -29,7 +29,7 @@ import { RoomsInter } from "../Interfaces/RoomsInterfaces";
 import React from "react";
 
 export const RoomsEdit = () => {
-  const { _id } = useParams<{ _id }>();
+  const { _id } = useParams<{ _id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const RoomID: RoomsInter | undefined = useSelector(getIdRoomsData);
@@ -81,6 +81,7 @@ export const RoomsEdit = () => {
 
   useEffect(() => {
     if (StatusRoom === "idle") {
+      console.log(RoomID)
       if (_id) {
         dispatch(IdRoomThunk(_id));
       }
