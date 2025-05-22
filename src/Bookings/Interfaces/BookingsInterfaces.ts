@@ -3,9 +3,9 @@ import { RoomsInter } from "../../Rooms/Interfaces/RoomsInterfaces";
 export interface BookingsInter {
   name: string;
   _id: string;
-  date: Date;
-  check_in: Date;
-  check_out: Date;
+  date: string;
+  check_in: string;
+  check_out: string;
   request: string;
   status: string;
   room_id: string; 

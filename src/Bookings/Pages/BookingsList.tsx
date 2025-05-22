@@ -60,7 +60,7 @@ export const BookingsList = () => {
   const navigate = useNavigate();
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [room, setRoom] = useState<RoomsInter | undefined>(RoomId)
-  const [open, setOpen] = useState<number | null>(null);
+  const [open, setOpen] = useState<string | null>(null);
 
   useEffect(() => {
     if (StatusBookings === "idle") {
@@ -130,7 +130,7 @@ export const BookingsList = () => {
         alert("Error al eliminar la reserva");
       });
   };
-  const handlePopUp = (_id:number) => {
+  const handlePopUp = (_id:string) => {
     if (open === _id) {
       setOpen(null);
     } else {
@@ -199,8 +199,13 @@ export const BookingsList = () => {
             </TableR>
           </TableHead>
           <TableBody>
-            {currentBookings.map((booking) =>{
-              const room = roomsMap[booking.room_id]
+            {currentBookings.map((booking) => {
+            const roomId =
+            typeof booking.room_id === "string"
+              ? booking.room_id
+              : (booking.room_id as { _id: string })?._id;
+
+            const room = roomsMap[roomId];
             return (
               
               <TableR key={booking._id}>

@@ -24,12 +24,12 @@ export const AllBookingsThunk = createAsyncThunk<BookingsInter[]>(
 );
 
 //THUNKS ID
-export const BookingsIdThunk = createAsyncThunk<BookingsInter, number>(
+export const BookingsIdThunk = createAsyncThunk<BookingsInter, string>(
   "bookingsId/getIdBookings",
-  async (id: number, { rejectWithValue }) => {
+  async (_id: string, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings/${_id}`,
         {
           method: "GET",
           headers: GetAuthHeaders(),
@@ -56,12 +56,12 @@ export const BookingsIdThunk = createAsyncThunk<BookingsInter, number>(
 );
 
 //THUNK DELETE
-export const DeleteBookingsThunk = createAsyncThunk<{ id: number }, number>(
+export const DeleteBookingsThunk = createAsyncThunk<{ id: string }, number>(
   "bookings/deleteBookings",
-  async (id: number, { rejectWithValue }) => {
+  async (_id: string, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings/${_id}`,
         {
           method: "DELETE",
           headers: GetAuthHeaders(),
@@ -71,7 +71,7 @@ export const DeleteBookingsThunk = createAsyncThunk<{ id: number }, number>(
         return rejectWithValue("Error al eliminar la reserva");
       }
 
-      return { id };
+      return { _id };
     } catch (error) {
       return rejectWithValue(error.message || "Error al eliminar la reserva");
     }
@@ -101,13 +101,13 @@ export const CreateBookingThunk = createAsyncThunk<
 //THUNK EDIT
 export const EditBookingThunk = createAsyncThunk<
   BookingsInter,
-  { id; updatedBooking: BookingsInter }
+  { _id; updatedBooking: BookingsInter }
 >(
   "booking/editBooking",
-  async ({ id, updatedBooking }, { rejectWithValue }) => {
+  async ({ _id, updatedBooking }, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings/${id}`,
+        `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/bookings/${_id}`,
         {
           method: "PUT",
           headers: GetAuthHeaders(),
@@ -119,10 +119,10 @@ export const EditBookingThunk = createAsyncThunk<
       }
       const jsonData: BookingsInter[] = await response.json();
       const updatedData = jsonData.map((booking) =>
-        booking._id === id ? { ...booking, ...updatedBooking } : booking
+        booking._id === _id ? { ...booking, ...updatedBooking } : booking
       );
       const updatedBookingData = updatedData.find(
-        (booking) => booking._id === id
+        (booking) => booking._id === _id
       );
       if (updatedBookingData) {
         return updatedBookingData;

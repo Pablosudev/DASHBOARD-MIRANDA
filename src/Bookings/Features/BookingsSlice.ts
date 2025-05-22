@@ -65,12 +65,12 @@ export const BookingsSlice = createSlice({
         state.statusDelete = "fulfilled";
 
         state.data = state.data.filter(
-          (bookings) => bookings.id !== action.payload.id
+          (bookings) => bookings._id !== action.payload.id
         );
 
         if (
           state.bookingsId.data &&
-          state.bookingsId.data.id === action.payload.id
+          state.bookingsId.data._id === action.payload.id
         ) {
           state.bookingsId.data = null;
         }
@@ -93,7 +93,7 @@ export const BookingsSlice = createSlice({
         state.bookingsId.data = action.payload;
 
         const index = state.data.findIndex(
-          (booking) => booking.id === action.payload.id
+          (booking) => booking._id === action.payload._id
         );
         if (index !== -1) {
           state.data[index] = action.payload;
