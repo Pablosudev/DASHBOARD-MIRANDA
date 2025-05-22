@@ -76,7 +76,7 @@ export const SliceRooms = createSlice({
           state.roomId.data = action.payload; 
     
           
-          const index = state.data.findIndex((room) => room.id === action.payload.id);
+          const index = state.data.findIndex((room) => room._id === action.payload._id);
           if (index !== -1) {
             state.data[index] = action.payload;
           }
@@ -99,10 +99,10 @@ export const SliceRooms = createSlice({
           state.statusDelete = "fulfilled";
          
           state.data = state.data.filter(
-            (room) => room.id !== action.payload.id
+            (room) => room._id !== action.payload._id
           );
           
-          if (state.roomId.data && state.roomId.data.id === action.payload.id) {
+          if (state.roomId.data && state.roomId.data._id === action.payload._id) {
             state.roomId.data = undefined;
           }
 

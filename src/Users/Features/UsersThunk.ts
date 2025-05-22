@@ -24,16 +24,17 @@ export const UsersAllThunk = createAsyncThunk<Users[], number | undefined>(
       
 
 //FETCH ID
-export const IdUserThunk = createAsyncThunk<Users, number>(
+export const IdUserThunk = createAsyncThunk<Users, string>(
   "userId/getIdUser",
-  async (_id: number, { rejectWithValue }) => {
+  async (_id: string, { rejectWithValue }) => {
     try {
       const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/users/${_id}`, {
         method: "GET",
         headers: GetAuthHeaders(),
       });
       if (!response.ok) {
-        console.log("Error en la respuesta de la API:", response);
+        const errorText = await response.text();
+        throw new Error(`Error ${response.status}: ${errorText}`);
       }
       const userData: Users = await response.json();
 
@@ -53,9 +54,9 @@ export const IdUserThunk = createAsyncThunk<Users, number>(
 
 //FETCH DELETE
 
-export const DeleteUserThunk = createAsyncThunk<{ _id: number }, number>(
+export const DeleteUserThunk = createAsyncThunk<{ _id: string }, string>(
   "user/deleteUser",
-  async (_id: number, { rejectWithValue }) => {
+  async (_id: string, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/users/${_id}`,
@@ -103,7 +104,7 @@ export const CreateUserThunk = createAsyncThunk<Users, Users>(
 //FETCH EDIT
 export const EditUserThunk = createAsyncThunk<
   Users,
-  { _id: number; updatedUser: Users }
+  { _id: string; updatedUser: Users }
 >("user/editUser", async ({ _id, updatedUser }, { rejectWithValue }) => {
   try {
     const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/users/${_id}`, {

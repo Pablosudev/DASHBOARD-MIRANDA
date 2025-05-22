@@ -48,7 +48,7 @@ createRoot(document.getElementById('root') as HTMLElement).render(
               <Route path='/users'>
                 <Route path='' element={<UserList />} />
                 <Route path='new' element={<UserCreate />} />
-                <Route path='/users/edit/:id' element={<UserEdit/>}/>
+                <Route path='/users/edit/:_id' element={<UserEdit/>}/>
               </Route>
             </Route>
           </Routes>

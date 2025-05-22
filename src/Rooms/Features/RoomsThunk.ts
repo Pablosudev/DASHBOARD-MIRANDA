@@ -25,11 +25,11 @@ export const RoomsThunk = createAsyncThunk<RoomsInter[]>(
 );
 
 //FETCH UNO
-export const IdRoomThunk = createAsyncThunk<RoomsInter, number>(
+export const IdRoomThunk = createAsyncThunk<RoomsInter, string>(
   "roomId/getIdRoom",
-  async (id: number, { rejectWithValue }) => {
+  async (_id: string, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${id}`, {
+      const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${_id}`, {
         method: "GET",
         headers: GetAuthHeaders(),
       });
@@ -54,7 +54,7 @@ export const IdRoomThunk = createAsyncThunk<RoomsInter, number>(
 //FETCH EDIT
 export const EditRoomThunk = createAsyncThunk<
   RoomsInter,
-  { _id: number; updatedRoom: RoomsInter }
+  { _id: string; updatedRoom: RoomsInter }
 >("room/editRoom", async ({ _id, updatedRoom }, { rejectWithValue }) => {
         try {
           const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${_id}`,{
@@ -73,9 +73,9 @@ export const EditRoomThunk = createAsyncThunk<
         }
       });
 //FETCH DELETE
-export const DeleteRoomThunk = createAsyncThunk<{ _id: number }, number>(
+export const DeleteRoomThunk = createAsyncThunk<{ _id: string }, string>(
   "room/deleteRoom",
-  async (_id: number, {rejectWithValue}) => {
+  async (_id: string, {rejectWithValue}) => {
 
           try {
             const response = await fetch(`https://yj5nkhibw8.execute-api.eu-west-3.amazonaws.com/dev/api/v1/rooms/${_id}`, {

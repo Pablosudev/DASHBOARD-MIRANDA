@@ -41,7 +41,7 @@ export const RoomsEdit = () => {
     roomStatus: "",
     type: "",
     amenities: [],
-    _id: 0
+    _id: ""
   });
   const handleAmenities = (amenity: string) => {
     setRoomId((prevState) => {

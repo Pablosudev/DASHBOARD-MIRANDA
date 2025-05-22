@@ -187,7 +187,7 @@ export const TableStatusRooms = styled.td`
 export const TableIcons = styled.td`
   display: flex;
   flex-direction: column;
-  padding-right: 8%;
+  padding-right: 70%;
   padding-top:75%;
   justify-content:center;
 `;

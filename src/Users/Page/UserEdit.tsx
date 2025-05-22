@@ -41,7 +41,7 @@ export const UserEdit = () => {
   };
 
   const [newUser, setNewUser] = useState<Users>({
-    _id:0,
+    _id: "",
     name: "",
     email: "",
     start_date: new Date().toISOString().split('T')[0],
@@ -79,41 +79,76 @@ export const UserEdit = () => {
   };
   
   
+useEffect(() => {
+  if (_id) {
+    console.log("🔥 Lanzando thunk con ID:", numericId);
+    dispatch(IdUserThunk(_id));
+  }
+}, [_id, dispatch]);
 
-  useEffect(() => {
-    if (UserStatus === "idle") {
-      if (_id) {
-        dispatch(IdUserThunk(numericId));
-      }
-    } else if (UserStatus === "fulfilled" && Users) {
+
+
+useEffect(() => {
+  if (Users && Users._id === _id) {
+    const isValidDate = Users.start_date && !isNaN(new Date(Users.start_date).getTime());
+    const formattedDate = isValidDate
+      ? new Date(Users.start_date).toISOString().split('T')[0]
+      : new Date().toISOString().split('T')[0];
+
+    setNewUser({
+      _id: Users._id,
+      name: Users.name,
+      email: Users.email,
+      start_date: formattedDate,
+      description: Users.description,
+      phone: Users.phone,
+      status: Users.status,
+      department: Users.department,
+      password: Users.password,
+    });
+  }
+}, [Users, _id]);
+
+console.log("Users:", Users);
+console.log("newUser:", newUser);
+console.log("UserStatus:", UserStatus);
+console.log("_id:", _id)
+
+
+  // useEffect(() => {
+  //   if (UserStatus === "idle") {
+  //     if (_id) {
+  //       dispatch(IdUserThunk(_id));
+  //     }
+  //   } else if (UserStatus === "fulfilled" && Users) {
       
-      if (Users) {
+  //     if (Users) {
         
-        const isValidDate = Users.start_date && !isNaN(new Date(Users.start_date).getTime());
-        const formattedDate = isValidDate
-          ? new Date(Users.start_date).toISOString().split('T')[0]
-          : new Date().toISOString().split('T')[0]; 
+  //       const isValidDate = Users.start_date && !isNaN(new Date(Users.start_date).getTime());
+  //       const formattedDate = isValidDate
+  //         ? new Date(Users.start_date).toISOString().split('T')[0]
+  //         : new Date().toISOString().split('T')[0]; 
   
-        setNewUser({
-          name: Users.name,
-          start_date: formattedDate, 
-          description: Users.description,
-          phone: Users.phone,
-          email: Users.email,
-          password: Users.password,
-          status: Users.status,
-          department: Users.department,
-          _id: Users._id,
-        });
+  //       setNewUser({
+  //         name: Users.name,
+  //         start_date: formattedDate, 
+  //         description: Users.description,
+  //         phone: Users.phone,
+  //         email: Users.email,
+  //         password: Users.password,
+  //         status: Users.status,
+  //         department: Users.department,
+  //         _id: Users._id,
+  //       });
   
-        if (Users._id != numericId) {
-          dispatch(IdUserThunk(numericId));
-        }
-      }
-    } else if (UserStatus === "rejected") {
-      alert("Error al cargar los datos de la habitación");
-    }
-  }, [dispatch, numericId, UserStatus, Users]);
+  //       if (Users._id != _id) {
+  //         dispatch(IdUserThunk(_id));
+  //       }
+  //     }
+  //   } else if (UserStatus === "rejected") {
+  //     alert("Error al cargar los datos de la habitación");
+  //   }
+  // }, [dispatch, _id, UserStatus, Users]);
 
   return (
     <>

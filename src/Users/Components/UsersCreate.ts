@@ -4,14 +4,14 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 
 export const ContainerNewUsers = styled.section`
     background-color:#ffffff;
-    padding-left:3rem;
+    padding-left:3rem; 
     padding-right:3rem;
     border-radius:12px;
-    margin-left:15%;
-    margin-top: 10%;
+    margin-top: 8%;
     margin-bottom: 2%;
     max-height: 85rem;
-    position: relative
+    position: relative;
+    left:20%;
 `
 export const ImgUser = styled.img`
     width:15rem;
